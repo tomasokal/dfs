@@ -12,13 +12,15 @@ page <- rvest::html_table(xml2::read_html(web_page)
                           , fill = TRUE)
 
 data <- data.table::data.table(page[[1]])[
-
+  
   ,
   j = .(Player
-        , SALARY = as.numeric(gsub("[\\$,]","", `This Week`)))
+        , SALARY = as.numeric(gsub("[\\$,]","", `This Week`))
+        , DAY = toupper(substring(Kickoff, 1, 3))
+        , TIME = trimws(substring(Kickoff, 5, 11)))
   
-] %>% extract(Player, c("PLAYER_NAME", "TEAM", "POSITION"),
-              "(.+)\\s\\(([A-Z]+)\\s\\-\\s([A-Z]+)\\)$")
+  ] %>% tidyr::extract(Player, c("PLAYER_NAME", "TEAM", "POSITION"),
+                       "(.+)\\s\\(([A-Z]+)\\s\\-\\s([A-Z]+)\\)$")
 
 projections_salaries <- merge(final_projections, data, by = c("PLAYER_NAME", "POSITION"), all.x = TRUE, all.y = TRUE)[
   
@@ -28,11 +30,13 @@ projections_salaries <- merge(final_projections, data, by = c("PLAYER_NAME", "PO
         , POSITION
         , TEAM = ifelse(is.na(TEAM.x), TEAM.y, TEAM.x)
         , POINTS = ifelse(is.na(POINTS), 0, POINTS)
-        , SALARY)
+        , SALARY
+        , DAY
+        , TIME)
   
 ]
 
-saveRDS(final_projections, paste0("Data/salaries_week", week_number, "_", Sys.Date(), ".RDS"))
+saveRDS(projections_salaries, paste0("Data/salaries_week", week_number, "_", Sys.Date(), ".RDS"))
 
 
 
