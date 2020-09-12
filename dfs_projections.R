@@ -6,12 +6,11 @@ library(rvest)
 
 week_number <- 1
 
-web_page_generate <- function(position, week) {
+web_page_generate <- function(position) {
   
   web_page <- paste0("https://www.fantasypros.com/nfl/projections/"
                      , position
-                     , ".php?week="
-                     , week)
+                     , ".php?scoring=PPR")
   
   return(web_page)
   
@@ -19,7 +18,7 @@ web_page_generate <- function(position, week) {
 
 position_list <- list(c("qb", "rb", "wr", "te", "k", "dst"))
 
-web_pages_list <- lapply(position_list, web_page_generate, week = week_number)
+web_pages_list <- lapply(position_list, web_page_generate)
 web_pages_list <- as.list(unlist(web_pages_list))
 
 # Generate list of scraped tables
