@@ -25,3 +25,5 @@ f.rhs[3:nrow(f.con)] <- c(1, 2, 1, 3, 7)
 opt <- lp("max", f.obj, f.con, f.dir, f.rhs, all.bin = TRUE)
 picks <- fd[which(opt$solution == 1), ]
 sum(picks$SALARY)
+
+data.table::fwrite(picks, "Data/picks.csv")
