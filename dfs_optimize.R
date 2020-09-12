@@ -2,7 +2,6 @@ library(dummies)
 library(lpSolve)
 
 fd <- projections_salaries[order(projections_salaries[, "POSITION"]), ]
-fd <- fd[DAY == "SUN" & !TIME == "8:20PM"]
 Position.Mat <- dummies::dummy(fd[, POSITION])
 Position.Mat <- cbind(Position.Mat, fdFlex = rowSums(Position.Mat[, c(3, 4, 5)]))
 

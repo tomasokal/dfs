@@ -19,57 +19,76 @@ salaries <- data[
   
   ,
   j = .(POSITION = Position
-        , PLAYER_NAME = ifelse(Position == "DST"
-                               , sapply(Player
-                                        , switch
-                                        , "Buffalo Bills" = "BUF"
-                                        , "New England Patriots" = "NE"
-                                        , "Pittsburgh Steelers" = "PIT"
-                                        , "Philadelphia Eagles" = "PHI"
-                                        , "Baltimore Ravens" = "BAL"
-                                        , "Indianpolis Colts" = "IND"
-                                        , "San Francisco 49ers" = "SF"
-                                        , "Kansas City Chiefs" = "KC"
-                                        , "Denver Broncos" = "DEN"
-                                        , "Los Angeles Chargers" = "LAC"
-                                        , "Cincinnati Bengals" = "CIN"
-                                        , "Tennessee Titans" = "TEN"
-                                        , "Las Vegas Raiders" = "LV"
-                                        , "New York Jets" = "NYJ"
-                                        , "Arizona Cardinals" = "ARI"
-                                        , "Atlanta Falcons" = "ATL"
-                                        , "Green Bay Packers" = "GB"
-                                        , "Detroit Lions" = "DET"
-                                        , "Los Angeles Rams" = "LAR"
-                                        , "Miami Dolphins" = "MIA"
-                                        , "Chicago Bears" = "CHI"
-                                        , "Dallas Cowboys" = "DAL"
-                                        , "Seattle Seahawks" = "SEA"
-                                        , "Washington Football Team" = "WAS"
-                                        , "Caroline Panthers" = "CAR"
-                                        , "Cleveland Browns" = "CLE"
-                                        , "Minnesota Vikings" = "MIN"
-                                        , "New Orleans Saints" = "NO"
-                                        , "Jacksonville Jaguars" = "JAC"
-                                        , "Tampa Bay Buccaneers" = "TB"
-                                        , "New York Giants" = "NYG"
-                                        , "Houston Texans" = "HOU")
-                               , Player)
+        , PLAYER_NAME1 = ifelse(Position == "DST"
+                                , sapply(Name
+                                         , switch
+                                         , "49ers" = "San Francisco 49ers"
+                                         , "Bears" = "Chicago Bears"
+                                         , "Bengals" = "Cincinnati Bengals"
+                                         , "Bills" = "Buffalo Bills"
+                                         , "Browns" = "Cleveland Browns"
+                                         , "Buccaneers" = "Tampa Bay Buccaneers"
+                                         , "Cardinals" = "Arizona Cardinals"
+                                         , "Chargers" = "Los Angeles Chargers"
+                                         , "Colts" = "Indianapolis Colts"
+                                         , "Dolphins" = "Miami Dolphins"
+                                         , "Eagles" = "Philadelphia Eagles"
+                                         , "Falcons" = "Atlanta Falcons"
+                                         , "Jaguars" = "Jacksonville Jaguars"
+                                         , "Jets" = "New York Jets"
+                                         , "Lions" = "Detroit Lions"
+                                         , "Packers" = "Green Bay Packers"
+                                         , "Panthers" = "Carolina Panthers"
+                                         , "Patriots" = "New England Patriots"
+                                         , "Raiders" = "Las Vegas Raiders"
+                                         , "Ravens" = "Baltimore Ravens"
+                                         , "Saints" = "New Orleans Saints"
+                                         , "Seahawks" = "Seattle Seahawks"
+                                         , "Vikings" = "Minnesota Vikings"
+                                         , "WAS Football Team" = "Washington Football Team"
+                                         )
+                                , ifelse(Name %in% c("Willie Snead IV", "Todd Gurley II", "Ted Ginn Jr.", "Steven Sims Jr.", "Stanley Morgan", "Scotty Miller",
+                                                     "Robert Griffin III", "Richie James Jr.", "P.J. Walker", "Phillip Dorsett II", "Mitchell Trubisky", "Matthew Slater",
+                                                     "Marvin Jones Jr.", "KhaDarel Hodge", "John Ross III", "Jeff Wilson Jr.", "JJ Arcega-Whiteside", "Dwayne Haskins Jr.",
+                                                     "Donald Parham Jr.", "DK Metcalf", "DJ Moore", "DJ Chark Jr.", "Chris Herndon", "C.J. Ham", "Allen Robinson II", "AJ Dillon")
+                                         , sapply(Name
+                                                  , switch
+                                                  , "Willie Snead IV" = "Willie Snead"
+                                                  , "Todd Gurley II" = "Todd Gurley"
+                                                  , "Ted Ginn Jr." = "Ted Ginn"
+                                                  , "Steven Sims Jr." = "Steven Sims"
+                                                  , "Stanley Morgan" = "Stanley Morgan Jr."
+                                                  , "Scotty Miller" = "Scott Miller"
+                                                  , "Robert Griffin III" = "Robert Griffin"
+                                                  , "Richie James Jr." = "Richie James"
+                                                  , "P.J. Walker" = "Phillip Walker"
+                                                  , "Phillip Dorsett II" = "Phillip Dorsett"
+                                                  , "Mitchell Trubisky" = "Mitch Trubisky"
+                                                  , "Matthew Slater" = "Matt Slater"
+                                                  , "Marvin Jones Jr." = "Marvin Jones"
+                                                  , "KhaDarel Hodge" = "Khadarel Hodge"
+                                                  , "John Ross III" = "John Ross"
+                                                  , "Jeff Wilson Jr." = "Jeff Wilson"
+                                                  , "JJ Arcega-Whiteside" = "J.J. Arcega-Whiteside"
+                                                  , "Dwayne Haskins Jr." = "Dwayne Haskins"
+                                                  , "Donald Parham Jr." = "Donald Parham"
+                                                  , "DK Metcalf" = "D.K. Metcalf"
+                                                  , "DJ Moore" = "D.J. Moore"
+                                                  , "DJ Chark Jr." = "D.J. Chark"
+                                                  , "Chris Herndon" = "Chris Herndon IV"
+                                                  , "C.J. Ham" = "CJ Ham"
+                                                  , "Allen Robinson II" = "Allen Robinson"
+                                                  , "AJ Dillon" = "A.J. Dillon"
+                                                  , as.character(Name))
+                                         , Name))
         , TEAM = Team
-        , SALARY = Salary)
+        , SALARY = as.numeric(Salary))
   
-]
+  ][, PLAYER_NAME := as.character(PLAYER_NAME1)][, -2]
 
 projections_salaries <- merge(final_projections, salaries, by = c("PLAYER_NAME", "POSITION"), all.x = TRUE, all.y = TRUE)[
   
-  !is.na(SALARY)
+  !TEAM1 %in% c("DAL", "LAR", "PIT", "NYG", "HOU", "KC", "TEN", "DEN")
   ,
-  j = .(PLAYER_NAME
-        , POSITION
-        , TEAM = ifelse(is.na(TEAM.x), TEAM.y, TEAM.x)
-        , POINTS = ifelse(is.na(POINTS), 0, POINTS)
-        , SALARY
-        , DAY
-        , TIME)
   
-  ]
+  ][!is.na(SALARY)][!is.na(POINTS)]
