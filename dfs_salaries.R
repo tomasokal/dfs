@@ -37,6 +37,7 @@ projections_salaries <- merge(final_projections, data, by = c("PLAYER_NAME", "PO
 ]
 
 saveRDS(projections_salaries, paste0("Data/salaries_week", week_number, "_", Sys.Date(), ".RDS"))
-
+salaries <- projections_salaries
+projections_salaries <- merge(final_projections, salaries, by = c("PLAYER_NAME", "POSITION"), all.x = TRUE, all.y = TRUE)[!is.na(SALARY)][DAY == "SUN", ][!TIME == "8:20PM"]
 
 

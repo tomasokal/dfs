@@ -5,7 +5,7 @@ fd <- projections_salaries[order(projections_salaries[, "POSITION"]), ]
 Position.Mat <- dummies::dummy(fd[, POSITION])
 Position.Mat <- cbind(Position.Mat, fdFlex = rowSums(Position.Mat[, c(3, 4, 5)]))
 
-f.obj <- fd[, POINTS]
+f.obj <- fd[, POINTS.y]
 
 f.con <- t(cbind(SALARY = fd[, SALARY], Position.Mat))
 colnames(f.con) <- fd$PLAYER_NAME
