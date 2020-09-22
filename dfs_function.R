@@ -4,9 +4,25 @@ library(xml2)
 library(reshape2)
 
 # Salaries
+
+## Scrape ROTOGRINDERS for salaries for DraftKings, Fanduel, and Yahoo salaries
 salaries_draftkings <- data.table::fread("https://rotogrinders.com/projected-stats/nfl.csv?site=draftkings")
 salaries_fanduel <- data.table::fread("https://rotogrinders.com/projected-stats/nfl.csv?site=fanduel")
 salaries_yahoo <- data.table::fread("https://rotogrinders.com/projected-stats/nfl.csv?site=yahoo")
+
+## Combine these salaries to have PLAYER_ID, NAME, TEAM, POSITION, SALARY
+salaries <- Reduce(function(x, y) merge(x, y, by = "player_id"), list(salaries_draftkings, salaries_fanduel, salaries_yahoo))[
+  
+  ,
+  j = .(PLAYER_ID = player_id
+        , NAME = name.x
+        , TEAM = team.x
+        , POSITION = pos.x
+        , SALARY_DK = salary.x
+        , SALARY_FD = salary.y
+        , SALARY_YH = salary)
+  
+]
 
 # Projections
 
