@@ -160,6 +160,8 @@ optimize_dfs <- function(site) {
     opt <- lp("max", f.obj, f.con, f.dir, f.rhs, all.bin = TRUE)
     picks <- fd[which(opt$solution == 1), ]
     
+    print(sum(as.numeric(picks$POINTS)))
+    
     return(picks)
     
   }
@@ -189,6 +191,8 @@ optimize_dfs <- function(site) {
     
     opt <- lp("max", f.obj, f.con, f.dir, f.rhs, all.bin = TRUE)
     picks <- fd[which(opt$solution == 1), ]
+    
+    print(sum(as.numeric(picks$POINTS)))
     
     return(picks)
     
@@ -220,8 +224,10 @@ optimize_dfs <- function(site) {
     opt <- lp("max", f.obj, f.con, f.dir, f.rhs, all.bin = TRUE)
     picks <- fd[which(opt$solution == 1), ]
     
-    return(picks)
+    print(sum(as.numeric(picks$POINTS)))
     
+    return(picks)
+
   }
   
   else {
@@ -230,50 +236,8 @@ optimize_dfs <- function(site) {
     
   }
   
-  
 }
 
 optimize_dfs("DK")
 optimize_dfs("FD")
 optimize_dfs("YH")
-
-# ----------------------------------------------------------------------------------------------------
-
-
-## PPR Scoring
-url <- "https://www.numberfire.com/nfl/fantasy/fantasy-football-ppr-projections"
-page <- rvest::html_table(xml2::read_html(url)
-                          , header = TRUE
-                          , fill = TRUE)
-projections1 <- data.table::data.table(page[[1]])
-projections2 <- data.table::data.table(page[[2]])
-projections_ppr <- cbind(projections1, projections2)
-colnames(projections_ppr) <- as.character(projections_ppr[1, ])
-projections_ppr <- projections_ppr[-1, ]
-projections_ppr <- projections_ppr[-1, ][, gsub1 := gsub("\t", "", Player), by = Player][, gsub2 := gsub("\n", "_", gsub1), by = gsub1]
-projections_ppr <- projections_ppr[, c("v1", "v2", "v3") := tstrsplit(gsub2, "_", fixed = TRUE)]
-
-## Normal Scoring
-url <- "https://www.numberfire.com/nfl/fantasy/fantasy-football-projections"
-page <- rvest::html_table(xml2::read_html(url)
-                          , header = TRUE
-                          , fill = TRUE)
-projections1 <- data.table::data.table(page[[1]])
-projections2 <- data.table::data.table(page[[2]])
-projections_std <- cbind(projections1, projections2)
-
-## Defense
-url <- "https://www.numberfire.com/nfl/fantasy/fantasy-football-projections/d"
-page <- rvest::html_table(xml2::read_html(url)
-                          , header = TRUE
-                          , fill = TRUE)
-projections1 <- data.table::data.table(page[[1]])
-projections2 <- data.table::data.table(page[[2]])
-projections_dst <- cbind(projections1, projections2)
-
-# Merge together
-
-check1 <- projections_dfs
-check2 <- salaries_draftkings[, .(player_id, PLAYER = name, POSITION = pos, SALARY = salary)]
-
-check <- merge(check1, check2, by = c("PLAYER", "POSITION"), all.x = TRUE, all.y = TRUE)
