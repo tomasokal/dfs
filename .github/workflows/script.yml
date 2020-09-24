@@ -1,9 +1,8 @@
 name: script
 
 on:
-  push:
-    branches: 
-      - production
+  schedule:
+    - cron:  '*/60 * * * *'
 
 jobs:
 

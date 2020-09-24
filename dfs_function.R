@@ -4,6 +4,7 @@ library(xml2)
 library(reshape2)
 library(fuzzyjoin)
 library(dummies)
+library(lpSolve)
 
 # Set non-slate games
 NON_SLATE <- <- c("MIA", "JAC", "KCC", "BAL", "GBP", "NOS")
