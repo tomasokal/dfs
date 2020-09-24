@@ -16,6 +16,6 @@ jobs:
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
         run:
-          script_scrape_salaries_projections.R
+          Rscript script_scrape_salaries_projections.R
 
 
