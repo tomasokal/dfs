@@ -5,10 +5,8 @@ on:
     branches: 
       - production
 
-name: R Setup
-
 jobs:
-  R Setup:
+  script:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
