@@ -1,10 +1,4 @@
 # Necessary libraries
-install.packages("data.table")
-install.packages("xml2")
-install.packages("httr")
-install.packages("rvest")
-install.packages("fuzzyjoin")
-
 library(data.table)
 library(rvest)
 library(xml2)
