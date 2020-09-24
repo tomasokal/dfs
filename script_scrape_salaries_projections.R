@@ -8,9 +8,7 @@ install.packages("fuzzyjoin")
 library(data.table)
 library(rvest)
 library(xml2)
-library(reshape2)
 library(fuzzyjoin)
-library(dummies)
 
 # Setting the non-slate games
 NON_SLATE <- c("MIA", "JAC", "KCC", "BAL", "GBP", "NOS")
