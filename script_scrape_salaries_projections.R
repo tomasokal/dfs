@@ -1,5 +1,9 @@
 # Necessary libraries
-install.packages(c("data.table", "rvest", "xml2", "reshape2", "fuzzyjoin", "dummies"))
+install.packages("data.table")
+install.packages("xml2")
+install.packages("httr")
+install.packages("rvest")
+install.packages("fuzzyjoin")
 
 library(data.table)
 library(rvest)
