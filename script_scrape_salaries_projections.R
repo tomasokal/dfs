@@ -1,4 +1,6 @@
 # Necessary libraries
+install.packages(c("data.table", "rvest", "xml2", "reshape2", "fuzzyjoin", "dummies"))
+
 library(data.table)
 library(rvest)
 library(xml2)
@@ -7,7 +9,7 @@ library(fuzzyjoin)
 library(dummies)
 
 # Setting the non-slate games
-NON_SLATE <- <- c("MIA", "JAC", "KCC", "BAL", "GBP", "NOS")
+NON_SLATE <- c("MIA", "JAC", "KCC", "BAL", "GBP", "NOS")
 
   ## Note: This could probably be updated to be done automatically since schedule is known ahead of time.
 
