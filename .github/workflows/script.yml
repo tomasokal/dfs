@@ -1,21 +1,26 @@
 name: script
 
 on:
-  schedule:
-    # * is a special character in YAML so you have to quote this string
-    - cron:  '*/5 * * * *'
-      
+  push:
+    branches: 
+      - production
+
+name: R Setup
+
 jobs:
-  run:
-    runs-on: [ubuntu-latest]
-    container: docker://dvcorg/cml-py3:latest
+  R Setup:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: r-lib/actions/setup-r@master
-      - name: scrape_salaries_projections
-        env:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-        run:
-          Rscript script_scrape_salaries_projections.R
+      - name: Install Packages
+        run: |
+          install.packages("data.table")
+          install.packages("xml2")
+          install.packages("httr")
+          install.packages("rvest")
+          install.packages("fuzzyjoin")  
+        shell: Rscript {0}
+
 
 
