@@ -25,3 +25,14 @@ jobs:
           
       - name: Scrape
         run: Rscript script_scrape_salaries_projections.R
+      
+      - name: Commit files
+        run: |
+          git config --local user.name github-actions
+          git config --local user.email "actions@github.com"
+          git add Output/*
+          git commit -am "GH ACTION Autorun $(date)"
+          git push origin production 
+        env:
+          REPO_KEY: ${{secrets.GITHUB_TOKEN}}
+          username: github-actions
