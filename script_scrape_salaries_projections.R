@@ -129,4 +129,4 @@ merge_dst <- merge(projections_dst, salaries[POSITION == "DST"], by = "PLAYER_ID
 merge_full <- data.table::rbindlist(list(merge_nondst, merge_dst))
 
 # Export data 
-data.table::fwrite(merge_full, "Output/salaries_projections_scraped_script.csv")
+data.table::fwrite(merge_full, "salaries_projections_scraped_script.csv")
