@@ -1,0 +1,22 @@
+# Run script on a schedule
+
+name: schedule
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the production branch
+on:
+  schedule:
+    - cron "0 2 * * *"
+jobs:
+  run:
+    runs-on: [ubuntu-latest]
+    container: docker://dvcorg/cml-py3:latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: r-lib/actions/setup-r@master
+      - name: cml_run
+        env:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          Rscript requirements.R      
+          Rscript dfs_function.R
