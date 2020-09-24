@@ -17,6 +17,5 @@ jobs:
       - name: cml_run
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          Rscript requirements.R      
+        run: |  
           Rscript dfs_function.R
