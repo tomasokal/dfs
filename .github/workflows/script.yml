@@ -3,7 +3,7 @@ name: script
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '*/360 * * * *'
+    - cron:  '*/15 * * * *'
       
 jobs:
   run:
@@ -16,6 +16,6 @@ jobs:
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
         run:
-          script_scrape_salaries_projections.R
+          Rscript script_scrape_salaries_projections.R
 
 
