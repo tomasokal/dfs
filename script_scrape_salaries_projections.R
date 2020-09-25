@@ -130,3 +130,6 @@ merge_full <- data.table::rbindlist(list(merge_nondst, merge_dst))
 
 # Export data 
 data.table::fwrite(merge_full, "Output/salaries_projections_scraped_script.csv")
+
+# Setting time
+data.table::fwrite(data.frame(as.POSIXct(Sys.time(),"Etc/GMT+5")), "Output/last_run_time.csv")
