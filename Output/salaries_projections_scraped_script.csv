@@ -6,8 +6,8 @@ Dak Prescott,QB,21.6,7200,8500,34
 Matthew Stafford,QB,20.7,6300,7300,31
 Josh Allen,QB,20.1,6900,8100,36
 Carson Wentz,QB,18.9,5800,7600,25
+Matt Ryan,QB,18.9,6600,7800,32
 Ben Roethlisberger,QB,18.9,6400,7500,32
-Matt Ryan,QB,18.8,6600,7800,32
 Deshaun Watson,QB,18.8,6500,8000,32
 DeAndre Hopkins,WR,18.2,7900,8500,35
 Joe Burrow,QB,18.1,6200,7400,25
@@ -22,7 +22,7 @@ Jonathan Taylor,RB,17.0,7000,6700,27
 Derrick Henry,RB,16.9,7800,8200,34
 Jared Goff,QB,16.8,5600,7200,24
 Philip Rivers,QB,16.7,6000,7000,28
-Tom Brady,QB,16.6,6100,7300,30
+Tom Brady,QB,16.7,6100,7300,30
 Kenyan Drake,RB,16.6,6000,6500,23
 Justin Herbert,QB,16.2,5900,7200,27
 Daniel Jones,QB,16.2,5500,6900,26
@@ -37,11 +37,11 @@ Sam Darnold,QB,14.3,5000,6600,20
 Josh Jacobs,RB,14.2,7300,8300,30
 Devin Singletary,RB,14.2,4900,5900,16
 Dwayne Haskins,QB,14.1,5200,6600,22
-Melvin Gordon,RB,13.8,5800,6500,18
+Melvin Gordon,RB,13.7,5800,6500,18
+Todd Gurley,RB,13.7,5800,6600,21
 Joe Mixon,RB,13.6,5900,7000,22
-Todd Gurley,RB,13.6,5800,6600,21
-Tyler Lockett,WR,13.3,6400,6800,22
 Calvin Ridley,WR,13.3,7200,8000,29
+Tyler Lockett,WR,13.3,6400,6800,22
 Amari Cooper,WR,13.3,6500,7000,25
 D.J. Moore,WR,13.2,6100,6700,22
 D.K. Metcalf,WR,13.1,6500,6500,24
@@ -95,11 +95,11 @@ Evan Engram,TE,9.2,5000,5900,14
 Golden Tate,WR,9.0,4500,5400,16
 Braxton Berrios,WR,9.0,3600,5100,10
 Jerry Jeudy,WR,9.0,5000,5300,13
+Leonard Fournette,RB,9.0,6200,6400,17
 Brandin Cooks,WR,9.0,5200,5700,19
 Frank Gore,RB,8.9,4400,5400,10
-Leonard Fournette,RB,8.9,6200,6400,17
+Russell Gage,WR,8.9,5100,5600,16
 Hayden Hurst,TE,8.8,4700,5700,18
-Russell Gage,WR,8.8,5100,5600,16
 Sony Michel,RB,8.8,4400,5700,15
 Hunter Henry,TE,8.7,4800,6000,20
 Rex Burkhead,RB,8.7,4000,4800,13
@@ -112,7 +112,7 @@ Mike Davis,RB,8.4,5100,6000,14
 Tyler Higbee,TE,8.4,5900,6100,22
 Ronald Jones,RB,8.4,5000,5600,15
 Kendrick Bourne,WR,8.3,5000,5500,15
-Anthony Miller,WR,8.1,4900,5500,19
+Anthony Miller,WR,8.0,4900,5500,19
 David Moore,WR,7.8,3600,4600,10
 Andy Isabella,WR,7.7,3800,4500,10
 Randall Cobb,WR,7.6,4400,5200,11
@@ -127,9 +127,9 @@ Dion Lewis,RB,7.0,5300,5500,11
 Nyheim Hines,RB,7.0,4800,5300,14
 D'Andre Swift,RB,6.9,5000,5300,17
 Steven Sims,WR,6.8,4000,4900,14
-Noah Fant,TE,6.8,5400,5800,19
 Logan Thomas,TE,6.7,3700,4900,15
 Cole Beasley,WR,6.7,4500,5300,14
+Noah Fant,TE,6.7,5400,5800,19
 Adrian Peterson,RB,6.6,4500,5100,17
 Eric Ebron,TE,6.3,4300,4700,14
 Boston Scott,RB,6.3,4400,4900,12
@@ -137,8 +137,8 @@ Van Jefferson,WR,6.3,3100,4700,10
 Zach Pascal,WR,6.1,4500,5100,10
 Benny Snell,RB,6.0,4700,4800,16
 John Ross,WR,5.9,3500,4800,10
-Tarik Cohen,RB,5.9,4300,5000,13
 Dalton Schultz,TE,5.9,4500,4900,10
+Tarik Cohen,RB,5.8,4300,5000,13
 Kerryon Johnson,RB,5.8,4200,5200,13
 Mohamed Sanu,WR,5.7,3000,4900,10
 Justin Jefferson,WR,5.7,4200,4900,10
@@ -193,9 +193,9 @@ Reggie Gilliam,RB,3.6,3400,4500,10
 Kalen Ballage,RB,3.5,4000,4500,10
 Ryan Izzo,TE,3.5,3000,4100,10
 Isaiah McKenzie,WR,3.4,3000,4500,10
-Tim Patrick,WR,3.3,3700,4600,10
-Harrison Bryant,TE,3.3,2500,4200,10
+Tim Patrick,WR,3.4,3700,4600,10
 Anthony Firkser,TE,3.3,2500,4100,10
+Harrison Bryant,TE,3.3,2500,4200,10
 Josh Reynolds,WR,3.2,3700,4600,10
 T.J. Yeldon,RB,3.2,4000,4500,10
 Olamide Zaccheaus,WR,3.1,3000,4500,10
@@ -389,14 +389,14 @@ Brett Hundley,QB,0.0,5000,6000,20
 Ryan Griffin,QB,0.0,4000,6000,20
 Ryan Griffin,QB,0.0,2500,4100,10
 Arizona D/ST,DST,6.11,3300,3700,15
-Atlanta D/ST,DST,6.93,2800,3200,10
+Atlanta D/ST,DST,6.99,2800,3200,10
 Buffalo D/ST,DST,6.34,3400,4400,17
 Carolina D/ST,DST,6.63,2200,3500,10
-Chicago D/ST,DST,6.28,2900,4200,11
+Chicago D/ST,DST,6.22,2900,4200,11
 Cincinnati D/ST,DST,5.98,2600,3300,15
 Cleveland D/ST,DST,9.22,3800,3900,11
 Dallas D/ST,DST,4.93,2600,3500,11
-Denver D/ST,DST,5.32,3100,3700,17
+Denver D/ST,DST,5.26,3100,3700,17
 Detroit D/ST,DST,4.6,2400,3000,11
 Houston D/ST,DST,5.68,2100,3600,10
 Indianapolis D/ST,DST,9.31,4100,4800,19
@@ -411,6 +411,6 @@ Los Angeles Chargers D/ST,DST,8,3600,5000,16
 San Francisco D/ST,DST,8.92,3500,4600,20
 Seattle D/ST,DST,5,2900,4000,15
 Los Angeles Rams D/ST,DST,7.2,3000,4100,14
-Tampa Bay D/ST,DST,9.53,3700,3800,10
+Tampa Bay D/ST,DST,9.6,3700,3800,10
 Tennessee D/ST,DST,5.98,3900,4300,12
 Washington D/ST,DST,5.94,3000,3900,11
