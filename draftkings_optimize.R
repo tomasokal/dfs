@@ -1,11 +1,6 @@
 library(data.table)
 library(lpSolve)
 
-df_full <- check
-df_include <- df_full[PLAYER %in% c("Kyler Murray", "Jordan Reed", "George Kittle")]
-df_include <- df_full[PLAYER %in% c("A;SDLFKJASD;FLAJS")]
-df_exclude <- df_full[PLAYER %in% c("Chris Herndon")]
-
 # Optimize
 
 optimize_dk <- function(df_full, df_include, df_exclude) {
@@ -196,11 +191,16 @@ optimize_dk <- function(df_full, df_include, df_exclude) {
     f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
     f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
     
+    opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+    picks <- player_pool[which(opt$solution == 1), ]
+    
     return(picks)
     
   }
   
 }
+
+df_full <- data.table::fread("Output/salaries_projections_scraped_script.csv")
     
 df_include <- df_full[PLAYER %in% c("Kyler Murray", "George Kittle", "Curtis Samuel")]
 df_exclude <- df_full[PLAYER %in% c("asdfasdfa")]
@@ -215,7 +215,7 @@ df_exclude <- df_full[PLAYER %in% c("Chris Herndon")]
 optimize_dk(df_full, df_include, df_exclude)  
 
 df_include <- df_full[PLAYER %in% c("Carolina D/ST")]
-df_exclude <- df_full[PLAYER %in% c("Kyler Murray", "Miles Sanders")]
+df_exclude <- df_full[PLAYER %in% c("Braxton Berrios", "Chris Herndon")]
 optimize_dk(df_full, df_include, df_exclude)  
 
 df_include <- df_full[PLAYER %in% c("ASDFASDFAS")]
