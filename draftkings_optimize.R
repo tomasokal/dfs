@@ -207,7 +207,7 @@ df_exclude <- df_full[PLAYER %in% c("asdfasdfa")]
 optimize_dk(df_full, df_include, df_exclude)  
 
 df_include <- df_full[PLAYER %in% c("Kyler Murray", "George Kittle", "Jordan Reed")]
-df_exclude <- df_full[PLAYER %in% c("Chris Herndon")]
+df_exclude <- df_full[PLAYER %in% c("Kenyan Drake")]
 optimize_dk(df_full, df_include, df_exclude)  
 
 df_include <- df_full[PLAYER %in% c("Miles Sanders", "Kenyan Drake", "Chris Carson")]
@@ -220,4 +220,8 @@ optimize_dk(df_full, df_include, df_exclude)
 
 df_include <- df_full[PLAYER %in% c("ASDFASDFAS")]
 df_exclude <- df_full[PLAYER %in% c("Kyler Murray", "Miles Sanders")]
-optimize_dk(df_full, df_include, df_exclude)  
+optimize_dk(df_full, df_include, df_exclude) 
+
+df_include <- df_full[PLAYER %in% c("ASDFASDFAS")]
+df_exclude <- df_full[PLAYER %in% c("asdfasdfas")]
+optimize_dk(df_full, df_include, df_exclude) 
