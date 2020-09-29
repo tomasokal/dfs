@@ -5,7 +5,7 @@ library(xml2)
 library(fuzzyjoin)
 
 # Setting the non-slate games
-NON_SLATE <- c("MIA", "JAC", "KCC", "BAL", "GBP", "NOS")
+NON_SLATE <- c("NYJ", "DEN", "PHI", "SFO", "ATL", "GBP")
 
   ## Note: This could probably be updated to be done automatically since schedule is known ahead of time.
 
