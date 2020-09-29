@@ -43,14 +43,16 @@ ui <-
                                           actionButton(inputId = "reset",
                                                        label = "Reset selections",
                                                        class = "btncolor"),
-                                          p(HTML("<br>Click here to read more about the methodology.<br><br>"))),
+                                          p(HTML("<br>Optimizes for Sunday slate. More options coming soon.<br>"))),
                                    column(1)),
                             column(7,
                                    
-                                   column(11,
-                                          wellPanel(p("Your optimized lineup:"))
+                                   column(10,
+                                          wellPanel(class = "optiwell",
+                                                        p("Your optimized lineup:"),
+                                                    style = "height:25vh;")
                                           ),
-                                   column(1))
+                                   )
                                    
                         ),
                         fluidRow(
@@ -58,11 +60,22 @@ ui <-
                                    column(1),
                                    column(11,
                                           wellPanel(class = "wellclass",
+                                                    style = "height:60vh;",
                                           div(br(), DT::DTOutput(outputId = "player_list_table"))
                                           ))#,
                                    #column(1)
                                    
                                    
+                                   ),
+                            column(3,
+                                   wellPanel(class = "wellclass",
+                                             style = "height:60vh",
+                                             textOutput(outputId = "myText"))
+                                   ),
+                            column(3,
+                                   wellPanel(class = "wellclass",
+                                             style = "height:60vh",
+                                             textOutput(outputId = "myText2") )
                                    )
                         )
                    
@@ -82,7 +95,9 @@ ui <-
 # Define server logic required to draw a histogram
 server <- function(input, output) {
     
-    #myValue <- reactiveValues(check = '')
+    myValue <- reactiveValues(check = '')
+    
+    myValue2 <- reactiveValues(check = '')
     
     shinyInput <- function(FUN, len, id, ...) {
         inputs <- character(len)
@@ -101,16 +116,16 @@ server <- function(input, output) {
             Position = full_salaries$POSITION,
             'Expected Points' = full_salaries$POINTS,
             Include = shinyInput(actionButton, nrow(full_salaries),
-                                 'button_in_',
+                                 'button_',
                                  label = "Include",
                                  class = "include",
                                  onclick = paste0('Shiny.onInputChange( \"select_button\" , this.id)') 
             ),
             Exclude = shinyInput(actionButton, nrow(full_salaries),
-                                          'button_ex_',
+                                          'button_',
                                           label = "Exclude",
                                  class = "exclude",
-                                          onclick = paste0('Shiny.onInputChange( \"select_button\" , this.id)') 
+                                          onclick = paste0('Shiny.onInputChange( \"select_button2\" , this.id)') 
             ) 
         )
     })
@@ -134,6 +149,26 @@ server <- function(input, output) {
                           list(width = '18%', targets = 3))
         
     ))
+    
+    observeEvent(input$select_button, {
+        selectedRow <- as.numeric(strsplit(input$select_button, "_")[[1]][2])
+        myValue$check <<- paste(player_list()[selectedRow,1])
+    })
+    
+    
+    output$myText <- renderText({
+        myValue$check
+    })
+    
+    observeEvent(input$select_button2, {
+        selectedRow <- as.numeric(strsplit(input$select_button2, "_")[[1]][2])
+        myValue2$check <<- paste(player_list()[selectedRow,1])
+    })
+    
+    
+    output$myText2 <- renderText({
+        myValue2$check
+    })
     
 }
 
