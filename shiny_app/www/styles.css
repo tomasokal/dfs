@@ -72,8 +72,9 @@
   
 }
 
-.include .exclude:hover {
-  border: 1px solid black;
+
+.remove {
+    background-color:#ffcccb;
   
 }
 
