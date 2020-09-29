@@ -28,7 +28,7 @@ ui <-
                                           
                                           p("Select a salary source:"),
                                           radioGroupButtons(
-                                              inputId = "source-group",
+                                              inputId = "sourcegroup",
                                               size = "lg",
                                               choices = c("DraftKings", "FanDuel", " Yahoo Sports"),
                                               individual = TRUE,
@@ -38,10 +38,12 @@ ui <-
                                           ),
                                           p(HTML("<i>Salaries last updated: 9/25/2020 3:01PM</i>")),
                                           actionButton(inputId = "runbutton",
+                                                       icon = icon("chart-bar"),
                                                        label = "Optimize",
                                                        class = "btncolor"),
                                           actionButton(inputId = "reset",
                                                        label = "Reset selections",
+                                                       icon = icon("undo"),
                                                        class = "btncolor"),
                                           p(HTML("<br>Optimizes for Sunday slate. More options coming soon.<br>"))),
                                    column(1)),
@@ -70,12 +72,16 @@ ui <-
                             column(3,
                                    wellPanel(class = "wellclass",
                                              style = "height:60vh",
-                                             textOutput(outputId = "myText"))
+                                             div(br(), DT::DTOutput(outputId = "player_list_include"))
+                                             #textOutput(outputId = "myText")
+                                             )
                                    ),
                             column(3,
                                    wellPanel(class = "wellclass",
                                              style = "height:60vh",
-                                             textOutput(outputId = "myText2") )
+                                             div(br(), DT::DTOutput(outputId = "player_list_exclude"))
+                                             #textOutput(outputId = "myText2") 
+                                             )
                                    )
                         )
                    
@@ -95,9 +101,9 @@ ui <-
 # Define server logic required to draw a histogram
 server <- function(input, output) {
     
-    myValue <- reactiveValues(check = '')
+    player_include <- reactiveVal(NULL)
     
-    myValue2 <- reactiveValues(check = '')
+    player_exclude <- reactiveVal(NULL)
     
     shinyInput <- function(FUN, len, id, ...) {
         inputs <- character(len)
@@ -143,8 +149,9 @@ server <- function(input, output) {
         lengthMenu = list(c(50, 100, -1), c("50", "100", "All")),
         initComplete = JS(
             "function(settings, json) {",
-            "$(this.api().table().container()).css({'font-size': '90%'});",
+            "$(this.api().table().container()).css({'font-size': '80%'});",
             "}"),
+        #dom = 't', displays table only
         columnDefs = list(list(className = 'dt-center', targets = 2:5),
                           list(width = '18%', targets = 3))
         
@@ -152,23 +159,161 @@ server <- function(input, output) {
     
     observeEvent(input$select_button, {
         selectedRow <- as.numeric(strsplit(input$select_button, "_")[[1]][2])
-        myValue$check <<- paste(player_list()[selectedRow,1])
+        player_new <- paste(player_list()[selectedRow,1])
+        
+        
+        old_values <- player_include()
+        new_values <- player_new
+        
+        
+        # paste these together after first input:
+        ifelse(!is.null(player_include()), 
+               new_string <- paste(old_values, new_values, sep = ", "), 
+               new_string <- paste(new_values))
+        
+        #store the result in values variable
+        player_include(new_string)
+        
+    })
+    
+    
+    observeEvent(input$select_button2, {
+        selectedRow <- as.numeric(strsplit(input$select_button2, "_")[[1]][2])
+        player_new <- paste(player_list()[selectedRow,1])
+        
+        old_values <- player_exclude()
+        new_values <- player_new
+        
+        
+        # paste these together after first input:
+        ifelse(!is.null(player_exclude()), 
+               new_string <- paste(old_values, new_values, sep = ", "), 
+               new_string <- paste(new_values))
+        
+        #store the result in values variable
+        player_exclude(new_string)
+        
+    })
+    
+    
+    pl_inc <- reactive({
+        
+        strsplit(player_include(), ", ")[[1]]
+        
+    })
+    
+    
+    pl_exc <- reactive({
+        
+        strsplit(player_exclude(), ", ")[[1]]
+        
+    })
+    
+    
+    df_include <- reactive({
+        
+        
+        
+        players <- subset(full_salaries, PLAYER %in% pl_inc())
+        
+        source_switch <- switch(input$sourcegroup, "DraftKings" = "SALARY_DK", "FanDuel" = "SALARY_FD", "Yahoo Sports" = "SALARY_YH") 
+        
+        players_fil <- dplyr::select(players, PLAYER, POSITION, source_switch)
+        
+        tibble::tibble(
+            
+            
+            Player = players_fil$PLAYER,
+            Position = players_fil$POSITION,
+            Salary = players_fil[[ncol(players_fil)]],
+            
+            Remove = shinyInput(actionButton, nrow(players_fil),
+                                 'button_',
+                                label = "",
+                                 icon = icon("minus-circle"),
+                                 class = "exclude",
+                                 onclick = paste0('Shiny.onInputChange( \"select_button3\" , this.id)')
+                                )
+            )
+    })
+    
+    
+    df_exclude <- reactive({
+        
+        
+        
+        players <- subset(full_salaries, PLAYER %in% pl_exc())
+        
+        source_switch <- switch(input$sourcegroup, "DraftKings" = "SALARY_DK", "FanDuel" = "SALARY_FD", "Yahoo Sports" = "SALARY_YH") 
+        
+        players_fil <- dplyr::select(players, PLAYER, POSITION, source_switch)
+        
+        tibble::tibble(
+            
+            
+            Player = players_fil$PLAYER,
+            Position = players_fil$POSITION,
+            Salary = players_fil[[ncol(players_fil)]],
+            
+            Remove = shinyInput(actionButton, nrow(players_fil),
+                                'button_',
+                                label = "",
+                                icon = icon("minus-circle"),
+                                class = "exclude",
+                                onclick = paste0('Shiny.onInputChange( \"select_button4\" , this.id)')
+            )
+        )
+    })
+    
+    
+    
+    output$player_list_include <- DT::renderDT({
+        df_include()
+    },
+    escape = FALSE,
+    selection = "none",
+    options = list(
+        initComplete = JS(
+            "function(settings, json) {",
+            "$(this.api().table().container()).css({'font-size': '80%'});",
+            "}"),
+        dom = 't'
+        
+    ))
+    
+    
+    output$player_list_exclude <- DT::renderDT({
+        df_exclude()
+    },
+    escape = FALSE,
+    selection = "none",
+    options = list(
+        initComplete = JS(
+            "function(settings, json) {",
+            "$(this.api().table().container()).css({'font-size': '80%'});",
+            "}"),
+        dom = 't'
+        
+    ))
+    
+    observeEvent(input$reset, {
+        
+        player_include(NULL)
+        
+        player_exclude(NULL)
+        
     })
     
     
     output$myText <- renderText({
-        myValue$check
+        return(player_include())
     })
-    
-    observeEvent(input$select_button2, {
-        selectedRow <- as.numeric(strsplit(input$select_button2, "_")[[1]][2])
-        myValue2$check <<- paste(player_list()[selectedRow,1])
-    })
-    
     
     output$myText2 <- renderText({
-        myValue2$check
+        #return(player_exclude())
+        return(input$sourcegroup)
     })
+    
     
 }
 
