@@ -4,10 +4,76 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap');
 
 
-.testbutton {
-  background-color:#FFFF99;
-  margin-left: 10px;
+.btn-testbutton {
+  background-color:#EBECF0;
+  /*padding:10px;
+  margin-left: 20px;*/
+  height:60px;
+  font-size:18px;
+  font-weight:bold;
+  border: 2px solid #808080;
   
+}
+
+.btn-testbutton:active {
+  background-color:#FFFF99;
+  /*padding:10px;
+  margin-left: 20px;*/
+}
+
+.btn-testbutton:hover {
+  background-color:#FFFF99;
+  /*padding:10px;
+  margin-left: 20px;*/
+}
+
+.btn-testbutton:focus {
+  background-color:#FFFF99;
+  /*padding:10px;
+  margin-left: 20px;*/
+}
+
+.btncolor {
+  
+  background-color:#EBECF0;
+  margin-left: 10px;
+  height:60px;
+  font-size:18px;
+  font-weight:bold;
+  border: 2px solid #808080;
+  
+}
+
+.btncolor:active {
+  background-color:#FFFF99;
+  
+}
+
+.btncolor:hover {
+  background-color:#FFFF99;
+  
+}
+
+.btncolor:focus {
+  background-color:#FFFF99;
+  
+}
+
+.include {
+  background-color:#c5e5a1;
+  border: 1px solid black;
+  
+  
+}
+
+.exclude {
+    background-color:#ffcccb;
+  border: 1px solid black;
+  
+}
+
+.include .exclude:hover {
+  border: 1px solid black;
   
 }
 
@@ -29,7 +95,7 @@
   font-weight:bold;
 }
 
-.wellclass {background-color: #f9f9f9;
+.wellclass {background-color: #FFFFFF;
                           -webkit-box-shadow: 2px 3px 6px 2px rgba(211,211,211,1);
                           -moz-box-shadow: 2px 3px 6px 2px rgba(211,211,211,1);
                           box-shadow: 2px 3px 6px 2px rgba(211,211,211,1);
@@ -40,37 +106,37 @@
 
 /*
 .navbar-brand {background-color: #262626}
+*/
 
 
-
-.navbar-nav { border: 0; padding: 4px 0px;
+.navbar-nav .navbar-brand { border: 0; padding: 4px 0px;
   min-height:55px !important;
-                               background-color: #262626;
-                               font-size: 25px;
-                               color: blue;
+                               /*background-color: #262626;*/
+                               font-size: 26px;
+                               /*color: blue;*/
                                line-height: 55px;
                                text-align:center;
 }
 
-*/
+
                                
  /* font size and border*/
 
-/*
-
-.dropdown-menu { font-size: 14px;} /* dropdown menu within navBar*/
 
 
-/*
+.dropdown-menu { font-size: 20px;} /* dropdown menu within navBar*/
+
+
+
 .container-fluid {padding-right: 0}
 
-*/                        
+                      
 
 /*Text size and line height. Padding needed for footer */
 
 
 
-body { font-size: 16px; line-height: 1.4; padding-bottom:30px; font-family: 'Source Sans Pro', sans-serif;}
+body { font-size: 22px; line-height: 1.4; padding-bottom:30px; font-family: 'Source Sans Pro', sans-serif;}
 
 /*
 
