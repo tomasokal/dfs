@@ -85,8 +85,10 @@ ui <-
                                              style = "height:60vh",
                                              div(p("Players to exclude from the optimized lineup:"),
                                                  br(), 
-                                                 DT::DTOutput(outputId = "player_list_exclude"))
-                                             #textOutput(outputId = "myText2") 
+                                                 # DT::DTOutput(outputId = "player_list_exclude")
+                                                 textOutput(outputId = "myText2") 
+                                                 )
+                                             
                                              )
                                    )
                         )
@@ -331,7 +333,7 @@ server <- function(input, output) {
     observeEvent(input$select_button3, {
 
         selectedRow <- as.numeric(strsplit(input$select_button3, "_")[[1]][2])
-        player_new <- paste(df_include()[[selectedRow,1]])
+        player_new <- paste(df_include()[selectedRow,1])
 
         pl_inc_new <- pl_inc()[!pl_inc()==player_new]
         
@@ -349,20 +351,27 @@ server <- function(input, output) {
 
     })
     
-
+    observeEvent(input$select_button4, {
+        
+        selectedRow <- as.numeric(strsplit(input$select_button4, "_")[[1]][2])
+        player_new <- paste(df_exclude()[[selectedRow,1]])
+        
+        pl_inc_new <- pl_inc()[!pl_inc()==player_new]
+        
+        if (length(pl_inc_new)==0) {pl_inc(NULL)}
+        
+        
+        else {
+            
+            #store the result in values variable
+            pl_inc(pl_inc_new)
+            
+        }
+        
+        
+        
+    })
     
-    # pl_inc <- reactive({
-    #     
-    #     strsplit(player_include(), ", ")[[1]]
-    #     
-    # })
-    # 
-    # 
-    # pl_exc <- reactive({
-    # 
-    #     strsplit(player_exclude(), ", ")[[1]]
-    # 
-    # })
     
     
     df_include <- reactive({
@@ -470,7 +479,7 @@ server <- function(input, output) {
     
     output$myText2 <- renderText({
         #return(player_exclude())
-        return(input$sourcegroup)
+        return(input$select_button3)
     })
     
     
