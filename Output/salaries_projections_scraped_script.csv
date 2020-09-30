@@ -1,410 +1,568 @@
-PLAYER,POSITION,POINTS,SALARY_DK,SALARY_FD,SALARY_YH
-Lamar Jackson,QB,25.2,8100,9600,40
-Dak Prescott,QB,24.1,7200,8200,41
-Russell Wilson,QB,23.9,7800,9000,42
-Patrick Mahomes,QB,23.5,7400,8700,39
-Josh Allen,QB,23.1,7300,8600,40
-Kyler Murray,QB,22.4,7000,8400,36
-Deshaun Watson,QB,22.0,6600,7800,30
-Jared Goff,QB,20.7,6700,7500,34
-Cam Newton,QB,20.6,6400,7900,34
-Joe Burrow,QB,20.5,6300,7400,27
-Matthew Stafford,QB,19.6,5900,7200,29
-Ezekiel Elliott,RB,19.4,7800,9000,32
-Gardner Minshew,QB,19.4,5900,7400,25
-Drew Brees,QB,19.4,5800,7700,28
-Ryan Fitzpatrick,QB,19.2,5400,7100,31
-Alvin Kamara,RB,19.1,8000,8800,36
-Teddy Bridgewater,QB,18.9,5600,6800,24
-Ben Roethlisberger,QB,18.9,6500,7500,31
-Kirk Cousins,QB,18.5,5600,6800,24
-Dalvin Cook,RB,18.3,7600,8700,32
-Tom Brady,QB,17.3,6100,7300,30
-Baker Mayfield,QB,17.2,5800,7000,26
-DeAndre Hopkins,WR,17.1,8500,8700,32
-Derek Carr,QB,17.0,5300,6900,26
-Derek Carr,QB,17.0,2500,4000,10
-Ryan Tannehill,QB,16.5,6000,7200,29
-Daniel Jones,QB,16.5,5100,6600,23
-Josh Jacobs,RB,16.4,6800,8000,29
-Clyde Edwards-Helaire,RB,16.0,6400,7400,32
-Kenyan Drake,RB,15.8,6000,7000,28
-Derrick Henry,RB,15.7,7400,8500,28
-David Johnson,RB,15.5,5600,6700,17
-Philip Rivers,QB,15.4,5500,6700,23
-Joe Mixon,RB,15.3,5800,6800,20
-Nick Foles,QB,15.0,5700,7100,27
-Justin Herbert,QB,14.8,5800,6700,27
-Travis Kelce,TE,14.7,6800,7600,27
-Jonathan Taylor,RB,14.7,6600,7500,27
-Chris Carson,RB,14.4,6300,7900,26
-Tyreek Hill,WR,14.3,6900,8000,31
-Mike Evans,WR,14.2,6400,7400,26
-Austin Ekeler,RB,14.1,7100,6900,24
-Tyler Lockett,WR,13.7,7000,7500,25
-Dwayne Haskins,QB,13.6,5000,6500,20
-Allen Robinson,WR,13.6,6700,7000,23
-D.J. Moore,WR,13.5,5600,6800,21
-James Conner,RB,13.3,6900,7200,24
-James Robinson,RB,13.3,6500,6600,23
-D.K. Metcalf,WR,13.2,6800,6900,28
-Adam Thielen,WR,13.1,6600,7100,24
-Kenny Golladay,WR,13.1,6000,7300,28
-Robert Woods,WR,12.9,6300,6700,23
-Nick Chubb,RB,12.8,7000,8300,27
-Stefon Diggs,WR,12.8,6800,7000,24
-Odell Beckham,WR,12.8,5800,6600,25
-Keenan Allen,WR,12.7,6500,6900,22
-Amari Cooper,WR,12.6,6700,7100,26
-Mark Andrews,TE,12.5,6000,7400,27
-Tyler Boyd,WR,12.4,6100,6000,20
-Darrell Henderson,RB,12.3,5800,6400,23
-Mike Davis,RB,12.3,5700,6300,17
-Cooper Kupp,WR,12.2,6700,7200,22
-Terry McLaurin,WR,12.1,5800,6600,22
-Kareem Hunt,RB,11.9,6200,5900,16
-JuJu Smith-Schuster,WR,11.8,6600,7200,27
-David Montgomery,RB,11.8,5500,5800,14
-Julian Edelman,WR,11.7,5700,6400,19
-Myles Gaskin,RB,11.6,5000,5400,15
-Robby Anderson,WR,11.6,5400,6200,19
-Darren Waller,TE,11.3,5200,6700,23
-Mark Ingram,RB,11.2,5700,6500,15
-DeVante Parker,WR,11.2,5700,6500,21
-Will Fuller,WR,11.1,5900,6100,22
-Devin Singletary,RB,11.0,5900,6000,18
-Ronald Jones,RB,11.0,4700,5600,12
-A.J. Green,WR,10.9,5500,5700,18
-T.Y. Hilton,WR,10.9,5300,5900,16
-Jarvis Landry,WR,10.8,5100,5700,18
-Marquise Brown,WR,10.6,6300,6300,19
-Marvin Jones,WR,10.1,4900,6000,17
-Curtis Samuel,WR,10.0,4800,5100,13
-Michael Gallup,WR,10.0,6200,5900,20
-Michael Thomas,WR,9.7,7600,8800,35
-Preston Williams,WR,9.7,4500,5500,19
-Darius Slayton,WR,9.6,5000,5500,16
-CeeDee Lamb,WR,9.6,5400,5600,20
-Justin Jefferson,WR,9.5,5200,5400,24
-Adrian Peterson,RB,9.3,4700,5500,15
-Evan Engram,TE,9.1,4400,5600,13
-Golden Tate,WR,9.1,4600,5300,14
-John Brown,WR,9.0,5100,6100,19
-Cole Beasley,WR,9.0,4700,5100,14
-Jonnu Smith,TE,9.0,4900,5800,19
-Leonard Fournette,RB,8.9,5600,5500,14
-Emmanuel Sanders,WR,8.8,4800,5800,16
-Antonio Gibson,RB,8.8,4500,5500,11
-Devonta Freeman,RB,8.7,4800,5400,14
-James Washington,WR,8.7,4800,4900,15
-Tre'Quan Smith,WR,8.7,5000,5300,14
-James White,RB,8.6,5200,5200,15
-Corey Davis,WR,8.6,5000,5500,20
-Larry Fitzgerald,WR,8.5,4400,5100,13
-Hunter Henry,TE,8.5,4600,6100,16
-Nyheim Hines,RB,8.4,4700,5200,13
-Hunter Renfrow,WR,8.4,4600,5300,13
-Tyler Higbee,TE,8.3,5700,6000,18
-N'Keal Harry,WR,8.3,4000,5300,14
-Latavius Murray,RB,8.3,4900,4900,16
-T.J. Hockenson,TE,8.3,4800,5400,18
-Adam Humphries,WR,8.2,4000,4600,13
-Sammy Watkins,WR,8.1,4400,5600,17
-Zach Pascal,WR,8.1,4400,5000,10
-Danny Amendola,WR,8.1,4000,5100,12
-Brandin Cooks,WR,8.0,4500,5300,16
-Tee Higgins,WR,8.0,4500,5300,13
-Austin Hooper,TE,7.9,4000,5100,14
-Scotty Miller,WR,7.9,4100,5000,11
-Eric Ebron,TE,7.9,4200,5100,14
-Anthony Miller,WR,7.9,4900,5500,19
-Randall Cobb,WR,7.8,4800,5400,16
-Laviska Shenault,WR,7.7,4400,5200,12
-Zack Moss,RB,7.2,4300,5100,17
-Logan Thomas,TE,7.0,3500,4900,14
-Joshua Kelley,RB,7.0,5100,5300,19
-Mike Williams,WR,6.9,4200,5800,15
-Keelan Cole,WR,6.9,4500,5600,12
-Reggie Bonnafon,RB,6.8,4000,4600,11
-Mo Alie-Cox,TE,6.7,3900,5300,14
-Henry Ruggs,WR,6.7,4800,5300,16
-Rob Gronkowski,TE,6.6,3600,5200,10
-Greg Olsen,TE,6.5,4100,5000,10
-Sony Michel,RB,6.5,4600,5600,14
-Steven Sims,WR,6.4,3400,4900,10
-Miles Boykin,WR,6.2,4000,4700,11
-Cordarrelle Patterson,WR,6.2,3700,4700,10
-Kenny Stills,WR,6.0,3200,4700,16
-Dontrelle Inman,WR,6.0,3700,5000,12
-Justin Watson,WR,5.9,3400,4600,10
-Diontae Johnson,WR,5.9,5600,6200,19
-A.J. Brown,WR,5.9,5500,6500,26
-Chris Thompson,RB,5.8,4100,5000,16
-Jordan Akins,TE,5.8,3300,4900,13
-Jimmy Graham,TE,5.7,3800,5300,10
-Isaiah Ford,WR,5.6,3700,4600,10
-Dalton Schultz,TE,5.5,4300,4900,16
-Van Jefferson,WR,5.5,3000,4700,11
-Willie Snead,WR,5.4,4000,5200,15
-D'Andre Swift,RB,5.4,4300,5300,13
-Kyle Rudolph,TE,5.4,3300,4800,10
-Carlos Hyde,RB,5.4,5300,5700,16
-Dion Lewis,RB,5.3,4400,5000,12
-Malcolm Brown,RB,5.3,4700,5300,14
-Alexander Mattison,RB,5.2,4000,5500,13
-Damiere Byrd,WR,5.1,3000,4500,10
-Ian Thomas,TE,5.1,3500,4900,14
-Ian Thomas,TE,5.1,2500,4000,10
-Ian Thomas,TE,5.1,3000,4400,10
-Demarcus Robinson,WR,5.1,3900,4900,11
-Taysom Hill,TE,5.0,4100,5000,20
-O.J. Howard,TE,5.0,3300,4800,15
-Chase Edmonds,RB,4.9,4200,5300,15
-Tyler Eifert,TE,4.8,3500,4800,15
-Chase Claypool,WR,4.8,4000,4900,14
-Christian Kirk,WR,4.8,4400,5400,11
-Josh Reynolds,WR,4.8,4100,4600,10
-Kerryon Johnson,RB,4.8,4000,5100,13
-Chris Conley,WR,4.7,3700,4900,10
-Rex Burkhead,RB,4.7,4800,5600,17
-Giovani Bernard,RB,4.7,4400,4800,11
-Irv Smith,TE,4.7,2500,4500,10
-Jack Doyle,TE,4.7,3500,5000,12
-Darren Fells,TE,4.7,3200,4600,10
-Andy Isabella,WR,4.6,4500,5000,10
-Jared Cook,TE,4.5,5400,6300,19
-Dan Arnold,TE,4.5,2700,4300,10
-Gus Edwards,RB,4.4,4000,4600,10
-Cedrick Wilson,WR,4.3,3200,5000,13
-Mecole Hardman,WR,4.3,4300,5200,11
-Kaden Smith,TE,4.3,2800,4100,10
-Deonte Harris,WR,4.2,3400,4700,10
-J.D. McKissic,RB,4.2,4000,4700,10
-Bryan Edwards,WR,4.1,3300,4800,10
-Auden Tate,WR,4.0,3000,4500,10
-Jordan Howard,RB,4.0,4100,5000,11
-Benny Snell,RB,4.0,4200,4800,12
-David Moore,WR,4.0,3400,4600,12
-Gerald Everett,TE,3.9,2500,4200,10
-James O'Shaughnessy,TE,3.9,3100,4000,10
-J.K. Dobbins,RB,3.9,4800,5700,11
-Kalif Raymond,WR,3.8,3300,4800,10
-Darrel Williams,RB,3.8,4000,4600,11
-Darnell Mooney,WR,3.8,3000,4600,11
-Seth Roberts,WR,3.7,3000,4600,10
-Jalen Richard,RB,3.7,4300,4500,11
-Jacob Hollister,TE,3.7,2900,4000,10
-Jakeem Grant,WR,3.7,3000,4700,10
-Nick Boyle,TE,3.7,2800,4300,10
-Darrynton Evans,RB,3.6,4000,4500,10
-Harrison Bryant,TE,3.6,2500,4400,10
-Drew Sample,TE,3.5,3500,4700,12
-Bisi Johnson,WR,3.5,3100,4600,10
-Duke Johnson,RB,3.4,4000,4700,12
-Vance McDonald,TE,3.4,2900,4200,10
-Peyton Barber,RB,3.4,4000,4900,10
-Nelson Agholor,WR,3.3,3500,4700,10
-Matt Breida,RB,3.3,4000,4800,10
-KeeSean Johnson,WR,3.3,3000,4500,10
-Javon Wims,WR,3.3,3000,4600,10
-Tony Pollard,RB,3.2,4100,4700,11
-Travis Homer,RB,3.2,4000,5200,13
-Jordan Wilkins,RB,3.2,4000,4600,12
-Cam Akers,RB,3.1,4100,5400,15
-Anthony McFarland,RB,3.1,4000,4500,10
-Khadarel Hodge,WR,3.1,3200,4500,10
-Devontae Booker,RB,3.1,4000,4800,10
-Ashton Dulin,WR,3.0,3000,4500,10
-Ryan Izzo,TE,2.8,2700,4100,10
-Wayne Gallman,RB,2.6,4500,4900,13
-J.J. Taylor,RB,2.5,4000,4700,12
-Gabriel Davis,WR,2.5,3200,4600,10
-Chad Beebe,WR,2.4,3000,4500,10
-Mike Thomas,WR,2.4,3000,4700,10
-MyCole Pruitt,TE,2.4,2500,4000,10
-LeSean McCoy,RB,2.3,4000,4600,10
-Ted Ginn,WR,2.3,3400,4600,10
-Jalen Guyton,WR,2.3,3400,4800,10
-Damion Ratley,WR,2.2,3100,4500,10
-Foster Moreau,TE,2.2,2500,4400,10
-C.J. Board,WR,2.2,3000,4500,10
-Zay Jones,WR,2.1,3000,4500,10
-Isaiah McKenzie,WR,2.1,3000,4500,10
-Antonio Gandy-Golden,WR,2.1,3100,4600,10
-Dawson Knox,TE,2.1,3500,4600,10
-Demetrius Harris,TE,2.0,2500,4000,10
-Will Dissly,TE,2.0,2500,4600,10
-Ryan Nall,RB,2.0,4200,4500,10
-Freddie Swain,WR,2.0,3000,4700,10
-Tyler Kroft,TE,2.0,3400,4700,12
-Jaylen Samuels,RB,2.0,4000,4600,10
-Adam Trautman,TE,2.0,2500,4000,10
-Jesse James,TE,1.9,2500,4600,10
-Devin Duvernay,WR,1.8,3300,4500,10
-Dede Westbrook,WR,1.8,3100,4600,10
-Alex Armah,RB,1.7,4000,4500,10
-Noah Brown,WR,1.7,3000,4500,10
-Blake Bell,TE,1.7,3100,4000,10
-Cethan Carter,TE,1.6,2500,4000,10
-Keke Coutee,WR,1.6,3000,4600,10
-Virgil Green,TE,1.6,2500,4000,10
-Durham Smythe,TE,1.6,2500,4100,10
-Cullen Gillaspia,RB,1.5,4000,4500,10
-C.J. Ham,RB,1.4,4000,4500,10
-Jakobi Meyers,WR,1.3,3000,4500,10
-Damien Harris,RB,1.3,4000,4500,10
-John Ross,WR,1.2,3000,4600,10
-Patrick Ricard,RB,1.2,4000,4500,10
-Jakob Johnson,RB,1.2,4000,4500,10
-Darwin Thompson,RB,1.1,4000,4500,10
-Darrell Daniels,TE,1.1,2500,4000,10
-Trenton Cannon,RB,1.1,4000,4500,11
-Alec Ingold,RB,1.1,4000,4500,10
-T.J. Yeldon,RB,1.0,4000,4500,12
-Quintez Cephus,WR,1.0,3000,4700,10
-Josh Hill,TE,1.0,2500,4200,10
-Collin Johnson,WR,0.9,3000,4600,10
-Adam Shaheen,TE,0.9,2500,4200,10
-Isaiah Wright,WR,0.8,3000,4500,10
-Anthony Sherman,RB,0.8,4000,4500,10
-Lynn Bowden,WR,0.7,3000,4500,10
-Jason Witten,TE,0.7,2500,4300,10
-Lee Smith,TE,0.7,4400,6000,20
-Lee Smith,TE,0.7,2800,4200,10
-Jeremy McNichols,RB,0.6,4000,4500,10
-Marvin Hall,WR,0.6,3100,4800,10
-Cole Kmet,TE,0.6,2500,4100,10
-Justin Jackson,RB,0.5,4000,4800,10
-Anthony Firkser,TE,0.5,2500,4100,10
-Reggie Gilliam,RB,0.5,2500,4500,10
-Mike Boone,RB,0.5,4000,4500,10
-Tyler Johnson,WR,0.4,3200,4500,10
-Nick Westbrook-Ikhine,WR,0.3,3000,4500,10
-Derek Watt,RB,0.3,4000,4500,10
-Bo Scarbrough,RB,0.3,4000,4500,10
-K.J. Hill,WR,0.3,3000,4600,10
-Tajae Sharpe,WR,0.2,3000,4500,10
-Justice Hill,RB,0.2,4000,4500,10
-Nick Bellore,RB,0.2,4000,4500,10
-Michael Pittman,WR,0.2,4100,5000,12
-Cameron Brate,TE,0.2,2500,4000,10
-Stephen Carlson,TE,0.2,2500,4000,10
-Chris Manhertz,TE,0.2,2500,4000,10
-Luke Willson,TE,0.1,2500,4000,10
-Ricky Seals-Jones,TE,0.1,2700,4000,10
-Ty Johnson,RB,0.1,4000,4500,10
-Ty Johnson,RB,0.1,4000,4500,10
-Patrick Laird,RB,0.1,4000,4500,10
-Noah Togiai,TE,0.1,2500,4000,10
-Elijhaa Penny,RB,0.1,4000,4500,10
-Cody Core,WR,0.1,3000,4500,10
-Samaje Perine,RB,0.1,4000,4500,10
-Joe Reed,WR,0.1,3000,4500,10
-Dare Ogunbowale,RB,0.1,4000,4500,10
-Rashard Higgins,WR,0.1,3000,4500,10
-Ameer Abdullah,RB,0.1,4000,4500,10
-Derek Carrier,TE,0.1,2500,4000,10
-Malik Turner,WR,0.1,3000,4500,10
-Mack Hollins,WR,0.1,3000,4500,10
-DeeJay Dallas,RB,0.1,4000,4500,10
-Alex Erickson,WR,0.1,3000,4500,10
-Pharoh Cooper,WR,0.1,3000,4500,10
-Riley Ridley,WR,0.1,3000,4500,10
-Levine Toilolo,TE,0.1,2500,4000,10
-Ventell Bryant,WR,0.1,3000,4500,10
-Khari Blasingame,RB,0.1,4000,4500,10
-D'Ernest Johnson,RB,0.1,4000,4500,10
-Ke'Shawn Vaughn,RB,0.1,4000,4500,10
-Byron Pringle,WR,0.1,3000,4500,10
-Zach Gentry,TE,0.1,2500,4000,10
-DeAndre Carter,WR,0.1,3000,4500,10
-Tyler Conklin,TE,0.1,2500,4000,10
-Trent Sherfield,WR,0.1,3000,4500,10
-Pharaoh Brown,TE,0.1,2500,4000,10
-Marcus Baugh,TE,0.1,2500,4000,10
-Brandon Zylstra,WR,0.1,3000,4500,10
-Johnny Mundt,TE,0.1,2500,4000,10
-Andre Roberts,WR,0.1,3000,4500,10
-J.P. Holtz,TE,0.1,2500,4000,10
-Jason Moore,WR,0.1,3500,4500,10
-Geoff Swaim,TE,0.1,2500,4000,10
-Antony Auclair,TE,0.1,2500,4000,10
-Michael Burton,RB,0.1,4000,4500,10
-Devin Asiasi,TE,0.1,2500,4000,10
-Bennie Fowler,WR,0.1,3000,4500,10
-Dwayne Washington,RB,0.1,4000,4500,10
-Chris Moore,WR,0.1,3000,4500,10
-Matt Slater,WR,0.1,3000,4500,10
-Taiwan Jones,RB,0.1,4000,4500,10
-Jeremy Sprinkle,TE,0.1,2500,4000,10
-Bryce Love,RB,0.1,4000,4500,10
-Deon Yelder,TE,0.1,2500,4000,10
-Stephen Anderson,TE,0.1,2500,4000,10
-Xavier Jones,RB,0.1,4000,4500,10
-Nsimba Webster,WR,0.0,3000,4500,10
-Dalton Keene,TE,0.0,2500,4000,10
-Troy Fumagalli,TE,0.0,4000,4000,10
-Raymond Calais,RB,0.0,4000,4500,10
-Isaiah Zuber,WR,0.0,3000,4500,10
-Jordan Thomas,TE,0.0,2500,4000,10
-Blaine Gabbert,QB,0.0,4500,6000,20
-Andy Dalton,QB,0.0,4200,6000,20
-Robert Griffin III,QB,0.0,4300,6000,20
-Chase Daniel,QB,0.0,4700,6000,20
-Tyrod Taylor,QB,0.0,5700,6600,20
-Alex Smith,QB,0.0,4400,6000,20
-Geno Smith,QB,0.0,4400,6000,20
-Chad Henne,QB,0.0,4100,6000,20
-Brian Hoyer,QB,0.0,4100,6000,20
-Colt McCoy,QB,0.0,4100,6000,20
-Jarrett Stidham,QB,0.0,4800,6000,20
-Ryan Finley,QB,0.0,4400,6000,20
-Mason Rudolph,QB,0.0,4800,6000,20
-Kyle Allen,QB,0.0,4100,6000,20
-Devine Ozigbo,RB,0.0,4000,4600,10
-Ryan Griffin,QB,0.0,4000,6000,20
-K.J. Osborn,WR,0.0,3000,4500,10
-James Proche,WR,0.0,3000,4500,10
-Nick Keizer,TE,0.0,2500,4000,10
-Chris Streveler,QB,0.0,4100,6000,20
-Tua Tagovailoa,QB,0.0,5400,6100,20
-Will Grier,QB,0.0,4800,6000,20
-Trace McSorley,QB,0.0,4000,6000,20
-Phillip Dorsett,WR,0.0,3900,4500,10
-Matt Barkley,QB,0.0,4600,6000,20
-Case Keenum,QB,0.0,4600,6000,20
-Jameis Winston,QB,0.0,4700,6000,24
-Sean Mannion,QB,0.0,4300,6000,20
-Chris Godwin,WR,0.0,6500,7700,27
-Nathan Peterman,QB,0.0,4100,6000,20
-Mitchell Trubisky,QB,0.0,5300,7000,22
-Christian McCaffrey,RB,0.0,8800,6000,10
-Jacoby Brissett,QB,0.0,4900,6000,20
-Brett Hundley,QB,0.0,4900,6000,20
-Mike Glennon,QB,0.0,4300,6000,20
-Arizona D/ST,DST,6.41,3600,3800,18
-Buffalo D/ST,DST,5.85,3700,4400,12
-Carolina D/ST,DST,5.55,2700,3600,11
-Chicago D/ST,DST,6.23,3100,4100,17
-Cincinnati D/ST,DST,6.72,2900,3400,10
-Cleveland D/ST,DST,4.21,2300,3900,11
-Dallas D/ST,DST,6.38,3300,3400,10
-Detroit D/ST,DST,3.78,2200,3200,10
-Houston D/ST,DST,5.63,2500,3700,14
-Indianapolis D/ST,DST,7.4,3300,4900,19
-Jacksonville D/ST,DST,6.1,3000,3700,14
-Kansas City D/ST,DST,7.18,3200,3800,15
-Miami D/ST,DST,4.69,2000,3500,11
-Minnesota D/ST,DST,5.53,2800,3300,13
-New England D/ST,DST,4.06,3200,4200,15
-New Orleans D/ST,DST,6.23,3500,4600,21
-New York Giants D/ST,DST,3.97,2600,3000,15
-Las Vegas D/ST,DST,6.07,2700,3300,11
-Pittsburgh D/ST,DST,8.32,3800,4500,18
-Los Angeles Chargers D/ST,DST,4.85,2900,4300,18
-Seattle D/ST,DST,7.56,3400,4000,14
-Los Angeles Rams D/ST,DST,9.63,3900,4800,17
-Tampa Bay D/ST,DST,8.8,3400,4700,16
-Tennessee D/ST,DST,5.97,2800,3900,13
-Washington D/ST,DST,4.2,2100,3500,17
-Baltimore D/ST,DST,10.08,4000,5000,20
+PLAYER,POSITION,TEAM,POINTS_FD,POINTS_DF,POINTS_YH,SALARY_FD,SALARY_DF,SALARY_YH
+Lamar Jackson,QB, BAL,25.19,25.48,25.19,9600,8100,40
+Dak Prescott,QB, DAL,24.1,24.39,24.1,8200,7200,41
+Russell Wilson,QB, SEA,23.86,24.04,23.86,9000,7800,42
+Patrick Mahomes,QB, KC,23.47,23.7,23.47,8700,7400,39
+Josh Allen,QB, BUF,23.1,23.48,23.1,8600,7300,40
+Kyler Murray,QB, ARI,22.36,22.52,22.36,8400,7000,36
+Deshaun Watson,QB, HOU,22.03,22.22,22.03,7800,6600,30
+Aaron Rodgers,QB, GB,21.47,21.57,21.47,8000,7100,34
+Jared Goff,QB, LA,20.69,21.02,20.69,7500,6700,34
+Cam Newton,QB, NE,20.62,20.84,20.62,7900,6400,34
+Matt Ryan,QB, ATL,20.34,23.54,20.34,7700,6000,32
+Joe Burrow,QB, CIN,20.47,20.76,20.47,7400,6300,27
+Matthew Stafford,QB, DET,19.55,19.75,19.55,7200,5900,31
+Drew Brees,QB, NO,19.39,19.47,19.39,7700,5800,30
+Gardner Minshew,QB, JAC,19.41,19.75,19.41,7400,5900,25
+Teddy Bridgewater,QB, CAR,18.86,18.97,18.86,6800,5600,24
+Ben Roethlisberger,QB, PIT,18.86,19.06,18.86,7500,6500,31
+Aaron Jones,RB, GB,19.73,21.67,19.73,8400,7500,38
+Ryan Fitzpatrick,QB, MIA,19.16,19.37,19.16,7100,5400,31
+Kirk Cousins,QB, MIN,18.45,18.64,18.45,6800,5600,24
+Ezekiel Elliott,RB, DAL,19.42,21.44,19.42,9000,7800,32
+Tom Brady,QB, TB,17.34,17.52,17.34,7300,6100,30
+Derek Carr,QB, LV,17.02,17.26,17.02,6900,5300,26
+Alvin Kamara,RB, NO,19.07,21.92,19.07,8800,8000,36
+Dalvin Cook,RB, MIN,18.34,20.49,18.34,8700,7600,32
+Baker Mayfield,QB, CLE,17.23,17.38,17.23,7000,5800,26
+Ryan Tannehill,QB, TEN,16.51,16.82,16.51,7200,6000,29
+Daniel Jones,QB, NYG,16.45,16.89,16.45,6600,5100,23
+Josh Jacobs,RB, LV,16.41,17.68,16.41,8000,6800,29
+Derrick Henry,RB, TEN,15.69,16.63,15.69,8500,7400,28
+Carson Wentz,QB, PHI,15.43,15.77,15.43,7200,5600,26
+Kenyan Drake,RB, ARI,15.77,16.99,15.77,7000,6000,28
+Philip Rivers,QB, IND,15.39,15.57,15.39,6700,5500,28
+Sam Darnold,QB, NYJ,15.31,15.58,15.31,6700,5300,20
+David Johnson,RB, HOU,15.49,16.77,15.49,6700,5600,17
+Joe Mixon,RB, CIN,15.31,16.43,15.31,6800,5800,20
+Nick Foles,QB, CHI,14.98,15.23,14.98,7100,5700,27
+Clyde Edwards-Helaire,RB, KC,15.95,17.79,15.95,7400,6400,32
+Justin Herbert,QB, LAC,14.84,15.09,14.84,6700,5800,27
+Melvin Gordon,RB, DEN,14.38,15.12,14.38,7100,6900,18
+Jonathan Taylor,RB, IND,14.69,15.88,14.69,7500,6600,27
+DeAndre Hopkins,WR, ARI,17.14,20.97,17.14,8700,8500,32
+Miles Sanders,RB, PHI,15.1,17.33,15.1,7600,6700,25
+Chris Carson,RB, SEA,14.37,16.04,14.37,7900,6300,26
+Dwayne Haskins,QB, WSH,13.59,13.87,13.59,6500,5000,20
+Calvin Ridley,WR, ATL,15.84,19.13,15.84,8100,7500,29
+James Robinson,RB, JAC,13.25,14.51,13.25,6600,6500,23
+Nick Chubb,RB, CLE,12.83,13.73,12.83,8300,7000,27
+Todd Gurley,RB, ATL,13.15,14.49,13.15,6600,5500,21
+Austin Ekeler,RB, LAC,14.13,16.54,14.13,6900,7100,24
+James Conner,RB, PIT,13.34,14.98,13.34,7200,6900,24
+Tyreek Hill,WR, KC,14.32,16.98,14.32,8000,6900,31
+Travis Kelce,TE, KC,14.73,17.89,14.73,7600,6800,27
+Darrell Henderson,RB, LA,12.3,13.12,12.3,6400,5800,23
+Mike Evans,WR, TB,14.19,17.19,14.19,7400,6400,26
+Tyler Lockett,WR, SEA,13.73,16.48,13.73,7500,7000,25
+David Montgomery,RB, CHI,11.81,12.85,11.81,5800,5500,14
+D.K. Metcalf,WR, SEA,13.17,15.62,13.17,6900,6800,28
+Kenny Golladay,WR, DET,13.1,15.67,13.1,7300,6000,21
+Mike Davis,RB, CAR,12.27,14.01,12.27,6300,5700,17
+D.J. Moore,WR, CAR,13.53,16.69,13.53,6800,5600,21
+Adam Thielen,WR, MIN,13.13,15.79,13.13,7100,6600,24
+Robert Woods,WR, LA,12.93,15.5,12.93,6700,6300,23
+Stefon Diggs,WR, BUF,12.79,15.37,12.79,7000,6800,24
+Odell Beckham,WR, CLE,12.76,15.3,12.76,6600,5800,25
+Mark Ingram,RB, BAL,11.21,12.22,11.21,6500,5700,15
+Kareem Hunt,RB, CLE,11.93,13.79,11.93,5900,6200,16
+Allen Robinson,WR, CHI,13.58,17.15,13.58,7000,6700,23
+Mark Andrews,TE, BAL,12.46,14.92,12.46,7400,6000,27
+Ronald Jones,RB, TB,10.96,12.05,10.96,5600,4700,12
+Amari Cooper,WR, DAL,12.6,15.26,12.6,7100,6700,26
+Myles Gaskin,RB, MIA,11.58,13.27,11.58,5400,5000,15
+Cooper Kupp,WR, LA,12.18,14.71,12.18,7200,6700,22
+Devin Singletary,RB, BUF,11,12.55,11,6000,5900,18
+Terry McLaurin,WR, WSH,12.11,14.62,12.11,6600,5800,22
+Keenan Allen,WR, LAC,12.67,15.84,12.67,6900,6500,22
+Tyler Boyd,WR, CIN,12.37,15.27,12.37,6000,6100,20
+JuJu Smith-Schuster,WR, PIT,11.84,14.37,11.84,7200,6600,27
+Robby Anderson,WR, CAR,11.56,14.08,11.56,6200,5400,19
+Julian Edelman,WR, NE,11.67,14.45,11.67,6400,5700,19
+DeVante Parker,WR, MIA,11.19,13.52,11.19,6500,5700,21
+George Kittle,TE, SF,11.38,13.92,11.38,7500,6300,26
+Will Fuller,WR, HOU,11.08,13.38,11.08,6100,5900,22
+Adrian Peterson,RB, DET,9.25,9.83,9.25,5500,4700,17
+D.J. Chark,WR, JAC,10.81,12.97,10.81,6800,6000,20
+A.J. Green,WR, CIN,10.89,13.21,10.89,5700,5500,18
+T.Y. Hilton,WR, IND,10.89,13.15,10.89,5900,5300,19
+Frank Gore,RB, NYJ,8.99,9.43,8.99,5300,4400,10
+Darren Waller,TE, LV,11.29,14.08,11.29,6700,5200,23
+Jarvis Landry,WR, CLE,10.75,13.08,10.75,5700,5100,18
+Marquise Brown,WR, BAL,10.6,12.78,10.6,6300,6300,19
+Curtis Samuel,WR, CAR,9.99,11.81,9.99,5100,4800,13
+Marvin Jones,WR, DET,10.1,12.05,10.1,6000,4900,14
+Michael Gallup,WR, DAL,9.98,11.88,9.98,5900,6200,20
+Jerick McKinnon,RB, SF,9.29,10.72,9.29,6000,5700,18
+Brandon Aiyuk,WR, SF,9.42,10.84,9.42,5100,5000,13
+Leonard Fournette,RB, TB,8.91,9.88,8.91,5500,5600,14
+Allen Lazard,WR, GB,9.67,11.57,9.67,6200,5500,18
+Antonio Gibson,RB, WSH,8.79,9.82,8.79,5500,4500,11
+Michael Gesicki,TE, MIA,10.15,12.66,10.15,5700,5100,17
+Latavius Murray,RB, NO,8.31,8.94,8.31,4900,4900,16
+Zach Ertz,TE, PHI,10.5,13.39,10.5,6500,5300,17
+CeeDee Lamb,WR, DAL,9.59,11.55,9.59,5600,5400,20
+Preston Williams,WR, MIA,9.71,11.88,9.71,5500,4500,19
+Darius Slayton,WR, NYG,9.59,11.71,9.59,5500,5000,16
+Michael Thomas,WR, NO,9.74,11.99,9.74,8800,7600,36
+Justin Jefferson,WR, MIN,9.5,11.53,9.5,5400,5200,24
+Nick Mullens,QB, SF,7.91,8,7.91,6600,5200,22
+Davante Adams,WR, GB,9.42,11.39,9.42,9000,7900,35
+Devonta Freeman,RB, NYG,8.74,10.14,8.74,5400,4800,14
+John Brown,WR, BUF,8.98,10.71,8.98,6100,5100,19
+Jimmy Garoppolo,QB, SF,7.48,7.6,7.48,7000,5300,23
+Hayden Hurst,TE, ATL,9.3,11.53,9.3,5700,4700,18
+James Washington,WR, PIT,8.73,10.44,8.73,4900,4800,15
+Cole Beasley,WR, BUF,8.97,10.97,8.97,5100,4700,14
+Evan Engram,TE, NYG,9.14,11.35,9.14,5600,4400,13
+Tre'Quan Smith,WR, NO,8.72,10.54,8.72,5300,5000,14
+Emmanuel Sanders,WR, NO,8.84,10.73,8.84,5800,4800,18
+Jonnu Smith,TE, TEN,8.95,11.04,8.95,5800,4900,19
+Corey Davis,WR, TEN,8.62,10.49,8.62,5500,5000,20
+Golden Tate,WR, NYG,9.08,11.48,9.08,5300,4600,14
+Marquez Valdes-Scantling,WR, GB,8.24,9.77,8.24,5400,4400,18
+Nyheim Hines,RB, IND,8.36,10.13,8.36,5200,4700,14
+Julio Jones,WR, ATL,8.41,10.2,8.41,7900,7100,30
+Zack Moss,RB, BUF,7.21,7.9,7.21,5100,4300,17
+James White,RB, NE,8.62,10.66,8.62,5200,5200,15
+Larry Fitzgerald,WR, ARI,8.5,10.49,8.5,5100,4400,13
+Joshua Kelley,RB, LAC,6.95,7.48,6.95,5300,5100,19
+Sammy Watkins,WR, KC,8.13,9.79,8.13,5600,4400,17
+N'Keal Harry,WR, NE,8.32,10.16,8.32,5300,4000,14
+Hunter Renfrow,WR, LV,8.35,10.27,8.35,5300,4600,13
+Tyler Higbee,TE, LA,8.34,10.26,8.34,6000,5700,18
+Hunter Henry,TE, LAC,8.48,10.62,8.48,6100,4600,16
+Zach Pascal,WR, IND,8.13,9.87,8.13,5000,4400,10
+T.J. Hockenson,TE, DET,8.28,10.18,8.28,5400,4800,16
+Laviska Shenault,WR, JAC,7.66,8.99,7.66,5200,4400,12
+Brandin Cooks,WR, HOU,8.03,9.75,8.03,5300,4500,16
+Tee Higgins,WR, CIN,8,9.76,8,5300,4500,13
+Eric Ebron,TE, PIT,7.86,9.56,7.86,5100,4200,14
+Danny Amendola,WR, DET,8.08,10.1,8.08,5100,4000,10
+Adam Humphries,WR, TEN,8.18,10.31,8.18,4600,4000,13
+Sony Michel,RB, NE,6.46,6.94,6.46,5600,4600,14
+Brett Rypien,QB, DEN,6.06,6.07,6.06,,5500,22
+Randall Cobb,WR, HOU,7.78,9.57,7.78,5400,4800,16
+Scotty Miller,WR, TB,7.87,9.8,7.87,5000,4100,11
+Reggie Bonnafon,RB, CAR,6.84,7.81,6.84,4600,4000,11
+Austin Hooper,TE, CLE,7.93,9.88,7.93,5100,4000,14
+Anthony Miller,WR, CHI,7.85,9.84,7.85,5500,4900,19
+Raheem Mostert,RB, SF,6,6.33,6,6500,6200,21
+Cordarrelle Patterson,WR, CHI,6.16,6.73,6.16,4700,3700,10
+Chris Herndon,TE, NYJ,7.89,10.12,7.89,4800,3500,10
+Jamaal Williams,RB, GB,6.43,7.25,6.43,5100,4000,11
+Greg Ward,WR, PHI,7.58,9.57,7.58,5000,3900,14
+John Hightower,WR, PHI,7.36,9.25,7.36,4500,3000,10
+Mike Williams,WR, LAC,6.89,8.31,6.89,5800,4200,15
+Jeff Wilson,RB, SF,5.83,6.3,5.83,5900,4900,14
+Keelan Cole,WR, JAC,6.86,8.33,6.86,5600,4500,12
+Henry Ruggs,WR, LV,6.68,8.06,6.68,5300,4800,16
+Rob Gronkowski,TE, TB,6.6,7.94,6.6,5200,3600,10
+Mo Alie-Cox,TE, IND,6.73,8.3,6.73,5300,3900,12
+Logan Thomas,TE, WSH,6.96,8.74,6.96,4900,3500,14
+Greg Olsen,TE, SEA,6.5,7.91,6.5,5000,4100,10
+Braxton Berrios,WR, NYJ,6.59,8.23,6.59,5900,4600,10
+Steven Sims,WR, WSH,6.35,7.83,6.35,4900,3400,10
+Miles Boykin,WR, BAL,6.22,7.55,6.22,4700,4000,11
+Carlos Hyde,RB, SEA,5.36,5.93,5.36,5700,5300,16
+Malcolm Brown,RB, LA,5.27,5.7,5.27,5300,4700,14
+Kenny Stills,WR, HOU,5.98,7.23,5.98,4700,3200,16
+A.J. Brown,WR, TEN,5.85,6.96,5.85,6500,5500,26
+Diontae Johnson,WR, PIT,5.9,7.19,5.9,6200,5600,19
+Chris Hogan,WR, NYJ,6.1,7.56,6.1,5600,3500,12
+Alexander Mattison,RB, MIN,5.16,5.7,5.16,5500,4000,13
+Brian Hill,RB, ATL,5.35,6.12,5.35,4900,4000,10
+Jamison Crowder,WR, NYJ,6.17,7.81,6.17,6000,5200,17
+Dontrelle Inman,WR, WSH,5.97,7.37,5.97,5000,3700,12
+Chris Thompson,RB, JAC,5.79,7.12,5.79,5000,4100,16
+Van Jefferson,WR, LA,5.51,6.58,5.51,4700,3000,11
+Justin Watson,WR, TB,5.92,7.46,5.92,4600,3400,10
+Jordan Akins,TE, HOU,5.78,7.21,5.78,4900,3300,13
+Dion Lewis,RB, NYG,5.34,6.38,5.34,5000,4400,12
+Breshad Perriman,WR, NYJ,5.44,6.59,5.44,5200,3900,10
+Taysom Hill,TE, NO,5,5.71,5,5000,4100,20
+Dalton Schultz,TE, DAL,5.52,6.79,5.52,4900,4300,16
+Gus Edwards,RB, BAL,4.35,4.47,4.35,4600,4000,10
+Isaiah Ford,WR, MIA,5.62,6.98,5.62,4600,3700,10
+Phillip Lindsay,RB, DEN,4.41,4.62,4.41,4700,4200,14
+Kerryon Johnson,RB, DET,4.75,5.34,4.75,5100,4000,13
+Willie Snead,WR, BAL,5.42,6.71,5.42,5200,4000,15
+Kyle Rudolph,TE, MIN,5.37,6.56,5.37,4800,3300,10
+Deebo Samuel,WR, SF,5.11,6.1,5.11,6000,5300,16
+D'Andre Swift,RB, DET,5.4,6.73,5.4,5300,4300,17
+Jimmy Graham,TE, CHI,5.71,7.31,5.71,5300,3800,10
+Chase Edmonds,RB, ARI,4.87,5.69,4.87,5300,4200,15
+Robert Tonyan,TE, GB,5.13,6.3,5.13,5100,3400,12
+Demarcus Robinson,WR, KC,5.05,6.11,5.05,4900,3900,11
+Damiere Byrd,WR, NE,5.13,6.37,5.13,4500,3000,10
+Rex Burkhead,RB, NE,4.72,5.58,4.72,5600,4800,17
+Russell Gage,WR, ATL,4.94,6.08,4.94,5800,5100,16
+Josh Reynolds,WR, LA,4.76,5.69,4.76,4600,4100,10
+Christian Kirk,WR, ARI,4.81,5.76,4.81,5400,4400,11
+Ian Thomas,TE, CAR,5.07,6.35,5.07,4400,3000,10
+O.J. Howard,TE, TB,4.97,6.16,4.97,4800,3300,15
+Chase Claypool,WR, PIT,4.81,5.85,4.81,4900,4000,14
+Benny Snell Jr.,RB, PIT,3.97,4.23,3.97,4800,4200,12
+Tyler Eifert,TE, JAC,4.82,5.93,4.82,4800,3500,15
+Chris Conley,WR, JAC,4.73,5.76,4.73,4900,3700,10
+Andy Isabella,WR, ARI,4.58,5.53,4.58,5000,4500,10
+Giovani Bernard,RB, CIN,4.71,5.8,4.71,4800,4400,11
+Kendrick Bourne,WR, SF,4.57,5.54,4.57,5500,4600,13
+Irv Smith Jr.,TE, MIN,4.7,5.8,4.7,4500,2500,10
+Jordan Howard,RB, MIA,3.98,4.35,3.98,5000,4100,11
+J.K. Dobbins,RB, BAL,3.93,4.34,3.93,5700,4800,11
+Dan Arnold,TE, ARI,4.5,5.5,4.5,4300,2700,10
+Jared Cook,TE, NO,4.51,5.48,4.51,6300,5400,20
+Mecole Hardman,WR, KC,4.28,5.05,4.28,5200,4300,11
+Darren Fells,TE, HOU,4.67,5.8,4.67,4600,3200,10
+J.D. McKissic,RB, WSH,4.19,4.89,4.19,4700,4000,10
+Jack Doyle,TE, IND,4.69,5.93,4.69,5000,3500,12
+DeSean Jackson,WR, PHI,4.27,5.19,4.27,5700,4600,15
+Cedrick Wilson,WR, DAL,4.32,5.33,4.32,5000,3200,13
+Deonte Harris,WR, NO,4.22,5.19,4.22,4700,3400,10
+Boston Scott,RB, PHI,3.83,4.49,3.83,4700,4000,11
+David Moore,WR, SEA,3.97,4.69,3.97,4600,3400,12
+Kaden Smith,TE, NYG,4.28,5.44,4.28,4100,2800,10
+Darrel Williams,RB, KC,3.83,4.49,3.83,4600,4000,11
+Peyton Barber,RB, WSH,3.35,3.6,3.35,4900,4000,10
+Bryan Edwards,WR, LV,4.08,5.05,4.08,4800,3300,10
+Auden Tate,WR, CIN,4.02,4.95,4.02,4500,3000,10
+Gerald Everett,TE, LA,3.94,4.82,3.94,4200,2500,10
+Royce Freeman,RB, DEN,3.23,3.37,3.23,4800,4000,10
+Darrynton Evans,RB, TEN,3.63,4.31,3.63,4500,4000,10
+Brandon Powell,WR, ATL,3.81,4.69,3.81,4700,3000,10
+Olamide Zaccheaus,WR, ATL,3.79,4.63,3.79,5000,3000,10
+Jordan Wilkins,RB, IND,3.18,3.39,3.18,4600,4000,10
+Kalif Raymond,WR, TEN,3.83,4.78,3.83,4800,3300,10
+Kalen Ballage,RB, NYJ,3.25,3.61,3.25,5200,4300,10
+James O'Shaughnessy,TE, JAC,3.94,4.93,3.94,4000,3100,10
+Jerry Jeudy,WR, DEN,3.78,4.67,3.78,5600,5300,13
+Matt Breida,RB, MIA,3.29,3.74,3.29,4800,4000,10
+Cam Akers,RB, LA,3.13,3.42,3.13,5400,4100,15
+Jacob Hollister,TE, SEA,3.69,4.53,3.69,4000,2900,10
+Jakeem Grant,WR, MIA,3.65,4.5,3.65,4700,3000,10
+Jalen Richard,RB, LV,3.7,4.6,3.7,4500,4300,11
+Seth Roberts,WR, CAR,3.71,4.65,3.71,4600,3000,10
+Duke Johnson,RB, HOU,3.44,4.13,3.44,4700,4000,12
+Bisi Johnson,WR, MIN,3.49,4.24,3.49,4600,3100,10
+Nick Boyle,TE, BAL,3.65,4.56,3.65,4300,2800,10
+Anthony McFarland Jr.,RB, PIT,3.08,3.46,3.08,4500,4000,10
+Darnell Mooney,WR, CHI,3.75,4.82,3.75,4600,3000,11
+Harrison Bryant,TE, CLE,3.57,4.45,3.57,4400,2500,10
+Tony Pollard,RB, DAL,3.21,3.79,3.21,4700,4100,11
+Mohamed Sanu,WR, SF,3.49,4.33,3.49,4900,3000,10
+Travis Homer,RB, SEA,3.19,3.74,3.19,5200,4000,13
+Drew Sample,TE, CIN,3.52,4.4,3.52,4700,3500,12
+Devontae Booker,RB, LV,3.07,3.56,3.07,4800,4000,10
+Vance McDonald,TE, PIT,3.39,4.18,3.39,4200,2900,10
+KeeSean Johnson,WR, ARI,3.28,4.03,3.28,4500,3000,10
+Nelson Agholor,WR, LV,3.3,4.12,3.3,4700,3500,10
+Khadarel Hodge,WR, CLE,3.08,3.8,3.08,4500,3200,10
+Jace Sternberger,TE, GB,3.09,3.81,3.09,4400,3000,10
+Ashton Dulin,WR, IND,2.96,3.66,2.96,4500,3000,10
+Javon Wims,WR, CHI,3.26,4.23,3.26,4600,3000,10
+La'Mical Perine,RB, NYJ,2.61,2.92,2.61,4800,4000,10
+Wayne Gallman,RB, NYG,2.6,2.97,2.6,4900,4500,
+J.J. Taylor,RB, NE,2.54,2.89,2.54,4700,4000,12
+Darrius Shepherd,WR, GB,2.85,3.49,2.85,4500,3000,10
+Ryan Izzo,TE, NE,2.82,3.51,2.82,4100,2700,10
+Noah Fant,TE, DEN,2.88,3.6,2.88,5900,5800,19
+K.J. Hamler,WR, DEN,2.7,3.31,2.7,5000,3800,10
+Corey Clement,RB, PHI,2.66,3.22,2.66,4600,4000,10
+JaMycal Hasty,RB, SF,2.31,2.56,2.31,5000,4000,10
+Gabriel Davis,WR, BUF,2.53,3.13,2.53,4600,3200,10
+Ryan Griffin,TE, NYJ,2.69,3.4,2.69,4100,2600,10
+Chad Beebe,WR, MIN,2.41,2.96,2.41,4500,3000,10
+Marcedes Lewis,TE, GB,2.46,2.98,2.46,4300,3000,10
+Tyler Ervin,RB, GB,2.48,3.16,2.48,4600,4000,10
+Mike Thomas,WR, CIN,2.38,2.96,2.38,4700,3000,10
+Richard Rodgers,TE, PHI,2.46,3.14,2.46,4500,2500,10
+MyCole Pruitt,TE, TEN,2.36,2.95,2.36,4000,2500,10
+Kyle Juszczyk,RB, SF,2.24,2.78,2.24,4500,4000,10
+LeSean McCoy,RB, TB,2.32,2.89,2.32,4600,4000,10
+Antonio Gandy-Golden,WR, WSH,2.1,2.53,2.1,4600,3100,10
+Damion Ratley,WR, NYG,2.24,2.79,2.24,4500,3100,10
+Ted Ginn Jr.,WR, CHI,2.28,2.9,2.28,4600,3400,10
+Jalen Guyton,WR, LAC,2.27,2.84,2.27,4800,3400,10
+Ryan Nall,RB, CHI,2,2.35,2,4500,4200,10
+C.J. Board,WR, NYG,2.22,2.79,2.22,4500,3000,10
+Foster Moreau,TE, LV,2.23,2.78,2.23,4400,2500,10
+Dawson Knox,TE, BUF,2.07,2.55,2.07,4600,3500,10
+Will Dissly,TE, SEA,2.02,2.46,2.02,4600,2500,10
+Isaiah McKenzie,WR, BUF,2.13,2.69,2.13,4500,3000,10
+Zay Jones,WR, LV,2.14,2.67,2.14,4500,3000,10
+Josh Malone,WR, NYJ,2.13,2.69,2.13,4500,3000,10
+Freddie Swain,WR, SEA,1.97,2.38,1.97,4700,3000,10
+Ito Smith,RB, ATL,2.04,2.5,2.04,4500,4000,10
+Adam Trautman,TE, NO,1.95,2.43,1.95,4000,2500,10
+Tyler Kroft,TE, BUF,1.97,2.43,1.97,4700,3400,12
+Jesse James,TE, DET,1.94,2.4,1.94,4600,2500,10
+Trent Taylor,WR, SF,1.91,2.39,1.91,4500,3300,10
+Jaylen Samuels,RB, PIT,1.96,2.44,1.96,4600,4000,10
+Devin Duvernay,WR, BAL,1.83,2.25,1.83,4500,3300,10
+Demetrius Harris,TE, CHI,2.02,2.64,2.02,4000,2500,10
+Tim Patrick,WR, DEN,1.85,2.32,1.85,5300,3700,10
+Dede Westbrook,WR, JAC,1.83,2.27,1.83,4600,3100,10
+Noah Brown,WR, DAL,1.73,2.14,1.73,4500,3000,10
+Blake Bell,TE, DAL,1.67,2.04,1.67,4000,3100,10
+Alex Armah,RB, CAR,1.74,2.18,1.74,4500,4000,10
+Luke Stocker,TE, ATL,1.67,2.12,1.67,4000,2500,10
+Cullen Gillaspia,RB, HOU,1.45,1.66,1.45,4500,4000,10
+Cethan Carter,TE, CIN,1.63,2.02,1.63,4000,2500,10
+Damien Harris,RB, NE,1.33,1.47,1.33,4500,4000,10
+Keke Coutee,WR, HOU,1.59,1.96,1.59,4600,3000,10
+Durham Smythe,TE, MIA,1.56,1.96,1.56,4100,2500,10
+Virgil Green,TE, LAC,1.58,1.99,1.58,4000,2500,10
+Jamal Agnew,WR, DET,1.32,1.57,1.32,,3000,10
+C.J. Ham,RB, MIN,1.43,1.82,1.43,4500,4000,10
+Jakobi Meyers,WR, NE,1.33,1.65,1.33,4500,3000,10
+John Ross,WR, CIN,1.24,1.5,1.24,4600,3000,10
+Darwin Thompson,RB, KC,1.14,1.28,1.14,4500,4000,10
+Keith Smith,RB, ATL,1.27,1.66,1.27,4500,4000,10
+A.J. Dillon,RB, GB,0.9,0.91,0.9,4500,4000,10
+Darrell Daniels,TE, ARI,1.12,1.37,1.12,4000,2500,10
+Patrick Ricard,RB, BAL,1.19,1.52,1.19,4500,4000,10
+Jakob Johnson,RB, NE,1.15,1.53,1.15,4500,4000,10
+Trenton Cannon,RB, CAR,1.12,1.42,1.12,4500,4000,11
+Quintez Cephus,WR, DET,1.01,1.22,1.01,4700,3000,12
+Jake Butt,TE, DEN,1.06,1.34,1.06,4200,2500,10
+Josh Hill,TE, NO,1.01,1.25,1.01,4200,2500,10
+T.J. Yeldon,RB, BUF,1.02,1.27,1.02,4500,4000,12
+Alec Ingold,RB, LV,1.06,1.38,1.06,4500,4000,10
+Collin Johnson,WR, JAC,0.92,1.13,0.92,4600,3000,10
+Ross Dwelley,TE, SF,0.91,1.13,0.91,4700,2500,10
+Adam Shaheen,TE, MIA,0.9,1.11,0.9,4200,2500,10
+Lawrence Cager,WR, NYJ,0.9,1.15,0.9,,3000,10
+Anthony Sherman,RB, KC,0.77,0.92,0.77,4500,4000,10
+Trey Burton,TE, IND,0.77,0.97,0.77,4500,2900,
+Isaiah Wright,WR, WSH,0.77,1,0.77,,3000,10
+Lynn Bowden Jr.,WR, MIA,0.73,0.92,0.73,4500,3000,10
+Marcus Johnson,WR, IND,0.68,0.84,0.68,4500,,
+Lee Smith,TE, BUF,0.71,0.88,0.71,4200,2800,10
+Gunner Olszewski,WR, NE,0.66,0.82,0.66,4500,3000,
+Jason Witten,TE, LV,0.72,0.91,0.72,4300,2500,10
+J.J. Arcega-Whiteside,WR, PHI,0.63,0.78,0.63,4700,3000,10
+Jeremy McNichols,RB, TEN,0.59,0.71,0.59,4500,4000,10
+Marvin Hall,WR, DET,0.58,0.68,0.58,4800,3100,10
+Justin Jackson,RB, LAC,0.51,0.57,0.51,4800,4000,10
+Diontae Spencer,WR, DEN,0.56,0.71,0.56,4500,3000,10
+Cole Kmet,TE, CHI,0.57,0.74,0.57,4100,2500,10
+Reggie Gilliam,TE, BUF,0.47,0.59,0.47,4500,2500,10
+Jaydon Mickens,WR, TB,0.53,0.68,0.53,,3000,10
+Mike Boone,RB, MIN,0.46,0.55,0.46,4500,4000,10
+Anthony Firkser,TE, TEN,0.48,0.59,0.48,4100,2500,10
+Chad Williams,WR, IND,0.41,0.5,0.41,4500,,10
+Tyler Johnson,WR, TB,0.4,0.52,0.4,4500,3200,10
+Nick Westbrook-Ikhine,WR, TEN,0.34,0.44,0.34,,3000,10
+Bo Scarbrough,RB, DET,0.27,0.31,0.27,4500,4000,10
+DaeSean Hamilton,WR, DEN,0.32,0.4,0.32,4800,3300,10
+Derek Watt,RB, PIT,0.29,0.36,0.29,4500,4000,10
+Robert Foster,WR, GB,0.23,0.25,0.23,4500,,
+Tajae Sharpe,WR, MIN,0.24,0.29,0.24,4500,3000,10
+K.J. Hill,WR, LAC,0.25,0.33,0.25,,3000,10
+Justice Hill,RB, BAL,0.2,0.23,0.2,4500,4000,10
+Elijah McGuire,RB, DAL,0.13,0.16,0.13,4500,,
+Michael Pittman Jr.,WR, IND,0.16,0.16,0.16,5000,4100,12
+Patrick Laird,RB, MIA,0.12,0.15,0.12,4500,4000,10
+Nick Bellore,RB, SEA,0.18,0.22,0.18,4500,4000,10
+Ty Johnson,RB, DET,0.13,0.17,0.13,4500,4000,10
+Nick Vannett,TE, DEN,0.18,0.23,0.18,4000,2500,10
+Noah Togiai,TE, IND,0.12,0.16,0.12,,2500,10
+Trevon Wesco,TE, NYJ,0.1,0.13,0.1,4000,2500,10
+Jaeden Graham,TE, ATL,0.17,0.21,0.17,4000,2500,10
+Elijhaa Penny,RB, NYG,0.11,0.13,0.11,4500,4000,10
+DeeJay Dallas,RB, SEA,0.09,0.12,0.09,4500,4000,10
+Joe Reed,WR, LAC,0.1,0.12,0.1,4500,3000,10
+Isaac Nauta,TE, DET,0.16,0.19,0.16,4000,,
+Samaje Perine,RB, CIN,0.1,0.13,0.1,4500,4000,10
+Cody Core,WR, NYG,0.11,0.14,0.11,4500,3000,10
+Cameron Brate,TE, TB,0.16,0.19,0.16,4000,2500,10
+John Ursua,WR, SEA,0.08,0.1,0.08,4500,,
+Christian Blake,WR, ATL,0.1,0.12,0.1,4900,3000,10
+Stephen Carlson,TE, CLE,0.15,0.18,0.15,4000,2500,10
+D'Ernest Johnson,RB, CLE,0.08,0.11,0.08,4500,4000,10
+Dare Ogunbowale,RB, JAC,0.09,0.11,0.09,4500,4000,10
+Buddy Howell,RB, HOU,0.08,0.11,0.08,4500,4000,10
+Cole Hikutini,TE, DAL,0.14,0.16,0.14,4000,,
+Ricky Seals-Jones,TE, KC,0.14,0.17,0.14,4000,2700,10
+Chris Manhertz,TE, CAR,0.15,0.18,0.15,4000,2500,10
+Rashard Higgins,WR, CLE,0.09,0.11,0.09,4500,3000,10
+Ameer Abdullah,RB, MIN,0.09,0.11,0.09,4500,4000,10
+Derek Carrier,TE, LV,0.09,0.11,0.09,4000,2500,10
+Luke Willson,TE, SEA,0.14,0.17,0.14,4000,2500,10
+Malik Taylor,WR, GB,0.08,0.1,0.08,4500,3000,10
+Marcus Baugh,TE, WSH,0.08,0.11,0.08,4000,2500,10
+Josiah Deguara,TE, GB,0.14,0.16,0.14,4000,2500,10
+Ke'Shawn Vaughn,RB, TB,0.08,0.11,0.08,4500,4000,10
+Ishmael Hyman,WR, CAR,0.09,0.11,0.09,4500,,
+Rico Gafford,WR, LV,0.09,0.11,0.09,,3000,10
+Alexander Hollins,WR, MIN,0.08,0.1,0.08,4500,,
+Khari Blasingame,RB, TEN,0.08,0.11,0.08,4500,4000,10
+Steven Mitchell Jr.,WR, HOU,0.08,0.11,0.08,4500,,
+Ventell Bryant,WR, DAL,0.08,0.11,0.08,4500,3000,10
+Stanley Morgan Jr.,WR, CIN,0.08,0.11,0.08,4500,,
+Andrew Beck,RB, DEN,0.06,0.07,0.06,4000,2500,10
+Byron Pringle,WR, KC,0.08,0.1,0.08,4500,3000,10
+Zach Gentry,TE, PIT,0.08,0.11,0.08,4000,2500,10
+Tommy Sweeney,TE, BUF,0.07,0.1,0.07,4000,2500,
+Pharaoh Brown,TE, CLE,0.08,0.1,0.08,4000,,
+Johnny Mundt,TE, LA,0.07,0.1,0.07,4000,2500,10
+Gehrig Dieter,WR, KC,0.08,0.1,0.08,4500,,
+Malik Turner,WR, DAL,0.09,0.11,0.09,4500,3000,10
+Keith Kirkwood,WR, CAR,0.09,0.11,0.09,4500,3000,
+Trent Sherfield,WR, ARI,0.08,0.1,0.08,4500,3000,10
+Tyler Conklin,TE, MIN,0.08,0.1,0.08,4000,2500,10
+DeAndre Carter,WR, HOU,0.08,0.11,0.08,4500,3000,10
+Austin Carr,WR, NO,0.08,0.1,0.08,4500,,
+Mack Hollins,WR, MIA,0.09,0.11,0.09,4500,3000,10
+Chad Hansen,WR, HOU,0.08,0.1,0.08,4500,,
+Dwayne Washington,RB, NO,0.07,0.09,0.07,4500,4000,10
+Bennie Fowler,WR, NO,0.07,0.09,0.07,4500,3000,10
+Michael Burton,RB, NO,0.07,0.09,0.07,4500,4000,10
+Devin Asiasi,TE, NE,0.07,0.1,0.07,4000,2500,10
+Jeff Smith,WR, NYJ,0.08,0.1,0.08,4500,3000,
+Cody Hollister,WR, TEN,0.07,0.09,0.07,4500,,
+Qadree Ollison,RB, ATL,0.09,0.12,0.09,4500,4000,10
+Deon Yelder,TE, KC,0.06,0.08,0.06,4000,2500,10
+Brandon Zylstra,WR, CAR,0.08,0.1,0.08,4500,3000,10
+Dante Pettis,WR, SF,0.06,0.08,0.06,4600,3000,10
+Antony Auclair,TE, TB,0.07,0.09,0.07,4000,2500,10
+Eric Saubert,TE, JAC,0.07,0.1,0.07,4000,,
+Troymaine Pope,RB, LAC,0.08,0.1,0.08,4500,,
+Xavier Grimble,TE, BAL,0.06,0.08,0.06,4000,,
+Ricardo Louis,WR, MIA,0.08,0.1,0.08,,,
+Alex Erickson,WR, CIN,0.08,0.1,0.08,4500,3000,10
+Chris Moore,WR, BAL,0.07,0.09,0.07,4500,3000,10
+Pharoh Cooper,WR, CAR,0.08,0.1,0.08,4500,3000,10
+Geoff Swaim,TE, TEN,0.07,0.09,0.07,4000,2500,10
+Levine Toilolo,TE, NYG,0.08,0.1,0.08,4000,2500,10
+Andre Roberts,WR, BUF,0.07,0.09,0.07,4500,3000,10
+Matt Slater,WR, NE,0.07,0.09,0.07,4500,3000,10
+Jesper Horsted,TE, CHI,0.07,0.09,0.07,4000,,
+Jason Moore,WR, LAC,0.07,0.09,0.07,4500,3500,10
+J.P. Holtz,TE, CHI,0.07,0.09,0.07,4000,2500,10
+Riley Ridley,WR, CHI,0.08,0.1,0.08,4500,3000,10
+Darvin Kidsy,WR, WSH,0.07,0.09,0.07,4500,,
+Jeremy Sprinkle,TE, WSH,0.07,0.09,0.07,4000,2500,10
+Stephen Anderson,TE, LAC,0.06,0.08,0.06,4000,2500,10
+Taiwan Jones,RB, BUF,0.07,0.09,0.07,4500,4000,10
+Xavier Jones,RB, LA,0.05,0.06,0.05,4500,4000,10
+Jason Huntley,RB, PHI,0.05,0.07,0.05,4500,4000,10
+Bryce Love,RB, WSH,0.06,0.09,0.06,4500,4000,10
+Dalton Keene,TE, NE,0.03,0.04,0.03,4000,2500,10
+Nsimba Webster,WR, LA,0.04,0.05,0.04,4500,3000,10
+Lil'Jordan Humphrey,WR, NO,0.04,0.05,0.04,4500,,
+Richie James,WR, SF,0.04,0.05,0.04,4500,3000,10
+Shelton Gibson,WR, PHI,0.04,0.05,0.04,4500,,
+Tyrie Cleveland,WR, DEN,0.03,0.04,0.03,4500,3000,10
+Chris Thompson,WR, SF,0.04,0.05,0.04,4500,3000,10
+Senorise Perry,RB, TEN,0.01,0.02,0.01,4500,4000,10
+Isaiah Zuber,WR, NE,0.01,0.01,0.01,,3000,10
+Raymond Calais,RB, LA,0.01,0.01,0.01,,4000,10
+Troy Fumagalli,TE, HOU,0.01,0.01,0.01,4000,,10
+Jordan Thomas,TE, ARI,0.01,0.01,0.01,4000,2500,10
+Rod Smith,RB, NYG,0.01,0.01,0.01,4500,,
+Devin Smith,WR, HOU,0.01,0.01,0.01,4500,,
+LeVante Bellamy,RB, DEN,0,0,0,,4000,10
+Hakeem Butler,TE, PHI,0.01,0.01,0.01,,,
+Jordan Franks,TE, PHI,0.01,0.01,0.01,4000,,
+Temarrick Hemingway,TE, WSH,0.01,0.01,0.01,4000,,
+Jalen Hurts,QB, PHI,0,0,0,,4100,20
+Nick Keizer,TE, KC,0,0,0,4000,2500,10
+James Proche,WR, BAL,0,0,0,4500,3000,10
+K.J. Osborn,WR, MIN,0,0,0,4500,3000,10
+Chris Streveler,QB, ARI,0,0,0,6000,4100,20
+Denzel Mims,WR, NYJ,0,0,0,4600,3000,10
+Jalen Reagor,WR, PHI,0,0,0,5100,4100,10
+Tua Tagovailoa,QB, MIA,0,0,0,6100,5400,20
+Trace McSorley,QB, BAL,0,0,0,6000,4000,20
+Will Grier,QB, CAR,0,0,0,6000,4800,20
+Ryan Griffin,QB, TB,0,0,0,6000,4000,20
+Devine Ozigbo,RB, JAC,0,0,0,4600,4000,10
+Ryan Finley,QB, CIN,0,0,0,6000,4400,20
+Tim Boyle,QB, GB,0,0,0,6000,4300,20
+Devlin Hodges,QB, PIT,0,0,0,6000,,
+Jarrett Stidham,QB, NE,0,0,0,6000,4800,20
+Mason Rudolph,QB, PIT,0,0,0,6000,4800,20
+Ryquell Armstead,RB, JAC,0,0,0,4600,,
+Drew Lock,QB, DEN,0,0,0,6800,5700,20
+Parris Campbell,WR, IND,0,0,0,4500,3900,15
+Kyle Allen,QB, WSH,0,0,0,6000,4100,20
+Jeff Driskel,QB, DEN,0,0,0,6500,5500,20
+Chad Kelly,QB, IND,0,0,0,6000,,
+Equanimeous St. Brown,WR, GB,0,0,0,4500,4000,
+Vyncint Smith,WR, NYJ,0,0,0,4500,3000,10
+Dallas Goedert,TE, PHI,0,0,0,5800,4500,15
+Rashaad Penny,RB, SEA,0,0,0,4500,4000,
+Tyler Bray,QB, CHI,0,0,0,6000,,
+Nate Sudfeld,QB, PHI,0,0,0,6000,4000,20
+Jason Vander Laan,TE, NO,0,0,0,4000,,
+Nathan Peterman,QB, LV,0,0,0,6000,4100,20
+C.J. Beathard,QB, SF,0,0,0,6000,4700,20
+Chris Godwin,WR, TB,0,0,0,7700,6500,27
+David Njoku,TE, CLE,0,0,0,4500,3800,
+Mitchell Trubisky,QB, CHI,0,0,0,7000,5300,22
+Christian McCaffrey,RB, CAR,0,0,0,6000,8800,10
+Brett Hundley,QB, ARI,0,0,0,6000,4900,20
+Jacoby Brissett,QB, IND,0,0,0,6000,4900,20
+Sterling Shepard,WR, NYG,0,0,0,5400,5100,16
+Sean Mannion,QB, MIN,0,0,0,6000,4300,20
+A.J. McCarron,QB, HOU,0,0,0,6200,4800,20
+Ty Montgomery,RB, NO,0,0,0,4500,4000,10
+Phillip Dorsett,WR, SEA,0,0,0,4500,3900,10
+Maxx Williams,TE, ARI,0,0,0,4000,2700,10
+Tevin Coleman,RB, SF,0,0,0,5700,4000,12
+Marcus Mariota,QB, LV,0,0,0,6000,4700,
+Jameis Winston,QB, NO,0,0,0,6000,4700,24
+Blake Bortles,QB, DEN,0,0,0,6500,5400,20
+Case Keenum,QB, CLE,0,0,0,6000,4600,20
+Matt Barkley,QB, BUF,0,0,0,6000,4600,20
+Jordan Reed,TE, SF,0,0,0,5000,3500,14
+Mike Glennon,QB, JAC,0,0,0,6000,4300,20
+Le'Veon Bell,RB, NYJ,0,0,0,6000,5000,
+Geno Smith,QB, SEA,0,0,0,6000,4400,20
+Alshon Jeffery,WR, PHI,0,0,0,5000,5500,18
+Robert Griffin III,QB, BAL,0,0,0,6000,4300,20
+Tyrod Taylor,QB, LAC,0,0,0,6600,5700,20
+Andy Dalton,QB, DAL,0,0,0,6000,4200,20
+Blaine Gabbert,QB, TB,0,0,0,6000,4500,20
+Chase Daniel,QB, DET,0,0,0,6000,4700,20
+Colt McCoy,QB, NYG,0,0,0,6000,4100,20
+Brian Hoyer,QB, NE,0,0,0,6000,4100,20
+Alex Smith,QB, WSH,0,0,0,6000,4400,20
+Matt Moore,QB, KC,0,0,0,6000,,
+Chad Henne,QB, KC,0,0,0,6000,4100,20
+Joe Flacco,QB, NYJ,0,0,0,6000,4700,20
+Matt Schaub,QB, ATL,0,0,0,6000,4800,20
+Baltimore D/ST,DST,BAL,10.08,10.08,10.08,5000,4000,20
+Los Angeles Rams D/ST,DST,LA,9.63,9.63,9.63,4800,3900,17
+Tampa Bay D/ST,DST,TB,8.8,8.8,8.8,4700,3400,16
+San Francisco D/ST,DST,SF,8.47,8.47,8.47,4800,3700,16
+Pittsburgh D/ST,DST,PIT,8.32,8.32,8.32,4500,3800,18
+Denver D/ST,DST,DEN,7.91,7.91,7.91,4700,3900,17
+Seattle D/ST,DST,SEA,7.56,7.56,7.56,4000,3400,14
+Indianapolis D/ST,DST,IND,7.4,7.4,7.4,4900,3300,19
+Kansas City D/ST,DST,KC,7.18,7.18,7.18,3800,3200,15
+Cincinnati D/ST,DST,CIN,6.72,6.72,6.72,3400,2900,10
+Green Bay D/ST,DST,GB,6.67,6.67,6.67,3900,2900,16
+Arizona D/ST,DST,ARI,6.41,6.41,6.41,3800,3600,18
+Dallas D/ST,DST,DAL,6.38,6.38,6.38,3400,3300,10
+Chicago D/ST,DST,CHI,6.23,6.23,6.23,4100,3100,17
+New Orleans D/ST,DST,NO,6.23,6.23,6.23,4600,3500,15
+Jacksonville D/ST,DST,JAC,6.1,6.1,6.1,3700,3000,14
+Las Vegas D/ST,DST,LV,6.07,6.07,6.07,3300,2700,11
+Philadelphia D/ST,DST,PHI,5.91,5.91,5.91,4200,2600,12
+Tennessee D/ST,DST,TEN,5.97,5.97,5.97,3900,2800,13
+Buffalo D/ST,DST,BUF,5.85,5.85,5.85,4400,3700,12
+Houston D/ST,DST,HOU,5.63,5.63,5.63,3700,2500,14
+Minnesota D/ST,DST,MIN,5.53,5.53,5.53,3300,2800,13
+Carolina D/ST,DST,CAR,5.55,5.55,5.55,3600,2700,11
+Los Angeles Chargers D/ST,DST,LAC,4.85,4.85,4.85,4300,2900,18
+Miami D/ST,DST,MIA,4.69,4.69,4.69,3500,2000,11
+Washington D/ST,DST,WSH,4.2,4.2,4.2,3500,2100,17
+Cleveland D/ST,DST,CLE,4.21,4.21,4.21,3900,2300,11
+New York Jets D/ST,DST,NYJ,3.95,3.95,3.95,3400,2400,17
+New York Giants D/ST,DST,NYG,3.97,3.97,3.97,3000,2600,15
+New England D/ST,DST,NE,4.06,4.06,4.06,4200,3200,15
+Detroit D/ST,DST,DET,3.78,3.78,3.78,3200,2200,11
+Atlanta D/ST,DST,ATL,2.87,2.87,2.87,3100,2400,10
