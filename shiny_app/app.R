@@ -107,9 +107,7 @@ ui <-
 # Define server logic required to draw a histogram
 server <- function(input, output) {
     
-    player_include <- reactiveVal(NULL)
-    
-    player_exclude <- reactiveVal(NULL)
+
     
     shinyInput <- function(FUN, len, id, ...) {
         inputs <- character(len)
@@ -122,31 +120,149 @@ server <- function(input, output) {
 
     # babey's first reactive table
     
-    player_list <- reactive({
+    # player_list <- reactive({
+    # 
+    # 
+    #     source_switch <- switch(input$sourcegroup, "DraftKings" = "SALARY_DK", "FanDuel" = "SALARY_FD", "Yahoo Sports" = "SALARY_YH")
+    #     points_switch <- switch(input$sourcegroup, "DraftKings" = "POINTS_DK", "FanDuel" = "POINTS_FD", "Yahoo Sports" = "POINTS_YH")
+    # 
+    # 
+    #     players_full <- dplyr::select(full_salaries, PLAYER, POSITION, source_switch, points_switch)
+    # 
+    # 
+    # 
+    #     tibble::tibble(
+    # 
+    # 
+    #         Player = full_salaries$PLAYER,
+    #         `Pos.` = full_salaries$POSITION,
+    #         Salary = players_full[[ncol(players_full)-1]],
+    #         Points = players_full[[ncol(players_full)]],
+    #         # Points = full_salaries$POINTS_DK,
+    #         # Salary = full_salaries$SALARY_DK,
+    #         Include = shinyInput(actionButton, nrow(full_salaries),
+    #                              'button_',
+    #                              label = "",
+    #                              icon = icon("check"),
+    #                              class = "include",
+    #                              onclick = paste0('Shiny.onInputChange( \"select_button\" , this.id)')
+    #         ),
+    #         Exclude = shinyInput(actionButton, nrow(full_salaries),
+    #                                       'button_',
+    #                                       label = "",
+    #                              icon = icon("times"),
+    #                              class = "exclude",
+    #                                       onclick = paste0('Shiny.onInputChange( \"select_button2\" , this.id)')
+    #         )
+    #     )
+    # })
+    
+    
+    player_list_dk <- reactive({
+        
+        
+        
         tibble::tibble(
+            
+            
             Player = full_salaries$PLAYER,
-            Position = full_salaries$POSITION,
-            'Expected Points' = full_salaries$POINTS,
+            `Pos.` = full_salaries$POSITION,
+            Points = full_salaries$POINTS_DK,
+            Salary = full_salaries$SALARY_DK,
             Include = shinyInput(actionButton, nrow(full_salaries),
                                  'button_',
                                  label = "",
                                  icon = icon("check"),
                                  class = "include",
-                                 onclick = paste0('Shiny.onInputChange( \"select_button\" , this.id)') 
+                                 onclick = paste0('Shiny.onInputChange( \"select_button\" , this.id)')
             ),
             Exclude = shinyInput(actionButton, nrow(full_salaries),
-                                          'button_',
-                                          label = "",
+                                 'button_',
+                                 label = "",
                                  icon = icon("times"),
                                  class = "exclude",
-                                          onclick = paste0('Shiny.onInputChange( \"select_button2\" , this.id)') 
-            ) 
+                                 onclick = paste0('Shiny.onInputChange( \"select_button2\" , this.id)')
+            )
+        )
+    })
+    
+    player_list_fd <- reactive({
+        
+        
+        
+        tibble::tibble(
+            
+            
+            Player = full_salaries$PLAYER,
+            `Pos.` = full_salaries$POSITION,
+            Points = full_salaries$POINTS_FD,
+            Salary = full_salaries$SALARY_FD,
+            Include = shinyInput(actionButton, nrow(full_salaries),
+                                 'button_',
+                                 label = "",
+                                 icon = icon("check"),
+                                 class = "include",
+                                 onclick = paste0('Shiny.onInputChange( \"select_button\" , this.id)')
+            ),
+            Exclude = shinyInput(actionButton, nrow(full_salaries),
+                                 'button_',
+                                 label = "",
+                                 icon = icon("times"),
+                                 class = "exclude",
+                                 onclick = paste0('Shiny.onInputChange( \"select_button2\" , this.id)')
+            )
         )
     })
     
     
+    player_list_yh <- reactive({
+        
+        
+        
+        tibble::tibble(
+            
+            
+            Player = full_salaries$PLAYER,
+            `Pos.` = full_salaries$POSITION,
+            Points = full_salaries$POINTS_YH,
+            Salary = full_salaries$SALARY_YH,
+            Include = shinyInput(actionButton, nrow(full_salaries),
+                                 'button_',
+                                 label = "",
+                                 icon = icon("check"),
+                                 class = "include",
+                                 onclick = paste0('Shiny.onInputChange( \"select_button\" , this.id)')
+            ),
+            Exclude = shinyInput(actionButton, nrow(full_salaries),
+                                 'button_',
+                                 label = "",
+                                 icon = icon("times"),
+                                 class = "exclude",
+                                 onclick = paste0('Shiny.onInputChange( \"select_button2\" , this.id)')
+            )
+        )
+    })
+    
+    
+    proper_tb <- reactiveVal(NULL)
+    
+    
+    observeEvent(input$sourcegroup, {
+        
+
+        proper_tb(switch(input$sourcegroup, "DraftKings" = player_list_dk(), "FanDuel" = player_list_fd(), "Yahoo Sports" = player_list_yh()))
+        
+        # player_include(NULL)
+        # player_exclude(NULL)
+        
+        
+    })
+    
+    
+    
     output$player_list_table <- DT::renderDT({
-        player_list()
+        #player_list()
+        proper_tb()
     },
     escape = FALSE,
     selection = "none",
@@ -160,70 +276,93 @@ server <- function(input, output) {
             "$(this.api().table().container()).css({'font-size': '80%'});",
             "}"),
         #dom = 't', displays table only
-        columnDefs = list(list(className = 'dt-center', targets = 2:5),
+        columnDefs = list(list(className = 'dt-center', targets = 2:6),
                           list(width = '18%', targets = 3),
                           list(width = '18%', targets = 4))
         
     ))
     
+    
+    
+    # player_include <- reactiveVal(NULL)
+    # player_exclude <- reactiveVal(NULL)
+    
+    pl_inc <- reactiveVal(NULL)
+    pl_exc <- reactiveVal(NULL)
+    
+    
     observeEvent(input$select_button, {
         selectedRow <- as.numeric(strsplit(input$select_button, "_")[[1]][2])
-        player_new <- paste(player_list()[selectedRow,1])
+        player_new <- paste(proper_tb()[selectedRow,1])
         
         
-        old_values <- player_include()
+        old_values <- pl_inc() 
         new_values <- player_new
         
+        ifelse(!is.null(pl_inc()),
+               new_vec <- c(old_values, new_values),
+               new_vec <- new_values)
         
-        # paste these together after first input:
-        ifelse(!is.null(player_include()), 
-               new_string <- paste(old_values, new_values, sep = ", "), 
-               new_string <- paste(new_values))
+        pl_inc(new_vec)
         
-        #store the result in values variable
-        player_include(new_string)
+
         
     })
     
     
     observeEvent(input$select_button2, {
         selectedRow <- as.numeric(strsplit(input$select_button2, "_")[[1]][2])
-        player_new <- paste(player_list()[selectedRow,1])
+        player_new <- paste(proper_tb()[selectedRow,1])
         
-        old_values <- player_exclude()
+        old_values <- pl_exc() 
         new_values <- player_new
         
+        ifelse(!is.null(pl_exc()),
+               new_vec <- c(old_values, new_values),
+               new_vec <- new_values)
         
-        # paste these together after first input:
-        ifelse(!is.null(player_exclude()), 
-               new_string <- paste(old_values, new_values, sep = ", "), 
-               new_string <- paste(new_values))
-        
-        #store the result in values variable
-        player_exclude(new_string)
+        pl_exc(new_vec)
         
     })
     
     
+    
+
     observeEvent(input$select_button3, {
 
+        selectedRow <- as.numeric(strsplit(input$select_button3, "_")[[1]][2])
+        player_new <- paste(df_include()[[selectedRow,1]])
+
+        pl_inc_new <- pl_inc()[!pl_inc()==player_new]
+        
+        if (length(pl_inc_new)==0) {pl_inc(NULL)}
         
         
+        else {
+            
+            #store the result in values variable
+            pl_inc(pl_inc_new)
+            
+        }
+
+
+
     })
     
+
     
-    pl_inc <- reactive({
-        
-        strsplit(player_include(), ", ")[[1]]
-        
-    })
-    
-    
-    pl_exc <- reactive({
-        
-        strsplit(player_exclude(), ", ")[[1]]
-        
-    })
+    # pl_inc <- reactive({
+    #     
+    #     strsplit(player_include(), ", ")[[1]]
+    #     
+    # })
+    # 
+    # 
+    # pl_exc <- reactive({
+    # 
+    #     strsplit(player_exclude(), ", ")[[1]]
+    # 
+    # })
     
     
     df_include <- reactive({
@@ -318,9 +457,9 @@ server <- function(input, output) {
     
     observeEvent(input$reset, {
         
-        player_include(NULL)
+        pl_inc(NULL)
         
-        player_exclude(NULL)
+        pl_inc(NULL)
         
     })
     
