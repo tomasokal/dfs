@@ -30,7 +30,7 @@ ui <-
                                           radioGroupButtons(
                                               inputId = "sourcegroup",
                                               size = "lg",
-                                              choices = c("DraftKings", "FanDuel", " Yahoo Sports"),
+                                              choices = c("DraftKings", "FanDuel", "Yahoo Sports"),
                                               individual = TRUE,
                                               width = "100%",
                                               status = 'testbutton',
@@ -63,7 +63,9 @@ ui <-
                                    column(11,
                                           wellPanel(class = "wellclass",
                                                     style = "height:60vh;",
-                                          div(br(), DT::DTOutput(outputId = "player_list_table"))
+                                          div(
+                                              br(), 
+                                              DT::DTOutput(outputId = "player_list_table"))
                                           ))#,
                                    #column(1)
                                    
@@ -72,14 +74,18 @@ ui <-
                             column(3,
                                    wellPanel(class = "wellclass",
                                              style = "height:60vh",
-                                             div(br(), DT::DTOutput(outputId = "player_list_include"))
+                                             div(p("Players to include in the optimized lineup:"),
+                                                 br(), 
+                                                 DT::DTOutput(outputId = "player_list_include"))
                                              #textOutput(outputId = "myText")
                                              )
                                    ),
                             column(3,
                                    wellPanel(class = "wellclass",
                                              style = "height:60vh",
-                                             div(br(), DT::DTOutput(outputId = "player_list_exclude"))
+                                             div(p("Players to exclude from the optimized lineup:"),
+                                                 br(), 
+                                                 DT::DTOutput(outputId = "player_list_exclude"))
                                              #textOutput(outputId = "myText2") 
                                              )
                                    )
@@ -123,13 +129,15 @@ server <- function(input, output) {
             'Expected Points' = full_salaries$POINTS,
             Include = shinyInput(actionButton, nrow(full_salaries),
                                  'button_',
-                                 label = "Include",
+                                 label = "",
+                                 icon = icon("check"),
                                  class = "include",
                                  onclick = paste0('Shiny.onInputChange( \"select_button\" , this.id)') 
             ),
             Exclude = shinyInput(actionButton, nrow(full_salaries),
                                           'button_',
-                                          label = "Exclude",
+                                          label = "",
+                                 icon = icon("times"),
                                  class = "exclude",
                                           onclick = paste0('Shiny.onInputChange( \"select_button2\" , this.id)') 
             ) 
@@ -153,7 +161,8 @@ server <- function(input, output) {
             "}"),
         #dom = 't', displays table only
         columnDefs = list(list(className = 'dt-center', targets = 2:5),
-                          list(width = '18%', targets = 3))
+                          list(width = '18%', targets = 3),
+                          list(width = '18%', targets = 4))
         
     ))
     
@@ -196,6 +205,13 @@ server <- function(input, output) {
     })
     
     
+    observeEvent(input$select_button3, {
+
+        
+        
+    })
+    
+    
     pl_inc <- reactive({
         
         strsplit(player_include(), ", ")[[1]]
@@ -231,7 +247,7 @@ server <- function(input, output) {
                                  'button_',
                                 label = "",
                                  icon = icon("minus-circle"),
-                                 class = "exclude",
+                                 class = "remove",
                                  onclick = paste0('Shiny.onInputChange( \"select_button3\" , this.id)')
                                 )
             )
@@ -259,7 +275,7 @@ server <- function(input, output) {
                                 'button_',
                                 label = "",
                                 icon = icon("minus-circle"),
-                                class = "exclude",
+                                class = "remove",
                                 onclick = paste0('Shiny.onInputChange( \"select_button4\" , this.id)')
             )
         )
@@ -277,6 +293,8 @@ server <- function(input, output) {
             "function(settings, json) {",
             "$(this.api().table().container()).css({'font-size': '80%'});",
             "}"),
+        columnDefs = list(list(className = 'dt-center', targets = 2:4),
+                          list(width = '18%', targets = 4)),
         dom = 't'
         
     ))
@@ -292,6 +310,8 @@ server <- function(input, output) {
             "function(settings, json) {",
             "$(this.api().table().container()).css({'font-size': '80%'});",
             "}"),
+        columnDefs = list(list(className = 'dt-center', targets = 2:4),
+                          list(width = '18%', targets = 4)),
         dom = 't'
         
     ))
