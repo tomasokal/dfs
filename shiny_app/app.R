@@ -176,14 +176,14 @@ server <- function(input, output) {
                                  label = "",
                                  icon = icon("check"),
                                  class = "include",
-                                 onclick = paste0('Shiny.onInputChange( \"select_button\" , this.id)')
+                                 onclick = 'Shiny.setInputValue(\"select_button\", this.id, {priority: \"event\"})'
             ),
             Exclude = shinyInput(actionButton, nrow(full_salaries),
                                  'button_',
                                  label = "",
                                  icon = icon("times"),
                                  class = "exclude",
-                                 onclick = paste0('Shiny.onInputChange( \"select_button2\" , this.id)')
+                                 onclick = 'Shiny.setInputValue(\"select_button2\", this.id, {priority: \"event\"})'
             )
         )
     })
@@ -204,14 +204,14 @@ server <- function(input, output) {
                                  label = "",
                                  icon = icon("check"),
                                  class = "include",
-                                 onclick = paste0('Shiny.onInputChange( \"select_button\" , this.id)')
+                                 onclick = 'Shiny.setInputValue(\"select_button\", this.id, {priority: \"event\"})'
             ),
             Exclude = shinyInput(actionButton, nrow(full_salaries),
                                  'button_',
                                  label = "",
                                  icon = icon("times"),
                                  class = "exclude",
-                                 onclick = paste0('Shiny.onInputChange( \"select_button2\" , this.id)')
+                                 onclick = 'Shiny.setInputValue(\"select_button2\", this.id, {priority: \"event\"})'
             )
         )
     })
@@ -233,14 +233,14 @@ server <- function(input, output) {
                                  label = "",
                                  icon = icon("check"),
                                  class = "include",
-                                 onclick = paste0('Shiny.onInputChange( \"select_button\" , this.id)')
+                                 onclick = 'Shiny.setInputValue(\"select_button\", this.id, {priority: \"event\"})'
             ),
             Exclude = shinyInput(actionButton, nrow(full_salaries),
                                  'button_',
                                  label = "",
                                  icon = icon("times"),
                                  class = "exclude",
-                                 onclick = paste0('Shiny.onInputChange( \"select_button2\" , this.id)')
+                                 onclick = 'Shiny.setInputValue(\"select_button2\", this.id, {priority: \"event\"})'
             )
         )
     })
@@ -307,6 +307,19 @@ server <- function(input, output) {
         
         pl_inc(new_vec)
         
+        
+        pl_exc_new <- pl_exc()[!pl_exc()==player_new]
+        
+        if (length(pl_exc_new)==0) {pl_exc(NULL)}
+        
+        
+        else {
+            
+            #store the result in values variable
+            pl_exc(pl_exc_new)
+            
+        }
+        
 
         
     })
@@ -324,6 +337,19 @@ server <- function(input, output) {
                new_vec <- new_values)
         
         pl_exc(new_vec)
+        
+        pl_inc_new <- pl_inc()[!pl_inc()==player_new]
+        
+        if (length(pl_inc_new)==0) {pl_inc(NULL)}
+        
+        
+        else {
+            
+            #store the result in values variable
+            pl_inc(pl_inc_new)
+            
+        }
+        
         
     })
     
