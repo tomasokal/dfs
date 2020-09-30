@@ -22,10 +22,10 @@ projections_dfs <- projections_dfs[, .(PLAYER = v25
                                        , POSITION = substr(gsub(".*\\((.*)\\).*", "\\1", v27), 1, 2)
                                        , TEAM = substr(gsub(".*\\((.*)\\).*", "\\1", v27), 4, nchar(gsub(".*\\((.*)\\).*", "\\1", v27)))
                                        , POINTS_FD = as.numeric(gsub("[\\$,]","", v16))
-                                       , POINTS_DF = as.numeric(gsub("[\\$,]","", v19))
+                                       , POINTS_DK = as.numeric(gsub("[\\$,]","", v19))
                                        , POINTS_YH = as.numeric(gsub("[\\$,]","", v22))
                                        , SALARY_FD = as.numeric(gsub("[\\$,]","", v17))
-                                       , SALARY_DF = as.numeric(gsub("[\\$,]","", v20))
+                                       , SALARY_DK = as.numeric(gsub("[\\$,]","", v20))
                                        , SALARY_YH = as.numeric(gsub("[\\$,]","", v23)))]
 
 
@@ -45,10 +45,10 @@ projections_dst <- projections_dst[, .(PLAYER = v22
                                        , POSITION = "DST"
                                        , TEAM = substr(gsub(".*\\((.*)\\).*", "\\1", v24), 4, nchar(gsub(".*\\((.*)\\).*", "\\1", v24)))
                                        , POINTS_FD = as.numeric(gsub("[\\$,]","", v13))
-                                       , POINTS_DF = as.numeric(gsub("[\\$,]","", v16))
+                                       , POINTS_DK = as.numeric(gsub("[\\$,]","", v16))
                                        , POINTS_YH = as.numeric(gsub("[\\$,]","", v19))
                                        , SALARY_FD = as.numeric(gsub("[\\$,]","", v14))
-                                       , SALARY_DF = as.numeric(gsub("[\\$,]","", v17))
+                                       , SALARY_DK = as.numeric(gsub("[\\$,]","", v17))
                                        , SALARY_YH = as.numeric(gsub("[\\$,]","", v20)))]
 
 # Merging together
