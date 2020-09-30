@@ -85,8 +85,8 @@ ui <-
                                              style = "height:60vh",
                                              div(p("Players to exclude from the optimized lineup:"),
                                                  br(), 
-                                                 # DT::DTOutput(outputId = "player_list_exclude")
-                                                 textOutput(outputId = "myText2") 
+                                                 DT::DTOutput(outputId = "player_list_exclude")
+                                                 # textOutput(outputId = "myText2") 
                                                  )
                                              
                                              )
@@ -356,22 +356,21 @@ server <- function(input, output) {
         selectedRow <- as.numeric(strsplit(input$select_button4, "_")[[1]][2])
         player_new <- paste(df_exclude()[[selectedRow,1]])
         
-        pl_inc_new <- pl_inc()[!pl_inc()==player_new]
+        pl_exc_new <- pl_exc()[!pl_exc()==player_new]
         
-        if (length(pl_inc_new)==0) {pl_inc(NULL)}
+        if (length(pl_exc_new)==0) {pl_exc(NULL)}
         
         
         else {
             
             #store the result in values variable
-            pl_inc(pl_inc_new)
+            pl_exc(pl_exc_new)
             
         }
         
         
         
     })
-    
     
     
     df_include <- reactive({
@@ -396,7 +395,7 @@ server <- function(input, output) {
                                 label = "",
                                  icon = icon("minus-circle"),
                                  class = "remove",
-                                 onclick = paste0('Shiny.onInputChange( \"select_button3\" , this.id)')
+                                onclick = 'Shiny.setInputValue(\"select_button3\", this.id, {priority: \"event\"})'
                                 )
             )
     })
@@ -424,7 +423,7 @@ server <- function(input, output) {
                                 label = "",
                                 icon = icon("minus-circle"),
                                 class = "remove",
-                                onclick = paste0('Shiny.onInputChange( \"select_button4\" , this.id)')
+                                onclick = 'Shiny.setInputValue(\"select_button4\", this.id, {priority: \"event\"})'
             )
         )
     })
