@@ -21,9 +21,13 @@ jobs:
           R -e 'install.packages("xml2")'
           R -e 'install.packages("httr")'
           R -e 'install.packages("rvest")'
+          R -e 'install.packages("lpSolve")
           
       - name: Scrape
-        run: Rscript script_scrape_salaries_projections.R
+        run: Rscript script_scrape.R
+        run: Rscript script_dk.R
+        run: Rscript script_fd.R
+        run: Rscript script_yh.R
       
       - name: Commit files
         run: |
