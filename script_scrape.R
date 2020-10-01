@@ -2,6 +2,7 @@
 library(data.table)
 library(rvest)
 library(xml2)
+library(lpSolve)
 
 ## Daily Fantasy Sports
 url <- "https://www.numberfire.com/nfl/fantasy/fantasy-football-projections"
