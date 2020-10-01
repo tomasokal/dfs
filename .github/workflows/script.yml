@@ -25,9 +25,9 @@ jobs:
           
       - name: Scrape
         run: Rscript script_scrape.R
-        run: Rscript script_dk.R
-        run: Rscript script_fd.R
-        run: Rscript script_yh.R
+             Rscript script_dk.R
+             Rscript script_fd.R
+             Rscript script_yh.R
       
       - name: Commit files
         run: |
