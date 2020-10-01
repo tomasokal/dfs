@@ -56,6 +56,11 @@ merge_full <- data.table::rbindlist(list(projections_dfs, projections_dst))
 data.table::fwrite(merge_full, "Output/salaries_projections_scraped_script.csv")
 
 # Setting time
+
+time <- as.POSIXct(Sys.time(), "Etc/GMT+5")
+
+save(time, file = "Output/time.RData")
+
 data.table::fwrite(data.frame(as.POSIXct(Sys.time(),"Etc/GMT+5")), "Output/last_run_time.csv")
 
 # Setting the non-slate games
