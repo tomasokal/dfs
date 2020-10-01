@@ -28,8 +28,14 @@ jobs:
           
       - name: Scrape
         run: Rscript script_scrape.R
+      
+      - name: draftkings
              Rscript script_dk.R
+             
+      - name: fanduel
              Rscript script_fd.R
+             
+      - name: yahoo
              Rscript script_yh.R
       
       - name: Commit files
