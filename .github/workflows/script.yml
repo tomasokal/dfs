@@ -29,15 +29,6 @@ jobs:
       - name: Scrape
         run: Rscript script_scrape.R
       
-      - name: draftkings
-        run: Rscript script_dk.R
-             
-      - name: fanduel
-        run: Rscript script_fd.R
-             
-      - name: yahoo
-        run: Rscript script_yh.R
-      
       - name: Commit files
         run: |
           git config --local user.name github-actions
