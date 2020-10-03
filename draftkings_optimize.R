@@ -33,9 +33,9 @@ optimize_dk <- function(df_full, df_include, df_exclude) {
                                          ppDST = ifelse(POSITION == "DST", 1, 0),
                                          ppFlex = ifelse(POSITION %in% c("RB", "WR", "TE"), 1, 0))]
       
-      obj_points <- player_pool[, POINTS]
+      obj_points <- player_pool[, POINTS_DK]
       con_players <- t(cbind(SALARY = player_pool[, SALARY_DK], position_dt))
-      colnames(con_players) <- player_pool$PLAYER
+      colnames(con_players) <- player_pool$POINTS_DK
       
       f.dir <- rep(0, nrow(con_players))
       f.rhs <- rep(0, nrow(con_players))
@@ -178,9 +178,9 @@ optimize_dk <- function(df_full, df_include, df_exclude) {
                                        ppDST = ifelse(POSITION == "DST", 1, 0),
                                        ppFlex = ifelse(POSITION %in% c("RB", "WR", "TE"), 1, 0))]
     
-    obj_points <- player_pool[, POINTS]
+    obj_points <- player_pool[, POINTS_DK]
     con_players <- t(cbind(SALARY = player_pool[, SALARY_DK], position_dt))
-    colnames(con_players) <- player_pool$PLAYER
+    colnames(con_players) <- player_pool$POINTS_DK
     
     f.dir <- rep(0, nrow(con_players))
     f.rhs <- rep(0, nrow(con_players))
@@ -200,7 +200,7 @@ optimize_dk <- function(df_full, df_include, df_exclude) {
   
 }
 
-df_full <- data.table::fread("Output/salaries_projections_scraped_script.csv")
+df_full <- data.table::fread("Output/salaries_projections_scraped_script.csv")[!TEAM %in% NON_SLATE][!is.na(SALARY_YH)]
     
 df_include <- df_full[PLAYER %in% c("Kyler Murray", "George Kittle", "Curtis Samuel")]
 df_exclude <- df_full[PLAYER %in% c("asdfasdfa")]
@@ -219,7 +219,7 @@ df_exclude <- df_full[PLAYER %in% c("Braxton Berrios", "Chris Herndon")]
 optimize_dk(df_full, df_include, df_exclude)  
 
 df_include <- df_full[PLAYER %in% c("ASDFASDFAS")]
-df_exclude <- df_full[PLAYER %in% c("Kyler Murray", "Miles Sanders")]
+df_exclude <- df_full[PLAYER %in% c("Larry Fitzgerald", "Davante Adams")]
 optimize_dk(df_full, df_include, df_exclude) 
 
 df_include <- df_full[PLAYER %in% c("ASDFASDFAS")]
