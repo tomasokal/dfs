@@ -508,6 +508,45 @@ server <- function(input, output) {
     })
     
     
+    observeEvent(input$runbutton, {
+        
+        inc_test <- subset(full_salaries, PLAYER %in% pl_inc())[!TEAM %in% "NON_SLATE"][!is.na(SALARY_DK)] #param for source
+        
+        if (dim(inc_test)[1] > 0) {
+            
+            check_inclusion <- inc_test[, .N, by = POSITION]
+            check_qb <- ifelse(length(check_inclusion[POSITION == "QB"][[2]]) == 0, 0, check_inclusion[POSITION == "QB"][[2]])
+            check_rb <- ifelse(length(check_inclusion[POSITION == "RB"][[2]]) == 0, 0, check_inclusion[POSITION == "RB"][[2]])
+            check_wr <- ifelse(length(check_inclusion[POSITION == "WR"][[2]]) == 0, 0, check_inclusion[POSITION == "WR"][[2]])
+            check_te <- ifelse(length(check_inclusion[POSITION == "TE"][[2]]) == 0, 0, check_inclusion[POSITION == "TE"][[2]])
+            check_dst <- ifelse(length(check_inclusion[POSITION == "DST"][[2]]) == 0, 0, check_inclusion[POSITION == "DST"][[2]])
+            check_flex <- ifelse(dim(check_inclusion[POSITION %in% c("RB", "WR", "TE")])[1] == 0, 0, sum(check_inclusion[POSITION %in% c("RB", "WR", "TE"), 2]))
+            
+        }
+            
+            if (check_qb > 1 | check_rb > 3 | check_wr > 4 | check_te > 2 | check_dst > 1 | check_flex > 7) {
+                
+                shinyWidgets::show_alert(
+                    title = "Error !!",
+                    text = "It's broken..."#,
+                    #type = "error"
+                )
+                
+            }
+        
+        else {
+            
+            return(NULL)
+            
+        }
+        
+        #Salary check, 50k DK, 60K FD, 200 YH
+            
+            
+        
+    })
+    
+    
 }
 
 # Run the application 
