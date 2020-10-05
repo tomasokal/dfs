@@ -10,7 +10,7 @@ optimize_dk <- function(df_full, df_include, df_exclude) {
     check_dst <- ifelse(length(check_inclusion[POSITION == "DST"][[2]]) == 0, 0, check_inclusion[POSITION == "DST"][[2]])
     check_flex <- ifelse(dim(check_inclusion[POSITION %in% c("RB", "WR", "TE")])[1] == 0, 0, sum(check_inclusion[POSITION %in% c("RB", "WR", "TE"), 2]))
     
-    if (check_qb > 1 | check_rb > 3 | check_wr > 4 | check_te > 2 | check_dst > 1 | check_flex > 7 | sum(df_include$SALARY_DK) > 50000) {
+    if (check_qb > 1 | check_rb > 3 | check_wr > 4 | check_te > 2 | check_dst > 1 | check_flex > 7 | sum(df_include$SALARY_YH) > 200) {
       
       print("You are dumb.")
       
@@ -18,7 +18,7 @@ optimize_dk <- function(df_full, df_include, df_exclude) {
     
     else {
       
-      salary_inclusion <- sum(df_include$SALARY_DK)
+      salary_inclusion <- sum(df_include$SALARY_YH)
       
       player_pool <- df_full[!PLAYER %in% df_include$PLAYER][!PLAYER %in% df_exclude$PLAYER]
       position_dt <- player_pool[, j = .(ppQB = ifelse(POSITION == "QB", 1, 0),
@@ -28,15 +28,15 @@ optimize_dk <- function(df_full, df_include, df_exclude) {
                                          ppDST = ifelse(POSITION == "DST", 1, 0),
                                          ppFlex = ifelse(POSITION %in% c("RB", "WR", "TE"), 1, 0))]
       
-      obj_points <- player_pool[, POINTS_DK]
-      con_players <- t(cbind(SALARY = player_pool[, SALARY_DK], position_dt))
-      colnames(con_players) <- player_pool$POINTS_DK
+      obj_points <- player_pool[, POINTS_YH]
+      con_players <- t(cbind(SALARY = player_pool[, SALARY_YH], position_dt))
+      colnames(con_players) <- player_pool$POINTS_YH
       
       f.dir <- rep(0, nrow(con_players))
       f.rhs <- rep(0, nrow(con_players))
       
       f.dir[1] <- "<="
-      f.rhs[1] <- 50000 - salary_inclusion
+      f.rhs[1] <- 200 - salary_inclusion
       
       f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
       f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
@@ -173,9 +173,9 @@ optimize_dk <- function(df_full, df_include, df_exclude) {
                                        ppDST = ifelse(POSITION == "DST", 1, 0),
                                        ppFlex = ifelse(POSITION %in% c("RB", "WR", "TE"), 1, 0))]
     
-    obj_points <- player_pool[, POINTS_DK]
-    con_players <- t(cbind(SALARY = player_pool[, SALARY_DK], position_dt))
-    colnames(con_players) <- player_pool$POINTS_DK
+    obj_points <- player_pool[, POINTS_YH]
+    con_players <- t(cbind(SALARY = player_pool[, SALARY_YH], position_dt))
+    colnames(con_players) <- player_pool$POINTS_YH
     
     f.dir <- rep(0, nrow(con_players))
     f.rhs <- rep(0, nrow(con_players))
