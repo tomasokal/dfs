@@ -522,17 +522,37 @@ server <- function(input, output) {
             check_dst <- ifelse(length(check_inclusion[POSITION == "DST"][[2]]) == 0, 0, check_inclusion[POSITION == "DST"][[2]])
             check_flex <- ifelse(dim(check_inclusion[POSITION %in% c("RB", "WR", "TE")])[1] == 0, 0, sum(check_inclusion[POSITION %in% c("RB", "WR", "TE"), 2]))
             
-        }
             
             if (check_qb > 1 | check_rb > 3 | check_wr > 4 | check_te > 2 | check_dst > 1 | check_flex > 7) {
                 
+                qb_error <- ifelse(check_qb > 1, "\"Select just one \", tags$b(\"QB\"), \" pick.\", tags$br(), ", "")
+                rb_error <- ifelse(check_rb > 3, "\"Select fewer than 4 \", tags$b(\"RB\"), \" picks.\", tags$br(), ", "")
+                wr_error <- ifelse(check_wr > 4, "\"Select fewer than 5 \", tags$b(\"WR\"), \" picks.\", tags$br(), ", "")
+                te_error <- ifelse(check_te > 2, "\"Select fewer than 3 \", tags$b(\"TE\"), \" picks.\", tags$br(), ", "")
+                dst_error <- ifelse(check_dst > 1, "\"Select just one \", tags$b(\"defense\"), \".\", tags$br(), ", "")
+                flex_error <- ifelse(check_flex > 7, "\"Select fewer than 7 \", tags$b(\"flex\"), \" picks.\", tags$br(), ", "")
+                
+                error_full <- paste0(qb_error, rb_error, wr_error, te_error, dst_error, flex_error)
+                
+                text_full <- paste0("tags$span(", error_full, ")")
+                
                 shinyWidgets::show_alert(
-                    title = "Error !!",
-                    text = "It's broken..."#,
-                    #type = "error"
+                    #type = "error",
+                    title = "Error: Invalid list of players to include",
+                    text = eval(parse(text = text_full)),
+                    html = TRUE
+                    
                 )
                 
             }
+            
+            else {
+                
+                return(NULL)
+                
+            }
+            
+        }
         
         else {
             
