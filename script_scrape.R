@@ -172,13 +172,10 @@ time <- as.POSIXct(Sys.time(), "Etc/GMT+5")
 
 save(time, file = "Output/time.RData")
 
-# Setting the non-slate games
-NON_SLATE <- c("NYJ", "DEN", "PHI", "SF", "ATL", "GB")
-
 # Needs to be automated.
 
 # Yahoo
-player_pool <- slate_main[!TEAM %in% NON_SLATE][!is.na(SALARY_YH)]
+player_pool <- slate_main[!is.na(SALARY_YH)]
 obj_points <- player_pool[, .(POINTS = POINTS_YH)]
 position_dt <- player_pool[, j = .(ppQB = ifelse(POSITION == "QB", 1, 0),
                                    ppRB = ifelse(POSITION == "RB", 1, 0),
@@ -206,7 +203,7 @@ picks_yh <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, 
 data.table::fwrite(picks_yh, "Output/picks_yh.csv")
 
 # FanDuel
-player_pool <- slate_main[!TEAM %in% NON_SLATE][!is.na(SALARY_FD)]
+player_pool <- slate_main[!is.na(SALARY_FD)]
 obj_points <- player_pool[, .(POINTS = POINTS_FD)]
 position_dt <- player_pool[, j = .(ppQB = ifelse(POSITION == "QB", 1, 0),
                                    ppRB = ifelse(POSITION == "RB", 1, 0),
@@ -234,7 +231,7 @@ picks_fd <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, 
 data.table::fwrite(picks_fd, "Output/picks_fd.csv")
 
 # DraftKings
-player_pool <- slate_main[!TEAM %in% NON_SLATE][!is.na(SALARY_DK)]
+player_pool <- slate_main[!is.na(SALARY_DK)]
 obj_points <- player_pool[, .(POINTS = POINTS_DK)]
 position_dt <- player_pool[, j = .(ppQB = ifelse(POSITION == "QB", 1, 0),
                                    ppRB = ifelse(POSITION == "RB", 1, 0),
