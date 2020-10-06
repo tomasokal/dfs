@@ -7,6 +7,7 @@ library(DT)
 full_salaries <- data.table::fread("https://raw.githubusercontent.com/tomasokal/dfs/production/Output/salaries_projections_scraped_script.csv")
 
 
+load(url("https://github.com/tomasokal/dfs/raw/production/Output/time.RData"))
 
 # Define UI for application that draws a histogram
 ui <- 
@@ -36,7 +37,7 @@ ui <-
                                               status = 'testbutton',
                                               checkIcon = list(yes = icon("ok", lib = "glyphicon"))
                                           ),
-                                          p(HTML("<i>Salaries last updated: 9/25/2020 3:01PM</i>")),
+                                          p(HTML(paste0("<i>Salaries last updated: ", time, "</i>"))),
                                           actionButton(inputId = "runbutton",
                                                        icon = icon("chart-bar"),
                                                        label = "Optimize",
