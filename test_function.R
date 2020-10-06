@@ -3,7 +3,7 @@ library(lpSolve)
 
 NON_SLATE <- c("NYJ", "DEN", "PHI", "SFO", "ATL", "GBP")
 
-df_full <- data.table::fread("Output/salaries_projections_scraped_script.csv")[!TEAM %in% NON_SLATE][!is.na(SALARY_YH)]
-df_include <- df_full[PLAYER %in% c("Kyler Murray", "Lamar Jackson", "Curtis Samuel")]
-df_exclude <- df_full[PLAYER %in% c("asdfasdfa")]
+df_full <- slate_main[!is.na(SALARY_DK)]
+df_include <- slate_main[PLAYER %in% c("Kyler Murray")]
+df_exclude <- df_full[PLAYER %in% c("Kareem Hunt")]
 optimize_dk(df_full, df_include, df_exclude)  
