@@ -1,12 +1,12 @@
   
 name: script
 
-on:
-  schedule:
-    - cron:  '0 */6 * * *'
 #on:
-#  push:
-#    branches: production
+#  schedule:
+#    - cron:  '0 */6 * * *'
+on:
+  push:
+    branches: production
 
 jobs:
 
@@ -36,6 +36,3 @@ jobs:
           git add Output/*
           git commit -am "GH ACTION Autorun $(date)"
           git push origin production 
-        env:
-          REPO_KEY: ${{secrets.GITHUB_TOKEN}}
-          username: github-actions
