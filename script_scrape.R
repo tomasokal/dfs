@@ -49,8 +49,117 @@ projections_dst <- projections_dst[, .(PLAYER = v22
                                        , SALARY_DK = as.numeric(gsub("[\\$,]","", v17))
                                        , SALARY_YH = as.numeric(gsub("[\\$,]","", v20)))]
 
+# Slate information
+
+slate_function <- function(x) {
+  
+  if ("2020-10-05" < x & x < "2020-10-13") {
+    
+    # WEEK 5
+    exclude <- c("TBB", "CHI", "MIN", "SEA", "LAR", "NOS")
+    
+  }
+  
+  else if ("2020-10-12" < x & x < "2020-10-20") {
+    
+    # WEEK 6
+    exclude <- c("KCC", "BUF", "LAR", "SFO", "ARI", "DAL")
+    
+  }
+  
+  else if ("2020-10-19" < x & x < "2020-10-27") {
+    
+    # WEEK 7
+    exclude <- c("NYG", "PHI", "TBB", "LVR", "CHI", "LAR")
+    
+  }
+  
+  else if ("2020-10-26" < x & x < "2020-11-03") {
+    
+    # WEEK 8
+    exclude <- c("ATL", "CAR", "DAL", "PHI", "TBB", "NYG")
+    
+  }
+  
+  else if ("2020-11-02" < x & x < "2020-11-10") {
+    
+    # WEEK 9
+    exclude <- c("GBP", "SFO", "NOS", "TBP", "NEP", "NYJ")
+    
+  }
+  
+  else if ("2020-11-09" < x & x < "2020-11-17") {
+    
+    # WEEK 10
+    exclude <- c("IND", "TEN", "BAL", "NEP", "MIN", "CHI")
+    
+  }
+  
+  else if ("2020-11-16" < x & x < "2020-11-24") {
+    
+    # WEEK 11
+    exclude <- c("ARI", "SEA", "KCC", "LVR", "LAR", "TBB")
+    
+  }
+  
+  else if ("2020-11-23" < x & x < "2020-12-01") {
+    
+    # WEEK 12
+    exclude <- c("HOU", "DET", "WAS", "DAL", "BAL", "PIT", "CHI", "GBP", "SEA", "PHI")
+    
+  }
+  
+  else if ("2020-11-30" < x & x < "2020-12-08") {
+    
+    # WEEK 13
+    exclude <- c("DAL", "BAL", "DEN", "KCC", "BUF", "SFO")
+    
+  }
+  
+  else if ("2020-12-07" < x & x < "2020-12-15") {
+    
+    # WEEK 14
+    exclude <- c("NEP", "LAR", "PIT", "BUF", "BAL", "CLE")
+    
+  }
+  
+  else if ("2020-12-14" < x & x < "2020-12-22") {
+    
+    # WEEK 15
+    exclude <- c("NEP", "LAR", "PIT", "BUF", "BAL", "CLE")
+    
+  }
+  
+  else if ("2020-12-21" < x & x < "2020-12-29") {
+    
+    # WEEK 16
+    exclude <- c("NEP", "LAR", "PIT", "BUF", "BAL", "CLE")
+    
+  }
+  
+  else if ("2020-12-28" < x & x < "2021-01-05") {
+    
+    # WEEK 17
+    exclude <- c("NONE")
+    
+  }
+  
+  else {
+    
+    # WEEK 15
+    exclude <- c("NONE")
+    
+  }
+  
+  return(exclude)
+  
+}
+
+SLATE_CHECK <- slate_function(Sys.Date())
+
 # Merging together
-merge_full <- data.table::rbindlist(list(projections_dfs, projections_dst))
+
+merge_full <- data.table::rbindlist(list(projections_dfs, projections_dst))[, SLATE_MAIN := ifelse(TEAM %chin% SLATE_CHECK, 0, 1)]
 
 # Export data 
 data.table::fwrite(merge_full, "Output/salaries_projections_scraped_script.csv")
