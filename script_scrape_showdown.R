@@ -19,12 +19,7 @@ projections_dfs <- projections_dfs[, c("v25", "v26", "v27") := tstrsplit(gsub2, 
 projections_dfs <- projections_dfs[, .(PLAYER = v25
                                        , POSITION = substr(gsub(".*\\((.*)\\).*", "\\1", v27), 1, 2)
                                        , TEAM = trimws(substr(gsub(".*\\((.*)\\).*", "\\1", v27), 4, nchar(gsub(".*\\((.*)\\).*", "\\1", v27))))
-                                       , POINTS_FD = as.numeric(gsub("[\\$,]","", v16))
-                                       , POINTS_DK = as.numeric(gsub("[\\$,]","", v19))
-                                       , POINTS_YH = as.numeric(gsub("[\\$,]","", v22))
-                                       , SALARY_FD = as.numeric(gsub("[\\$,]","", v17))
-                                       , SALARY_DK = as.numeric(gsub("[\\$,]","", v20))
-                                       , SALARY_YH = as.numeric(gsub("[\\$,]","", v23)))]
+                                       , POINTS_DK = as.numeric(gsub("[\\$,]","", v19)))]
 
 ## Defense
 url <- "https://www.numberfire.com/nfl/fantasy/fantasy-football-projections/d"
@@ -41,12 +36,7 @@ projections_dst <- projections_dst[, c("v22", "v23", "v24") := tstrsplit(gsub2, 
 projections_dst <- projections_dst[, .(PLAYER = v22
                                        , POSITION = "DST"
                                        , TEAM = trimws(substr(gsub(".*\\((.*)\\).*", "\\1", v24), 4, nchar(gsub(".*\\((.*)\\).*", "\\1", v24))))
-                                       , POINTS_FD = as.numeric(gsub("[\\$,]","", v13))
-                                       , POINTS_DK = as.numeric(gsub("[\\$,]","", v16))
-                                       , POINTS_YH = as.numeric(gsub("[\\$,]","", v19))
-                                       , SALARY_FD = as.numeric(gsub("[\\$,]","", v14))
-                                       , SALARY_DK = as.numeric(gsub("[\\$,]","", v17))
-                                       , SALARY_YH = as.numeric(gsub("[\\$,]","", v20)))]
+                                       , POINTS_DK = as.numeric(gsub("[\\$,]","", v16)))]
 
 ## Kickers
 url <- "https://www.numberfire.com/nfl/fantasy/fantasy-football-projections/k"
@@ -65,4 +55,86 @@ projections_k <- projections_k[, .(PLAYER = v24
                                        , TEAM = trimws(substr(gsub(".*\\((.*)\\).*", "\\1", v26), 4, nchar(gsub(".*\\((.*)\\).*", "\\1", v26))))
                                        , POINTS_DK = as.numeric(gsub("[\\$,]","", v18)))]
 
-#
+## Combine
+merge_full <- data.table::rbindlist(list(projections_dfs, projections_dst, projections_k))
+
+## Salaries
+salaries <- data.table::fread("Data/Showdown Draftkings/draftkings_snf_w5.csv")[
+  
+  i = `Roster Position` == "FLEX"
+  ,
+  j = .(PLAYER = as.character(ifelse(!`Name` %in% merge_full$PLAYER
+                                     , sapply(`Name`
+                                              , switch
+                                              , "DK Metcalf" = "D.K. Metcalf"
+                                              , "Seahawks" = "Seattle D/ST"
+                                              , "Vikings" = "Minnesota D/ST"
+                                              , "Olabisi Johnson" = "Bisi Johnson"
+                                              , "Phillip Dorsett II" = "Phillip Dorsett")
+                                     , `Name`))
+        , POSITION = `Position`
+        , TEAM = `TeamAbbrev`
+        , SALARY_FLEX = as.numeric(as.integer(Salary))
+        , SALARY_CPT = 1.5 * as.numeric(as.integer(Salary)))
+  
+  ][!PLAYER == "NULL"]
+
+## Combine
+merge_full <- merge(merge_full, salaries, by.x = c("PLAYER", "POSITION", "TEAM"), by.y = c("PLAYER", "POSITION", "TEAM"))[
+  
+  ,
+  j = .(PLAYER
+        , POSITION
+        , TEAM
+        , POINTS_FLEX = POINTS_DK
+        , POINTS_CPT = 1.5 * POINTS_DK
+        , SALARY_FLEX
+        , SALARY_CPT)
+  
+]
+
+## Optimization
+
+picks <- list()
+
+for (row_cpt in 1:nrow(merge_full)) {
+  
+  player_pool <- merge_full[-row_cpt]
+  salary_cpt <- merge_full[row_cpt, SALARY_CPT]
+  points_cpt <- merge_full[-row_cpt, POINTS_CPT]
+  
+  flex_points <- player_pool[, .(POINTS = POINTS_FLEX)]
+  flex_rules <- player_pool[, j = .(ppPLAYER = 1
+                                    , ppHOME = ifelse(TEAM == "SEA", 1, 0)
+                                    , ppAWAY = ifelse(TEAM == "MIN", 1, 0))]
+  flex_con_pl <- t(cbind(player_pool[, SALARY_FLEX], flex_rules))
+  colnames(flex_con_pl) <- player_pool$PLAYER
+  
+  f.dir <- rep(0, nrow(flex_con_pl))
+  f.rhs <- rep(0, nrow(flex_con_pl))
+  
+  f.dir[1] <- "<="
+  f.rhs[1] <- 50000 - salary_cpt
+  
+  f.dir[2:nrow(flex_con_pl)] <- c("=", ">=", ">=")
+  f.rhs[2:nrow(flex_con_pl)] <- c(5, 1, 1)
+  
+  opt <- lp("max", flex_points, flex_con_pl, f.dir, f.rhs, all.bin = TRUE)
+  opt_picks <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_FLEX, SALARY = SALARY_FLEX, ROLE = "FLEX")]
+  
+  cpt_picks <- player_pool <- merge_full[row_cpt][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_CPT, SALARY = SALARY_CPT, ROLE = "CPT")]
+  
+  picks[[row_cpt]] <- c(data.table::rbindlist(list(cpt_picks, opt_picks))[, PLAYER]
+                         , sum(data.table::rbindlist(list(cpt_picks, opt_picks))[, SALARY])
+                         , sum(data.table::rbindlist(list(cpt_picks, opt_picks))[, POINTS]))
+  
+}
+
+lineups <- data.table::as.data.table(t(as.data.frame(picks)))
+names(lineups) <- c("CAPTAIN", "FLEX1", "FLEX2", "FLEX3", "FLEX4", "FLEX5", "SALARY", "POINTS")
+lineups$SALARY <- as.numeric(as.character(lineups$SALARY))
+lineups$POINTS <- as.numeric(as.character(lineups$POINTS))
+lineups <- lineups[order(-POINTS)][1:10, ]
+
+# Export
+data.table::fwrite(lineups, "Output/picks_dk_snf.csv")
