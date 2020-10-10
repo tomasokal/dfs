@@ -58,8 +58,10 @@ projections_k <- projections_k[, .(PLAYER = v24
 ## Combine
 merge_full <- data.table::rbindlist(list(projections_dfs, projections_dst, projections_k))
 
+## MIN @ SEA
+
 ## Salaries
-salaries <- data.table::fread("Data/Showdown Draftkings/draftkings_snf_w5.csv")[
+salaries <- data.table::fread("Data/Showdown Draftkings/draftkings_sea_min_w5.csv")[
   
   i = `Roster Position` == "FLEX"
   ,
@@ -137,4 +139,169 @@ lineups$POINTS <- as.numeric(as.character(lineups$POINTS))
 lineups <- lineups[order(-POINTS)][1:10, ]
 
 # Export
-data.table::fwrite(lineups, "Output/picks_dk_snf.csv")
+data.table::fwrite(lineups, "Output/picks_dk_sea_min_w5.csv")
+
+## NYG @ DAL
+merge_full <- data.table::rbindlist(list(projections_dfs, projections_dst, projections_k))
+
+## Salaries
+salaries <- data.table::fread("Data/Showdown Draftkings/draftkings_nyg_dal_w5.csv")[
+  
+  i = `Roster Position` == "FLEX"
+  ,
+  j = .(PLAYER = as.character(ifelse(!`Name` %in% merge_full$PLAYER
+                                     , sapply(`Name`
+                                              , switch
+                                              , "Cowboys" = "Dallas D/ST"
+                                              , "Giants" = "New York Giants D/ST"
+                                              , "Wayne Gallman Jr." = "Wayne Gallman")
+                                     , `Name`))
+        , POSITION = `Position`
+        , TEAM = `TeamAbbrev`
+        , SALARY_FLEX = as.numeric(as.integer(Salary))
+        , SALARY_CPT = 1.5 * as.numeric(as.integer(Salary)))
+  
+  ][!PLAYER == "NULL"]
+
+## Combine
+merge_full <- merge(merge_full, salaries, by.x = c("PLAYER", "POSITION", "TEAM"), by.y = c("PLAYER", "POSITION", "TEAM"))[
+  
+  ,
+  j = .(PLAYER
+        , POSITION
+        , TEAM
+        , POINTS_FLEX = POINTS_DK
+        , POINTS_CPT = 1.5 * POINTS_DK
+        , SALARY_FLEX
+        , SALARY_CPT)
+  
+  ]
+
+## Optimization
+
+picks <- list()
+
+for (row_cpt in 1:nrow(merge_full)) {
+  
+  player_pool <- merge_full[-row_cpt]
+  salary_cpt <- merge_full[row_cpt, SALARY_CPT]
+  points_cpt <- merge_full[-row_cpt, POINTS_CPT]
+  
+  flex_points <- player_pool[, .(POINTS = POINTS_FLEX)]
+  flex_rules <- player_pool[, j = .(ppPLAYER = 1
+                                    , ppHOME = ifelse(TEAM == "NYG", 1, 0)
+                                    , ppAWAY = ifelse(TEAM == "DAL", 1, 0))]
+  flex_con_pl <- t(cbind(player_pool[, SALARY_FLEX], flex_rules))
+  colnames(flex_con_pl) <- player_pool$PLAYER
+  
+  f.dir <- rep(0, nrow(flex_con_pl))
+  f.rhs <- rep(0, nrow(flex_con_pl))
+  
+  f.dir[1] <- "<="
+  f.rhs[1] <- 50000 - salary_cpt
+  
+  f.dir[2:nrow(flex_con_pl)] <- c("=", ">=", ">=")
+  f.rhs[2:nrow(flex_con_pl)] <- c(5, 1, 1)
+  
+  opt <- lp("max", flex_points, flex_con_pl, f.dir, f.rhs, all.bin = TRUE)
+  opt_picks <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_FLEX, SALARY = SALARY_FLEX, ROLE = "FLEX")]
+  
+  cpt_picks <- player_pool <- merge_full[row_cpt][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_CPT, SALARY = SALARY_CPT, ROLE = "CPT")]
+  
+  picks[[row_cpt]] <- c(data.table::rbindlist(list(cpt_picks, opt_picks))[, PLAYER]
+                        , sum(data.table::rbindlist(list(cpt_picks, opt_picks))[, SALARY])
+                        , sum(data.table::rbindlist(list(cpt_picks, opt_picks))[, POINTS]))
+  
+}
+
+lineups <- data.table::as.data.table(t(as.data.frame(picks)))
+names(lineups) <- c("CAPTAIN", "FLEX1", "FLEX2", "FLEX3", "FLEX4", "FLEX5", "SALARY", "POINTS")
+lineups$SALARY <- as.numeric(as.character(lineups$SALARY))
+lineups$POINTS <- as.numeric(as.character(lineups$POINTS))
+lineups <- lineups[order(-POINTS)][1:10, ]
+
+# Export
+data.table::fwrite(lineups, "Output/picks_dk_nyg_dal_w5.csv")
+
+## CAR @ ATL
+merge_full <- data.table::rbindlist(list(projections_dfs, projections_dst, projections_k))
+
+## Salaries
+salaries <- data.table::fread("Data/Showdown Draftkings/draftkings_car_atl_w5.csv")[
+  
+  i = `Roster Position` == "FLEX"
+  ,
+  j = .(PLAYER = as.character(ifelse(!`Name` %in% merge_full$PLAYER
+                                     , sapply(`Name`
+                                              , switch
+                                              , "Falcons" = "Atlanta D/ST"
+                                              , "Panthers" = "Carolina D/ST"
+                                              , "Todd Gurley II" = "Todd Gurley"
+                                              , "DJ Moore" = "DJ. Moore")
+                                     , `Name`))
+        , POSITION = `Position`
+        , TEAM = `TeamAbbrev`
+        , SALARY_FLEX = as.numeric(as.integer(Salary))
+        , SALARY_CPT = 1.5 * as.numeric(as.integer(Salary)))
+  
+  ][!PLAYER == "NULL"]
+
+## Combine
+merge_full <- merge(merge_full, salaries, by.x = c("PLAYER", "POSITION", "TEAM"), by.y = c("PLAYER", "POSITION", "TEAM"))[
+  
+  ,
+  j = .(PLAYER
+        , POSITION
+        , TEAM
+        , POINTS_FLEX = POINTS_DK
+        , POINTS_CPT = 1.5 * POINTS_DK
+        , SALARY_FLEX
+        , SALARY_CPT)
+  
+  ]
+
+## Optimization
+
+picks <- list()
+
+for (row_cpt in 1:nrow(merge_full)) {
+  
+  player_pool <- merge_full[-row_cpt]
+  salary_cpt <- merge_full[row_cpt, SALARY_CPT]
+  points_cpt <- merge_full[-row_cpt, POINTS_CPT]
+  
+  flex_points <- player_pool[, .(POINTS = POINTS_FLEX)]
+  flex_rules <- player_pool[, j = .(ppPLAYER = 1
+                                    , ppHOME = ifelse(TEAM == "CAR", 1, 0)
+                                    , ppAWAY = ifelse(TEAM == "ATL", 1, 0))]
+  flex_con_pl <- t(cbind(player_pool[, SALARY_FLEX], flex_rules))
+  colnames(flex_con_pl) <- player_pool$PLAYER
+  
+  f.dir <- rep(0, nrow(flex_con_pl))
+  f.rhs <- rep(0, nrow(flex_con_pl))
+  
+  f.dir[1] <- "<="
+  f.rhs[1] <- 50000 - salary_cpt
+  
+  f.dir[2:nrow(flex_con_pl)] <- c("=", ">=", ">=")
+  f.rhs[2:nrow(flex_con_pl)] <- c(5, 1, 1)
+  
+  opt <- lp("max", flex_points, flex_con_pl, f.dir, f.rhs, all.bin = TRUE)
+  opt_picks <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_FLEX, SALARY = SALARY_FLEX, ROLE = "FLEX")]
+  
+  cpt_picks <- player_pool <- merge_full[row_cpt][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_CPT, SALARY = SALARY_CPT, ROLE = "CPT")]
+  
+  picks[[row_cpt]] <- c(data.table::rbindlist(list(cpt_picks, opt_picks))[, PLAYER]
+                        , sum(data.table::rbindlist(list(cpt_picks, opt_picks))[, SALARY])
+                        , sum(data.table::rbindlist(list(cpt_picks, opt_picks))[, POINTS]))
+  
+}
+
+lineups <- data.table::as.data.table(t(as.data.frame(picks)))
+names(lineups) <- c("CAPTAIN", "FLEX1", "FLEX2", "FLEX3", "FLEX4", "FLEX5", "SALARY", "POINTS")
+lineups$SALARY <- as.numeric(as.character(lineups$SALARY))
+lineups$POINTS <- as.numeric(as.character(lineups$POINTS))
+lineups <- lineups[order(-POINTS)][1:10, ]
+
+# Export
+data.table::fwrite(lineups, "Output/picks_dk_car_atl_w5.csv")
