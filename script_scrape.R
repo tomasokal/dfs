@@ -56,7 +56,7 @@ slate_function <- function(x) {
   if ("2020-10-05" < x & x < "2020-10-13") {
     
     # WEEK 5
-    exclude <- c("TBB", "CHI", "MIN", "SEA", "LAR", "NOS", "BUF", "TEN")
+    exclude <- c("TBB", "CHI", "MIN", "SEA", "LAC", "NOS", "BUF", "TEN")
     
   }
   
