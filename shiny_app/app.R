@@ -4,7 +4,7 @@ library(shinyjs)
 library(data.table)
 library(DT)
 
-full_salaries <- data.table::fread("https://raw.githubusercontent.com/tomasokal/dfs/production/Output/salaries_projections_scraped_script.csv")
+full_salaries <- data.table::fread("https://raw.githubusercontent.com/tomasokal/dfs/production/Output/salaries_projections_main_slate.csv")
 
 
 load(url("https://github.com/tomasokal/dfs/raw/production/Output/time.RData"))
@@ -547,12 +547,7 @@ server <- function(input, output) {
                 
             }
             
-            else {
-                
-                return(NULL)
-                
-            }
-            
+
         }
         
         else {
