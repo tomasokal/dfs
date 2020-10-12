@@ -83,11 +83,13 @@
   flex-direction: column;
   align-content: flex-start;
   flex-wrap: wrap;
-  height: 26vh;
+  height: 24vh;
+  padding-left: 20px;
+  padding-top:15px;
 }
 .testcontainer div {
-  height: 5vh;
-  width: 16vw;
+  height: 4.4vh;
+  width: 25vw;
   display: inline-block;
   vertical-align: middle;
   font-size:24px;

@@ -57,7 +57,6 @@ ui <-
                                    column(10,
                                           wellPanel(class = "optiwell",
                                                     p("Your optimized lineup:"),
-                                                    br(),
                                                     #DT::DTOutput(outputId = "optimized"),
                                                     htmlOutput(outputId = "optimized"),
                                                     style = "height:30vh;")
@@ -740,7 +739,7 @@ server <- function(input, output) {
                 opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
                 picks <- player_pool[which(opt$solution == 1), ]
                 
-                picks_list <- paste0("<div>", picks$Player, " - $", picks$Salary, "</div>", collapse = " ")
+                picks_list <- paste0("<div><b>", picks$Player, "</b> - $", picks$Salary, "/", picks$Points, "<i>pts.</i>", " </div>", collapse = " ")
                 
                 html_picks <- paste0("<div class = \"testcontainer\">", picks_list, "</div>")
                 
@@ -780,7 +779,7 @@ server <- function(input, output) {
             opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
             picks <- player_pool[which(opt$solution == 1), ]
             
-            picks_list <- paste0("<div>", picks$Player, " - $", picks$Salary, "</div>", collapse = " ")
+            picks_list <- paste0("<div><b>", picks$Player, "</b> - $", picks$Salary, "/", picks$Points, "<i>pts.</i>", " </div>", collapse = " ")
             
             html_picks <- paste0("<div class = \"testcontainer\">", picks_list, "</div>")
             
