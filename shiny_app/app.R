@@ -3,11 +3,15 @@ library(shinyWidgets)
 library(shinyjs)
 library(data.table)
 library(DT)
+library(lpSolve)
+library(dplyr)
 
 full_salaries <- data.table::fread("https://raw.githubusercontent.com/tomasokal/dfs/production/Output/salaries_projections_main_slate.csv")
 
 
 load(url("https://github.com/tomasokal/dfs/raw/production/Output/time.RData"))
+
+
 
 # Define UI for application that draws a histogram
 ui <- 
@@ -52,8 +56,11 @@ ui <-
                                    
                                    column(10,
                                           wellPanel(class = "optiwell",
-                                                        p("Your optimized lineup:"),
-                                                    style = "height:25vh;")
+                                                    p("Your optimized lineup:"),
+                                                    br(),
+                                                    #DT::DTOutput(outputId = "optimized"),
+                                                    htmlOutput(outputId = "optimized"),
+                                                    style = "height:30vh;")
                                           ),
                                    )
                                    
@@ -63,7 +70,7 @@ ui <-
                                    column(1),
                                    column(11,
                                           wellPanel(class = "wellclass",
-                                                    style = "height:60vh;",
+                                                    style = "height:55vh;",
                                           div(
                                               br(), 
                                               DT::DTOutput(outputId = "player_list_table"))
@@ -74,7 +81,7 @@ ui <-
                                    ),
                             column(3,
                                    wellPanel(class = "wellclass",
-                                             style = "height:60vh",
+                                             style = "height:55vh",
                                              div(p("Players to include in the optimized lineup:"),
                                                  br(), 
                                                  DT::DTOutput(outputId = "player_list_include"))
@@ -83,7 +90,7 @@ ui <-
                                    ),
                             column(3,
                                    wellPanel(class = "wellclass",
-                                             style = "height:60vh",
+                                             style = "height:55vh",
                                              div(p("Players to exclude from the optimized lineup:"),
                                                  br(), 
                                                  DT::DTOutput(outputId = "player_list_exclude")
@@ -496,6 +503,8 @@ server <- function(input, output) {
         
         pl_exc(NULL)
         
+        optimized_lineup(NULL)
+        
     })
     
     
@@ -509,9 +518,42 @@ server <- function(input, output) {
     })
     
     
+    optimized_lineup <- reactiveVal(NULL)
+    
+    
     observeEvent(input$runbutton, {
         
-        inc_test <- subset(full_salaries, PLAYER %in% pl_inc())[!TEAM %in% "NON_SLATE"][!is.na(SALARY_DK)] #param for source
+        optimized_lineup(NULL)
+        
+        #--------------TESTING NOT DOING THIS FUNCTIONALIZED----------------##
+        
+        inc_players <- df_include()
+        exc_players <- df_exclude()
+        
+        salary_full <- switch(input$sourcegroup, 
+                              "DraftKings" = 50000, 
+                              "FanDuel" = 60000, 
+                              "Yahoo Sports" = 200
+        )
+        
+        salary_switch <- switch(input$sourcegroup, "DraftKings" = "SALARY_DK", "FanDuel" = "SALARY_FD", "Yahoo Sports" = "SALARY_YH")
+        points_switch <- switch(input$sourcegroup, "DraftKings" = "POINTS_DK", "FanDuel" = "POINTS_FD", "Yahoo Sports" = "POINTS_YH")
+        
+        df_full <- full_salaries %>%
+            dplyr::select(PLAYER, POSITION, TEAM, salary_switch, points_switch) %>%
+            `colnames<-`(c("Player", "Position", "Team", "Salary", "Points")) %>%
+            dplyr::filter(!is.na(Salary))
+        
+        
+        #------------------------------------------------------------------##
+        
+        inc_test <- subset(full_salaries, PLAYER %in% pl_inc())[!is.na(SALARY_DK)] #param for source
+        
+        salary_full <- switch(input$sourcegroup, 
+                              "DraftKings" = 50000, 
+                              "FanDuel" = 60000, 
+                              "Yahoo Sports" = 200
+        )
         
         if (dim(inc_test)[1] > 0) {
             
@@ -522,9 +564,10 @@ server <- function(input, output) {
             check_te <- ifelse(length(check_inclusion[POSITION == "TE"][[2]]) == 0, 0, check_inclusion[POSITION == "TE"][[2]])
             check_dst <- ifelse(length(check_inclusion[POSITION == "DST"][[2]]) == 0, 0, check_inclusion[POSITION == "DST"][[2]])
             check_flex <- ifelse(dim(check_inclusion[POSITION %in% c("RB", "WR", "TE")])[1] == 0, 0, sum(check_inclusion[POSITION %in% c("RB", "WR", "TE"), 2]))
+            check_salary <- ifelse(sum(df_include()$Salary) > salary_full, TRUE, FALSE)
             
             
-            if (check_qb > 1 | check_rb > 3 | check_wr > 4 | check_te > 2 | check_dst > 1 | check_flex > 7) {
+            if (check_qb > 1 | check_rb > 3 | check_wr > 4 | check_te > 2 | check_dst > 1 | check_flex > 7 | sum(df_include()$Salary) > salary_full) {
                 
                 qb_error <- ifelse(check_qb > 1, "\"Select just one \", tags$b(\"QB\"), \" pick.\", tags$br(), ", "")
                 rb_error <- ifelse(check_rb > 3, "\"Select fewer than 4 \", tags$b(\"RB\"), \" picks.\", tags$br(), ", "")
@@ -532,8 +575,11 @@ server <- function(input, output) {
                 te_error <- ifelse(check_te > 2, "\"Select fewer than 3 \", tags$b(\"TE\"), \" picks.\", tags$br(), ", "")
                 dst_error <- ifelse(check_dst > 1, "\"Select just one \", tags$b(\"defense\"), \".\", tags$br(), ", "")
                 flex_error <- ifelse(check_flex > 7, "\"Select fewer than 7 \", tags$b(\"flex\"), \" picks.\", tags$br(), ", "")
+                salary_error <- ifelse(check_salary==TRUE, paste0("\"Select a total values of players under \", ", 
+                                                                  "tags$b(\"$", prettyNum(salary_full), ".\"),", 
+                                                                  " tags$br(), "), "")
                 
-                error_full <- paste0(qb_error, rb_error, wr_error, te_error, dst_error, flex_error)
+                error_full <- paste0(qb_error, rb_error, wr_error, te_error, dst_error, flex_error, salary_error)
                 
                 text_full <- paste0("tags$span(", error_full, ")")
                 
@@ -545,14 +591,204 @@ server <- function(input, output) {
                     
                 )
                 
+                return(NULL)
+                
             }
-            
-
+            else {
+                
+                salary_inclusion <- sum(df_full[Player %in% inc_players$Player][["Salary"]])
+                
+                
+                # salary_inclusion <- sum(df_include$SALARY_DK)
+                
+                player_pool <- df_full[!Player %in% inc_players$Player][!Player %in% exc_players$Player]
+                
+                position_dt <- player_pool[, j = .(ppQB = ifelse(Position == "QB", 1, 0),
+                                                   ppRB = ifelse(Position == "RB", 1, 0),
+                                                   ppWR = ifelse(Position == "WR", 1, 0),
+                                                   ppTE = ifelse(Position == "TE", 1, 0),
+                                                   ppDST = ifelse(Position == "DST", 1, 0),
+                                                   ppFlex = ifelse(Position %in% c("RB", "WR", "TE"), 1, 0))]
+                
+                obj_points <- player_pool[, Points]
+                
+                con_players <- t(cbind(SALARY = player_pool[, Salary], position_dt))
+                colnames(con_players) <- player_pool$Points
+                
+                f.dir <- rep(0, nrow(con_players))
+                f.rhs <- rep(0, nrow(con_players))
+                
+                f.dir[1] <- "<="
+                f.rhs[1] <- salary_full - salary_inclusion
+                
+                f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
+                f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
+                
+                f.rhs[7] <- 7 - check_flex
+                
+                if (check_qb == 1) {
+                    
+                    f.dir[2] <- "="
+                    f.rhs[2] <- 0
+                    
+                }
+                
+                else {
+                    
+                    f.rhs <- f.rhs
+                    
+                }
+                
+                if (check_rb == 1) {
+                    
+                    f.dir[3] <- ">="
+                    f.rhs[3] <- 1
+                    
+                }
+                
+                if (check_rb == 2) {
+                    
+                    f.dir[3] <- ">="
+                    f.rhs[3] <- 0
+                    
+                }
+                
+                if (check_rb == 3) {
+                    
+                    f.dir[3] <- "="
+                    f.rhs[3] <- 0
+                    
+                }
+                
+                else {
+                    
+                    f.dir <- f.dir
+                    f.rhs <- f.rhs
+                    
+                }
+                
+                if (check_wr == 1) {
+                    
+                    f.dir[4] <- ">="
+                    f.rhs[4] <- 2
+                    
+                }
+                
+                if (check_wr == 2) {
+                    
+                    f.dir[4] <- ">="
+                    f.rhs[4] <- 1
+                    
+                }
+                
+                if (check_wr == 3) {
+                    
+                    f.dir[4] <- ">="
+                    f.rhs[4] <- 0
+                    
+                }
+                
+                if (check_wr == 4) {
+                    
+                    f.dir[4] <- "="
+                    f.rhs[4] <- 0
+                    
+                }
+                
+                else {
+                    
+                    f.dir <- f.dir
+                    f.rhs <- f.rhs
+                    
+                }
+                
+                if (check_te == 1) {
+                    
+                    f.dir[5] <- ">="
+                    f.rhs[5] <- 0
+                    
+                }
+                
+                if (check_te == 2) {
+                    
+                    f.dir[5] <- "="
+                    f.rhs[5] <- 0
+                    
+                }
+                
+                else {
+                    
+                    f.dir <- f.dir
+                    f.rhs <- f.rhs
+                    
+                }
+                
+                if (check_dst == 1) {
+                    
+                    f.dir[6] <- "="
+                    f.rhs[6] <- 0
+                    
+                }
+                
+                else {
+                    
+                    f.dir <- f.dir
+                    f.rhs <- f.rhs
+                    
+                }
+                
+                opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+                picks <- player_pool[which(opt$solution == 1), ]
+                
+                picks_list <- paste0("<div>", picks$Player, " - $", picks$Salary, "</div>", collapse = " ")
+                
+                html_picks <- paste0("<div class = \"testcontainer\">", picks_list, "</div>")
+                
+                optimized_lineup(html_picks)
+                
+                # optimized_lineup(picks)
+                
+            }
+                
         }
+            
         
         else {
             
-            return(NULL)
+
+            player_pool <- df_full[!Player %in% exc_players$Player]
+            position_dt <- player_pool[, j = .(ppQB = ifelse(Position == "QB", 1, 0),
+                                               ppRB = ifelse(Position == "RB", 1, 0),
+                                               ppWR = ifelse(Position == "WR", 1, 0),
+                                               ppTE = ifelse(Position == "TE", 1, 0),
+                                               ppDST = ifelse(Position == "DST", 1, 0),
+                                               ppFlex = ifelse(Position %in% c("RB", "WR", "TE"), 1, 0))]
+            
+            obj_points <- player_pool[, Points]
+            con_players <- t(cbind(SALARY = player_pool[, Salary], position_dt))
+            colnames(con_players) <- player_pool$Points
+            
+            f.dir <- rep(0, nrow(con_players))
+            f.rhs <- rep(0, nrow(con_players))
+            
+            f.dir[1] <- "<="
+            f.rhs[1] <- 50000
+            
+            f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
+            f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
+            
+            opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+            picks <- player_pool[which(opt$solution == 1), ]
+            
+            picks_list <- paste0("<div>", picks$Player, " - $", picks$Salary, "</div>", collapse = " ")
+            
+            html_picks <- paste0("<div class = \"testcontainer\">", picks_list, "</div>")
+            
+            optimized_lineup(html_picks)
+            
+            # optimized_lineup(picks)
+            
+
             
         }
         
@@ -561,6 +797,24 @@ server <- function(input, output) {
             
         
     })
+    
+    # output$optimized <- DT::renderDT({
+    #     optimized_lineup()
+    # },
+    # escape = FALSE,
+    # selection = "none",
+    # options = list(
+    #     initComplete = JS(
+    #         "function(settings, json) {",
+    #         "$(this.api().table().container()).css({'font-size': '50%'});",
+    #         "}"),
+    #     columnDefs = list(list(className = 'dt-center', targets = 2:4),
+    #                       list(width = '18%', targets = 4)),
+    #     dom = 't'
+    #     
+    # ))
+    
+    output$optimized <- renderText(optimized_lineup())
     
     
 }

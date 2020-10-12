@@ -78,6 +78,23 @@
   
 }
 
+.testcontainer {
+  display: flex;
+  flex-direction: column;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  height: 26vh;
+}
+.testcontainer div {
+  height: 5vh;
+  width: 16vw;
+  display: inline-block;
+  vertical-align: middle;
+  font-size:24px;
+}
+
+
+
 
 /* Style sidebars/well panels */
 
