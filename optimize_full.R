@@ -25,7 +25,7 @@ optimize_full <- function(df_to_use, df_include, df_exclude, site) {
   
   df_full <- df_to_use %>%
     dplyr::select(PLAYER, POSITION, TEAM, salary_switch, points_switch) %>%
-    `colnames<-`(c("Player", "Position", "Salary", "Points")) %>%
+    `colnames<-`(c("Player", "Position", "Team", "Salary", "Points")) %>%
     dplyr::filter(!is.na(Salary))
   
   # df_full <- full_salaries %>%
@@ -34,31 +34,31 @@ optimize_full <- function(df_to_use, df_include, df_exclude, site) {
   #   dplyr::filter(!is.na(Salary))
   
   
-  if (dim(df_include)[1] > 0) {
+  if (dim(df_include())[1] > 0) {
     
-    check_inclusion <- df_include[, .N, by = POSITION]
-    check_qb <- ifelse(length(check_inclusion[POSITION == "QB"][[2]]) == 0, 0, check_inclusion[POSITION == "QB"][[2]])
-    check_rb <- ifelse(length(check_inclusion[POSITION == "RB"][[2]]) == 0, 0, check_inclusion[POSITION == "RB"][[2]])
-    check_wr <- ifelse(length(check_inclusion[POSITION == "WR"][[2]]) == 0, 0, check_inclusion[POSITION == "WR"][[2]])
-    check_te <- ifelse(length(check_inclusion[POSITION == "TE"][[2]]) == 0, 0, check_inclusion[POSITION == "TE"][[2]])
-    check_dst <- ifelse(length(check_inclusion[POSITION == "DST"][[2]]) == 0, 0, check_inclusion[POSITION == "DST"][[2]])
-    check_flex <- ifelse(dim(check_inclusion[POSITION %in% c("RB", "WR", "TE")])[1] == 0, 0, sum(check_inclusion[POSITION %in% c("RB", "WR", "TE"), 2]))
+    check_inclusion <- df_include()[, .N, by = Position]
+    check_qb <- ifelse(length(check_inclusion[Position == "QB"][[2]]) == 0, 0, check_inclusion[Position == "QB"][[2]])
+    check_rb <- ifelse(length(check_inclusion[Position == "RB"][[2]]) == 0, 0, check_inclusion[Position == "RB"][[2]])
+    check_wr <- ifelse(length(check_inclusion[Position == "WR"][[2]]) == 0, 0, check_inclusion[Position == "WR"][[2]])
+    check_te <- ifelse(length(check_inclusion[Position == "TE"][[2]]) == 0, 0, check_inclusion[Position == "TE"][[2]])
+    check_dst <- ifelse(length(check_inclusion[Position == "DST"][[2]]) == 0, 0, check_inclusion[Position == "DST"][[2]])
+    check_flex <- ifelse(dim(check_inclusion[Position %in% c("RB", "WR", "TE")])[1] == 0, 0, sum(check_inclusion[Position %in% c("RB", "WR", "TE"), 2]))
     
-    if (check_qb > 1 | check_rb > 3 | check_wr > 4 | check_te > 2 | check_dst > 1 | check_flex > 7 | sum(df_include$SALARY_DK) > 50000) {
-      
-      print("You are dumb.")
-      
-    }
+    # if (check_qb > 1 | check_rb > 3 | check_wr > 4 | check_te > 2 | check_dst > 1 | check_flex > 7 | sum(df_include$Salary) > salary_full) {
+    #   
+    #   print("You are dumb.")
+    #   
+    # }
     
-    else {
+    # else {
       
       
-      salary_inclusion <- sum(df_full[Player %in% inc_players$PLAYER][["Salary"]])
+      salary_inclusion <- sum(df_full[Player %in% inc_players$Player][["Salary"]])
       
       
       # salary_inclusion <- sum(df_include$SALARY_DK)
       
-      player_pool <- df_full[!Player %in% inc_players$PLAYER][!Player %in% exc_players$PLAYER]
+      player_pool <- df_full[!Player %in% inc_players$Player][!Player %in% exc_players$Player]
       
       position_dt <- player_pool[, j = .(ppQB = ifelse(Position == "QB", 1, 0),
                                          ppRB = ifelse(Position == "RB", 1, 0),
@@ -201,7 +201,7 @@ optimize_full <- function(df_to_use, df_include, df_exclude, site) {
       
     }
     
-  }
+  # }
   
   else {
     
