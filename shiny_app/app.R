@@ -9,6 +9,7 @@ library(dplyr)
 full_salaries <- data.table::fread("https://raw.githubusercontent.com/tomasokal/dfs/production/Output/salaries_projections_main_slate.csv")
 
 
+
 load(url("https://github.com/tomasokal/dfs/raw/production/Output/time.RData"))
 
 
@@ -178,6 +179,7 @@ server <- function(input, output) {
             `Pos.` = full_salaries$POSITION,
             Points = full_salaries$POINTS_DK,
             Salary = full_salaries$SALARY_DK,
+            Diff = full_salaries$DIFF_DK,
             Include = shinyInput(actionButton, nrow(full_salaries),
                                  'button_',
                                  label = "",
@@ -206,6 +208,7 @@ server <- function(input, output) {
             `Pos.` = full_salaries$POSITION,
             Points = full_salaries$POINTS_FD,
             Salary = full_salaries$SALARY_FD,
+            Diff = full_salaries$DIFF_FD,
             Include = shinyInput(actionButton, nrow(full_salaries),
                                  'button_',
                                  label = "",
@@ -235,6 +238,7 @@ server <- function(input, output) {
             `Pos.` = full_salaries$POSITION,
             Points = full_salaries$POINTS_YH,
             Salary = full_salaries$SALARY_YH,
+            Diff = full_salaries$DIFF_YH,
             Include = shinyInput(actionButton, nrow(full_salaries),
                                  'button_',
                                  label = "",
@@ -269,27 +273,59 @@ server <- function(input, output) {
     
     
     
+    # output$player_list_table <- DT::renderDT({
+    #     #player_list()
+    #     proper_tb()
+    # },
+    # escape = FALSE,
+    # selection = "none",
+    # options = list(
+    #     pageLength = 50,
+    #     scrollY = "37.5vh",
+    #     scroller = TRUE,
+    #     lengthMenu = list(c(50, 100, -1), c("50", "100", "All")),
+    #     initComplete = JS(
+    #         "function(settings, json) {",
+    #         "$(this.api().table().container()).css({'font-size': '80%'});",
+    #         "}"),
+    #     #dom = 't', displays table only
+    #     columnDefs = list(list(className = 'dt-center', targets = 2:7),
+    #                       list(width = '18%', targets = 3),
+    #                       list(width = '18%', targets = 4),
+    #                       list(visible = FALSE, targets = 5))
+    #     
+    # )) 
+    
     output$player_list_table <- DT::renderDT({
         #player_list()
-        proper_tb()
-    },
-    escape = FALSE,
-    selection = "none",
-    options = list(
-        pageLength = 50,
-        scrollY = "37.5vh",
-        scroller = TRUE,
-        lengthMenu = list(c(50, 100, -1), c("50", "100", "All")),
-        initComplete = JS(
-            "function(settings, json) {",
-            "$(this.api().table().container()).css({'font-size': '80%'});",
-            "}"),
-        #dom = 't', displays table only
-        columnDefs = list(list(className = 'dt-center', targets = 2:6),
-                          list(width = '18%', targets = 3),
-                          list(width = '18%', targets = 4))
-        
-    ))
+        datatable(proper_tb(),
+                  escape = FALSE,
+                  selection = "none",
+                  options = list(
+                      pageLength = 50,
+                      scrollY = "37.5vh",
+                      scroller = TRUE,
+                      lengthMenu = list(c(50, 100, -1), c("50", "100", "All")),
+                      initComplete = JS(
+                          "function(settings, json) {",
+                          "$(this.api().table().container()).css({'font-size': '80%'});",
+                          "}"),
+                      #dom = 't', displays table only
+                      columnDefs = list(list(className = 'dt-center', targets = 2:7),
+                                        list(width = '18%', targets = 3),
+                                        list(width = '18%', targets = 4),
+                                        list(visible = FALSE, targets = 5))
+
+                  )) %>%
+            formatStyle(4, backgroundColor = "lightblue",
+                        `padding-top` = '5px',
+                        `padding-bottom` = '5px',
+                        `padding-left` = '20px',
+                        `padding-right` = '20px',
+                        target = 'cell',
+                        border = '5px solid transparent',
+                        `background-clip` = 'content-box')
+    })
     
     
     
@@ -813,7 +849,7 @@ server <- function(input, output) {
     #     
     # ))
     
-    output$optimized <- renderText(optimized_lineup())
+    output$optimized <- renderText({optimized_lineup()})
     
     
 }
