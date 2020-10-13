@@ -395,6 +395,8 @@ merge1 <- merge(slate_main, eval_dk, by = "PLAYER", all.x = TRUE)
 merge2 <- merge(merge1, eval_fd, by = "PLAYER", all.x = TRUE)
 merge3 <- merge(merge2, eval_yh, by = "PLAYER", all.x = TRUE)
 
+merge3 <- merge3[order(-POINTS_DK)]
+
 # Export data 
 data.table::fwrite(merge3, "Output/salaries_projections_main_slate.csv")
 
