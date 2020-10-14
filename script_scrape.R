@@ -240,9 +240,11 @@ for (i in 1:nrow(player_pool)) {
 }
 
 eval_dk <- data.table::data.table(PLAYER = player_pool$PLAYER
+                                  , TEAM = player_pool$TEAM
+                                  , POSITION = player_pool$POSITION
                                   , PROJECTED_POINTS = player_pool$POINTS_DK
                                   , NEEDED_POINTS = unlist(new_points)
-)[, DIFF_DK := NEEDED_POINTS - PROJECTED_POINTS][, .(PLAYER, DIFF_DK)]
+)[, DIFF_DK := NEEDED_POINTS - PROJECTED_POINTS][, .(PLAYER, TEAM, POSITION, DIFF_DK)]
 
 ## Fanduel
 player_pool <- slate_main[!is.na(SALARY_FD)]
@@ -313,9 +315,11 @@ for (i in 1:nrow(player_pool)) {
 }
 
 eval_fd <- data.table::data.table(PLAYER = player_pool$PLAYER
+                                  , TEAM = player_pool$TEAM
+                                  , POSITION = player_pool$POSITION
                                   , PROJECTED_POINTS = player_pool$POINTS_FD
                                   , NEEDED_POINTS = unlist(new_points)
-)[, DIFF_FD := NEEDED_POINTS - PROJECTED_POINTS][, .(PLAYER, DIFF_FD)]
+)[, DIFF_FD := NEEDED_POINTS - PROJECTED_POINTS][, .(PLAYER, TEAM, POSITION, DIFF_FD)]
 
 ## Yahoo
 player_pool <- slate_main[!is.na(SALARY_YH)]
@@ -386,14 +390,16 @@ for (i in 1:nrow(player_pool)) {
 }
 
 eval_yh <- data.table::data.table(PLAYER = player_pool$PLAYER
+                                  , TEAM = player_pool$TEAM
+                                  , POSITION = player_pool$POSITION
                                   , PROJECTED_POINTS = player_pool$POINTS_YH
                                   , NEEDED_POINTS = unlist(new_points)
-)[, DIFF_YH := NEEDED_POINTS - PROJECTED_POINTS][, .(PLAYER, DIFF_YH)]
+)[, DIFF_YH := NEEDED_POINTS - PROJECTED_POINTS][, .(PLAYER, TEAM, POSITION, DIFF_YH)]
 
 # Merging together
-merge1 <- merge(slate_main, eval_dk, by = "PLAYER", all.x = TRUE)
-merge2 <- merge(merge1, eval_fd, by = "PLAYER", all.x = TRUE)
-merge3 <- merge(merge2, eval_yh, by = "PLAYER", all.x = TRUE)
+merge1 <- merge(slate_main, eval_dk, by = c("PLAYER", "TEAM", "POSITION"), all.x = TRUE)
+merge2 <- merge(merge1, eval_fd, by = c("PLAYER", "TEAM", "POSITION"), all.x = TRUE)
+merge3 <- merge(merge2, eval_yh, by = c("PLAYER", "TEAM", "POSITION"), all.x = TRUE)
 
 merge3 <- merge3[order(-POINTS_DK)]
 
