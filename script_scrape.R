@@ -63,7 +63,7 @@ slate_function <- function(x) {
   else if ("2020-10-12" < x & x < "2020-10-20") {
     
     # WEEK 6
-    exclude <- c("KCC", "BUF", "LAR", "SFO", "ARI", "DAL")
+    exclude <- c("KC", "BUF", "LAR", "SFO", "ARI", "DAL")
     
   }
   
