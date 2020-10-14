@@ -312,6 +312,7 @@ server <- function(input, output) {
                                                                         'border':'4px solid transparent',
                                                                         'background-clip':'content-box',
                                                                 });",
+                                       # "$('td:eq(3)', nRow).tooltip();",
                                        "}")
 
                   )) #%>%
