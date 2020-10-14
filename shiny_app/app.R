@@ -51,7 +51,9 @@ ui <-
                                                        label = "Reset selections",
                                                        icon = icon("undo"),
                                                        class = "btncolor"),
-                                          p(HTML("<br>Optimizes for Sunday slate. More options coming soon.<br>"))),
+                                          p(HTML("<br>Optimizes for Sunday slate. More options coming soon.<br>")),
+                                          verbatimTextOutput('hoverIndex')
+                                          ),
                                    column(1)),
                             column(7,
                                    
@@ -99,7 +101,14 @@ ui <-
                                              
                                              )
                                    )
-                        )
+                        ),
+                        fluidRow(
+                                 column(11,
+                                        p(HTML("Built by <a href=\"https://twitter.com/tomasokal\">Tomas Okal</a> and <a href=\"https://twitter.com/_willdebras\">Will Bonnell</a>, 
+                                               inspired by work by <a href=\"https://twitter.com/Troy4MWRD\">Troy Hernandez</a>, 
+                                               powered by R Shiny, {data.table}, and Github Actions, with ♥."),
+                                          style = "padding-left:100px")),
+                                 column(1))
                    
                ),
                
@@ -170,24 +179,26 @@ server <- function(input, output) {
     
     player_list_dk <- reactive({
         
+        sal_dk <- full_salaries[!is.na(full_salaries$SALARY_DK)]
+        
         
         
         tibble::tibble(
             
             
-            Player = full_salaries$PLAYER,
-            `Pos.` = full_salaries$POSITION,
-            Points = full_salaries$POINTS_DK,
-            Salary = full_salaries$SALARY_DK,
-            Diff = full_salaries$DIFF_DK,
-            Include = shinyInput(actionButton, nrow(full_salaries),
+            Player = sal_dk$PLAYER,
+            `Pos.` = sal_dk$POSITION,
+            Points = sal_dk$POINTS_DK,
+            Salary = sal_dk$SALARY_DK,
+            Diff = sal_dk$DIFF_DK,
+            Include = shinyInput(actionButton, nrow(sal_dk),
                                  'button_',
                                  label = "",
                                  icon = icon("check"),
                                  class = "include",
                                  onclick = 'Shiny.setInputValue(\"select_button\", this.id, {priority: \"event\"})'
             ),
-            Exclude = shinyInput(actionButton, nrow(full_salaries),
+            Exclude = shinyInput(actionButton, nrow(sal_dk),
                                  'button_',
                                  label = "",
                                  icon = icon("times"),
@@ -199,24 +210,24 @@ server <- function(input, output) {
     
     player_list_fd <- reactive({
         
-        
+        sal_fd <- full_salaries[!is.na(full_salaries$SALARY_FD)]
         
         tibble::tibble(
             
             
-            Player = full_salaries$PLAYER,
-            `Pos.` = full_salaries$POSITION,
-            Points = full_salaries$POINTS_FD,
-            Salary = full_salaries$SALARY_FD,
-            Diff = full_salaries$DIFF_FD,
-            Include = shinyInput(actionButton, nrow(full_salaries),
+            Player = sal_fd$PLAYER,
+            `Pos.` = sal_fd$POSITION,
+            Points = sal_fd$POINTS_FD,
+            Salary = sal_fd$SALARY_FD,
+            Diff = sal_fd$DIFF_FD,
+            Include = shinyInput(actionButton, nrow(sal_fd),
                                  'button_',
                                  label = "",
                                  icon = icon("check"),
                                  class = "include",
                                  onclick = 'Shiny.setInputValue(\"select_button\", this.id, {priority: \"event\"})'
             ),
-            Exclude = shinyInput(actionButton, nrow(full_salaries),
+            Exclude = shinyInput(actionButton, nrow(sal_fd),
                                  'button_',
                                  label = "",
                                  icon = icon("times"),
@@ -229,24 +240,24 @@ server <- function(input, output) {
     
     player_list_yh <- reactive({
         
-        
+        sal_yh <- full_salaries[!is.na(full_salaries$SALARY_YH)]
         
         tibble::tibble(
             
             
-            Player = full_salaries$PLAYER,
-            `Pos.` = full_salaries$POSITION,
-            Points = full_salaries$POINTS_YH,
-            Salary = full_salaries$SALARY_YH,
-            Diff = full_salaries$DIFF_YH,
-            Include = shinyInput(actionButton, nrow(full_salaries),
+            Player = sal_yh$PLAYER,
+            `Pos.` = sal_yh$POSITION,
+            Points = sal_yh$POINTS_YH,
+            Salary = sal_yh$SALARY_YH,
+            Diff = sal_yh$DIFF_YH,
+            Include = shinyInput(actionButton, nrow(sal_yh),
                                  'button_',
                                  label = "",
                                  icon = icon("check"),
                                  class = "include",
                                  onclick = 'Shiny.setInputValue(\"select_button\", this.id, {priority: \"event\"})'
             ),
-            Exclude = shinyInput(actionButton, nrow(full_salaries),
+            Exclude = shinyInput(actionButton, nrow(sal_yh),
                                  'button_',
                                  label = "",
                                  icon = icon("times"),
@@ -273,29 +284,6 @@ server <- function(input, output) {
     
     
     
-    # output$player_list_table <- DT::renderDT({
-    #     #player_list()
-    #     proper_tb()
-    # },
-    # escape = FALSE,
-    # selection = "none",
-    # options = list(
-    #     pageLength = 50,
-    #     scrollY = "37.5vh",
-    #     scroller = TRUE,
-    #     lengthMenu = list(c(50, 100, -1), c("50", "100", "All")),
-    #     initComplete = JS(
-    #         "function(settings, json) {",
-    #         "$(this.api().table().container()).css({'font-size': '80%'});",
-    #         "}"),
-    #     #dom = 't', displays table only
-    #     columnDefs = list(list(className = 'dt-center', targets = 2:7),
-    #                       list(width = '18%', targets = 3),
-    #                       list(width = '18%', targets = 4),
-    #                       list(visible = FALSE, targets = 5))
-    #     
-    # )) 
-    
     output$player_list_table <- DT::renderDT({
         #player_list()
         datatable(proper_tb(),
@@ -312,20 +300,51 @@ server <- function(input, output) {
                           "}"),
                       #dom = 't', displays table only
                       columnDefs = list(list(className = 'dt-center', targets = 2:7),
-                                        list(width = '18%', targets = 3),
+                                        list(width = '10%', targets = 3),
                                         list(width = '18%', targets = 4),
-                                        list(visible = FALSE, targets = 5))
+                                        list(visible = FALSE, targets = 5)),
+                      # rowCallback = JS('(function(row, data) {var value=data[1]; $(row).css({"background-color":"#FFFF99"});})'),
+                      rowCallback = JS("function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {",
+                                       "var full_text = 'This player would need to earn an additional ' + aData[5] + ' points to be optimal.' ",
+                                       "$('td:eq(3)', nRow).attr('title', full_text);",
+                                       "$('td:eq(3)', nRow).css({    'background-color':'lightblue',
+                                                                        'target':'cell',
+                                                                        'border':'4px solid transparent',
+                                                                        'background-clip':'content-box',
+                                                                });",
+                                       "}")
 
-                  )) %>%
-            formatStyle(4, backgroundColor = "lightblue",
-                        `padding-top` = '5px',
-                        `padding-bottom` = '5px',
-                        `padding-left` = '20px',
-                        `padding-right` = '20px',
-                        target = 'cell',
-                        border = '5px solid transparent',
-                        `background-clip` = 'content-box')
+                  )) #%>%
+            # formatStyle(3, backgroundColor = "lightblue",
+            #             `padding-top` = '5px',
+            #             `padding-bottom` = '5px',
+            #             `padding-left` = '10px',
+            #             `padding-right` = '10px',
+            #             target = 'cell',
+            #             border = '5px solid transparent',
+            #             `background-clip` = 'content-box')
     })
+    
+    
+    # 'background-color':'#FFFF99';
+    # 'target':'cell';
+    # 'border':'5px solid transparent';
+    # 'background-clip':'content-box';
+    
+    
+    # output$player_list_table <- DT::renderDT({
+    #     #player_list()
+    #     datatable(full_salaries, 
+    #               options = list(columnDefs = list(list(visible=FALSE, targets = 6:10)), 
+    #                              rowCallback = JS("function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {",
+    #                                               "var full_text = 'This player needs to earn ' + aData[5] + ' to be considered in an optimal lineup' ",
+    #                                               "$('td:eq(3)', nRow).attr('title', full_text);",
+    #                                               "}")
+    #                              
+    #               ))
+    #     
+    # })
+    
     
     
     
