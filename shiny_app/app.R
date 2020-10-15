@@ -191,6 +191,7 @@ server <- function(input, output) {
             Points = sal_dk$POINTS_DK,
             Salary = sal_dk$SALARY_DK,
             Diff = sal_dk$DIFF_DK,
+            Color = sal_dk$COLOR_DK,
             Include = shinyInput(actionButton, nrow(sal_dk),
                                  'button_',
                                  label = "",
@@ -220,6 +221,7 @@ server <- function(input, output) {
             Points = sal_fd$POINTS_FD,
             Salary = sal_fd$SALARY_FD,
             Diff = sal_fd$DIFF_FD,
+            Color = sal_fd$COLOR_FD,
             Include = shinyInput(actionButton, nrow(sal_fd),
                                  'button_',
                                  label = "",
@@ -250,6 +252,7 @@ server <- function(input, output) {
             Points = sal_yh$POINTS_YH,
             Salary = sal_yh$SALARY_YH,
             Diff = sal_yh$DIFF_YH,
+            Color = sal_yh$COLOR_YH,
             Include = shinyInput(actionButton, nrow(sal_yh),
                                  'button_',
                                  label = "",
@@ -299,17 +302,17 @@ server <- function(input, output) {
                           "$(this.api().table().container()).css({'font-size': '80%'});",
                           "}"),
                       #dom = 't', displays table only
-                      columnDefs = list(list(className = 'dt-center', targets = 2:7),
+                      columnDefs = list(list(className = 'dt-center', targets = 2:8),
                                         list(width = '10%', targets = 3),
                                         list(width = '18%', targets = 4),
-                                        list(visible = FALSE, targets = 5)),
+                                        list(visible = FALSE, targets = c(5:6))),
                       # rowCallback = JS('(function(row, data) {var value=data[1]; $(row).css({"background-color":"#FFFF99"});})'),
                       rowCallback = JS("function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {",
                                        "var full_text = 'This player would need to earn an additional ' 
                                        + aData[5] + ' points to be optimal.' ",
                                        "$('td:eq(3)', nRow).attr('data-title', full_text);",
                                        "$('td:eq(3)', nRow).css('cursor', 'help');",
-                                       "$('td:eq(3)', nRow).css({ 'background-color':'lightblue',
+                                       "$('td:eq(3)', nRow).css({ 'background-color':aData[6],
                                                                     'target':'cell',
                                                                     'border':'4px solid transparent',
                                                                     'background-clip':'content-box',
@@ -321,15 +324,15 @@ server <- function(input, output) {
                                        # "});",
                                        "}")
 
-                  )) %>%
-            formatStyle(3, backgroundColor = "lightblue",
-                        `padding-top` = '5px',
-                        `padding-bottom` = '5px',
-                        `padding-left` = '10px',
-                        `padding-right` = '10px',
-                        target = 'cell',
-                        border = '5px solid transparent',
-                        `background-clip` = 'content-box')
+                  )) #%>%
+            # formatStyle(3, backgroundColor = "lightblue",
+            #             `padding-top` = '5px',
+            #             `padding-bottom` = '5px',
+            #             `padding-left` = '10px',
+            #             `padding-right` = '10px',
+            #             target = 'cell',
+            #             border = '5px solid transparent',
+            #             `background-clip` = 'content-box')
     })
     
     

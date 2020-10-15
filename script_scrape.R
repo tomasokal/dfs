@@ -239,7 +239,7 @@ for (i in 1:nrow(player_pool)) {
   
 }
 
-colorfunc <- colorRamp(c("#FFA500", "white", "#19BDFF"))
+colorfunc <- colorRamp(c("#FFA500", "white", "#D5D5F7", "#AAAAEE", "#8080E6", "#5555DE"))
 
 eval_dk <- data.table::data.table(PLAYER = player_pool$PLAYER
                                   , TEAM = player_pool$TEAM
