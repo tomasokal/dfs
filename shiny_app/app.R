@@ -12,6 +12,7 @@ full_salaries <- data.table::fread("https://raw.githubusercontent.com/tomasokal/
 
 load(url("https://github.com/tomasokal/dfs/raw/production/Output/time.RData"))
 
+#Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a> 
 
 
 # Define UI for application that draws a histogram
@@ -314,7 +315,7 @@ server <- function(input, output) {
                                        "$('td:eq(3)', nRow).css('cursor', 'help');",
                                        "$('td:eq(3)', nRow).css({ 'background-color':aData[6],
                                                                     'target':'cell',
-                                                                    'border':'4px solid transparent',
+                                                                    'outline':'4px solid transparent',
                                                                     'background-clip':'content-box',
                                                                 });",
                                        # "$('td:eq(3)', nRow).tooltip({",
