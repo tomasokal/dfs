@@ -309,8 +309,12 @@ server <- function(input, output) {
                                         list(visible = FALSE, targets = c(5:6))),
                       # rowCallback = JS('(function(row, data) {var value=data[1]; $(row).css({"background-color":"#FFFF99"});})'),
                       rowCallback = JS("function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {",
+                                       "if (aData[5]==0) {",
+                                       "var full_text = 'This player is in the most optimal lineup.' }",
+                                       "else {",
                                        "var full_text = 'This player would need to earn an additional ' 
                                        + aData[5] + ' points to be optimal.' ",
+                                       "};",
                                        "$('td:eq(3)', nRow).attr('data-title', full_text);",
                                        "$('td:eq(3)', nRow).css('cursor', 'help');",
                                        "$('td:eq(3)', nRow).css({ 'background-color':aData[6],
