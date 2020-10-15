@@ -239,12 +239,14 @@ for (i in 1:nrow(player_pool)) {
   
 }
 
+colorfunc <- colorRamp(c("#FFA500", "white", "#19BDFF"))
+
 eval_dk <- data.table::data.table(PLAYER = player_pool$PLAYER
                                   , TEAM = player_pool$TEAM
                                   , POSITION = player_pool$POSITION
                                   , PROJECTED_POINTS = player_pool$POINTS_DK
                                   , NEEDED_POINTS = unlist(new_points)
-)[, DIFF_DK := NEEDED_POINTS - PROJECTED_POINTS][, .(PLAYER, TEAM, POSITION, DIFF_DK)]
+)[, DIFF_DK := NEEDED_POINTS - PROJECTED_POINTS][, .(PLAYER, TEAM, POSITION, DIFF_DK)][, COLOR_DK := rgb(colorfunc((DIFF_DK - min(DIFF_DK)) / (max(DIFF_DK) - min(DIFF_DK))), maxColorValue = 255)]
 
 ## Fanduel
 player_pool <- slate_main[!is.na(SALARY_FD)]
@@ -319,7 +321,7 @@ eval_fd <- data.table::data.table(PLAYER = player_pool$PLAYER
                                   , POSITION = player_pool$POSITION
                                   , PROJECTED_POINTS = player_pool$POINTS_FD
                                   , NEEDED_POINTS = unlist(new_points)
-)[, DIFF_FD := NEEDED_POINTS - PROJECTED_POINTS][, .(PLAYER, TEAM, POSITION, DIFF_FD)]
+)[, DIFF_FD := NEEDED_POINTS - PROJECTED_POINTS][, .(PLAYER, TEAM, POSITION, DIFF_FD)][, COLOR_FD := rgb(colorfunc((DIFF_FD - min(DIFF_FD)) / (max(DIFF_FD) - min(DIFF_FD))), maxColorValue = 255)]
 
 ## Yahoo
 player_pool <- slate_main[!is.na(SALARY_YH)]
@@ -389,12 +391,13 @@ for (i in 1:nrow(player_pool)) {
   
 }
 
+
 eval_yh <- data.table::data.table(PLAYER = player_pool$PLAYER
                                   , TEAM = player_pool$TEAM
                                   , POSITION = player_pool$POSITION
                                   , PROJECTED_POINTS = player_pool$POINTS_YH
                                   , NEEDED_POINTS = unlist(new_points)
-)[, DIFF_YH := NEEDED_POINTS - PROJECTED_POINTS][, .(PLAYER, TEAM, POSITION, DIFF_YH)]
+)[, DIFF_YH := NEEDED_POINTS - PROJECTED_POINTS][, .(PLAYER, TEAM, POSITION, DIFF_YH)][, COLOR_YH := rgb(colorfunc((DIFF_YH - min(DIFF_YH)) / (max(DIFF_YH) - min(DIFF_YH))), maxColorValue = 255)]
 
 # Merging together
 merge1 <- merge(slate_main, eval_dk, by = c("PLAYER", "TEAM", "POSITION"), all.x = TRUE)

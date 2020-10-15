@@ -321,15 +321,15 @@ server <- function(input, output) {
                                        # "});",
                                        "}")
 
-                  )) #%>%
-            # formatStyle(3, backgroundColor = "lightblue",
-            #             `padding-top` = '5px',
-            #             `padding-bottom` = '5px',
-            #             `padding-left` = '10px',
-            #             `padding-right` = '10px',
-            #             target = 'cell',
-            #             border = '5px solid transparent',
-            #             `background-clip` = 'content-box')
+                  )) %>%
+            formatStyle(3, backgroundColor = "lightblue",
+                        `padding-top` = '5px',
+                        `padding-bottom` = '5px',
+                        `padding-left` = '10px',
+                        `padding-right` = '10px',
+                        target = 'cell',
+                        border = '5px solid transparent',
+                        `background-clip` = 'content-box')
     })
     
     
@@ -799,9 +799,10 @@ server <- function(input, output) {
                 }
                 
                 opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
-                picks <- player_pool[which(opt$solution == 1), ]
+                picks <- rbind(player_pool[which(opt$solution == 1), ], df_full[Player %in% inc_players$Player])[order(-Salary)]
                 
-                picks_list <- paste0("<div><b>", picks$Player, "</b> - $", picks$Salary, "/", picks$Points, "<i>pts.</i>", " </div>", collapse = " ")
+                
+                picks_list <- paste0("<div><b>", picks$Player, " (", picks$Position, ")</b> - $", picks$Salary, "/", picks$Points, "<i>pts.</i>", " </div>", collapse = " ")
                 
                 html_picks <- paste0("<div class = \"testcontainer\">", picks_list, "</div>")
                 
@@ -841,7 +842,7 @@ server <- function(input, output) {
             opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
             picks <- player_pool[which(opt$solution == 1), ]
             
-            picks_list <- paste0("<div><b>", picks$Player, "</b> - $", picks$Salary, "/", picks$Points, "<i>pts.</i>", " </div>", collapse = " ")
+            picks_list <- paste0("<div><b>", picks$Player, " (", picks$Position, ")</b> - $", picks$Salary, "/", picks$Points, "<i>pts.</i>", " </div>", collapse = " ")
             
             html_picks <- paste0("<div class = \"testcontainer\">", picks_list, "</div>")
             
