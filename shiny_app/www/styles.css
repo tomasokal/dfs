@@ -196,6 +196,7 @@ span.tooltip:after {
     transition: all 0.1s ease 0.5s;
     visibility: visible;
 }
+
 [data-title]:after {
     content: attr(data-title);
     background-color: #fed8b1;
@@ -217,9 +218,13 @@ span.tooltip:after {
     z-index: 99999;
     visibility: hidden;
 }
+
 [data-title] {
     position: relative;
 }
+
+
+
 
 
 body { font-size: 22px; line-height: 1.4; padding-bottom:30px; font-family: 'Source Sans Pro', sans-serif;}

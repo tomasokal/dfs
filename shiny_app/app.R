@@ -308,6 +308,7 @@ server <- function(input, output) {
                                        "var full_text = 'This player would need to earn an additional ' 
                                        + aData[5] + ' points to be optimal.' ",
                                        "$('td:eq(3)', nRow).attr('data-title', full_text);",
+                                       "$('td:eq(3)', nRow).css('cursor', 'help');",
                                        "$('td:eq(3)', nRow).css({ 'background-color':'lightblue',
                                                                     'target':'cell',
                                                                     'border':'4px solid transparent',
