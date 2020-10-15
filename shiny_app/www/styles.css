@@ -163,6 +163,64 @@
 /*Text size and line height. Padding needed for footer */
 
 
+span.tooltip {
+      position: absolute;
+      width: 100px;
+      height: 20px;
+      line-height: 20px;
+      padding: 10px;
+      font-size: 14px;
+      text-align: center;
+      color: rgb(113, 157, 171);
+      background: rgb(255, 255, 255);
+      border: 4px solid rgb(255, 255, 255);
+      border-radius: 5px;
+      text-shadow: rgba(0, 0, 0, 0.1) 1px 1px 1px;
+      box-shadow: rgba(0, 0, 0, 0.1) 1px 1px 2px 0px;
+}
+
+span.tooltip:after {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-width: 10px;
+      border-style: solid;
+      border-color: #FFFFFF transparent transparent transparent;
+      top: 44px;
+      left: 50px;
+}
+
+[data-title]:hover:after {
+    opacity: 1;
+    transition: all 0.1s ease 0.5s;
+    visibility: visible;
+}
+[data-title]:after {
+    content: attr(data-title);
+    background-color: #fed8b1;
+    color: black;
+    font-size: 100%;
+    position: absolute;
+    width:250px;
+    padding: 1px 5px 2px 5px;
+    bottom: -2.5em;
+      border: 4px solid rgb(255, 255, 255);
+      border-radius: 5px;
+      text-shadow: rgba(0, 0, 0, 0.1) 1px 1px 1px;
+      box-shadow: rgba(0, 0, 0, 0.1) 1px 1px 2px 0px;
+    left: 100%;
+    /*white-space: nowrap;*/
+    /*box-shadow: 1px 1px 3px #222222;*/
+    opacity: 0;
+    /*border: 1px solid #111111;*/
+    z-index: 99999;
+    visibility: hidden;
+}
+[data-title] {
+    position: relative;
+}
+
 
 body { font-size: 22px; line-height: 1.4; padding-bottom:30px; font-family: 'Source Sans Pro', sans-serif;}
 
