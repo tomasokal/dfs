@@ -305,14 +305,15 @@ server <- function(input, output) {
                                         list(visible = FALSE, targets = 5)),
                       # rowCallback = JS('(function(row, data) {var value=data[1]; $(row).css({"background-color":"#FFFF99"});})'),
                       rowCallback = JS("function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {",
-                                       "var full_text = 'This player would need to earn an additional ' + aData[5] + ' points to be optimal.' ",
+                                       "var full_text = 'This player would need to earn an additional ' 
+                                       + aData[5] + ' points to be optimal.' ",
                                        "$('td:eq(3)', nRow).attr('title', full_text);",
-                                       "$('td:eq(3)', nRow).css({    'background-color':'lightblue',
-                                                                        'target':'cell',
-                                                                        'border':'4px solid transparent',
-                                                                        'background-clip':'content-box',
+                                       "$('td:eq(3)', nRow).css({ 'background-color':'lightblue',
+                                                                    'target':'cell',
+                                                                    'border':'4px solid transparent',
+                                                                    'background-clip':'content-box',
                                                                 });",
-                                       # "$('td:eq(3)', nRow).tooltip();",
+                                        "$('td:eq(3)', nRow).tooltip();",
                                        "}")
 
                   )) #%>%
