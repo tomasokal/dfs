@@ -33,6 +33,50 @@
   margin-left: 20px;*/
 }
 
+
+.btn-helpbutton {
+  background-color:#FFFFFF;
+  /*padding:10px;
+  margin-left: 20px;*/
+  height:60px;
+  font-size:20px;
+  font-weight:bold;
+  border: 1px dotted #fed8b1;
+  outline: none !important;
+  box-shadow: none !important;
+  
+}
+
+.btn-helpbutton:active {
+  background-color:#FFFFFF;
+  /*border: none;*/
+  /*padding:10px;
+  margin-left: 20px;*/
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.btn-helpbutton:hover {
+  background-color:#FFFFFF;
+  /*border: none;*/
+  /*padding:10px;
+  margin-left: 20px;*/
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.btn-helpbutton:focus {
+  background-color:#FFFFFF;
+  /*border: none;*/
+  /*padding:10px;
+  margin-left: 20px;*/
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.dropdown-toggle:after { content: none }
+
+
 .btncolor {
   
   background-color:#EBECF0;

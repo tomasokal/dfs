@@ -6,6 +6,9 @@ library(DT)
 library(lpSolve)
 library(dplyr)
 
+
+
+
 full_salaries <- data.table::fread("https://raw.githubusercontent.com/tomasokal/dfs/production/Output/salaries_projections_main_slate.csv")
 
 
@@ -70,7 +73,22 @@ ui <-
                         ),
                         fluidRow(
                             column(5,
-                                   column(1),
+                                   column(1,
+                                          shinyWidgets::dropdown(
+                                              inputId = "dropdown",
+                                              p("Need help? Hover a player's expected points to see how many points they would need to be considered optimal at their salary and position."),
+                                              #style = "minimal",
+                                              size = "lg",
+                                              icon = icon("info"),
+                                              status = 'helpbutton', 
+                                              width = "300px",
+                                              
+                                              animate = animateOptions(
+                                                  enter = animations$fading_entrances$fadeInLeftBig,
+                                                  exit = animations$fading_exits$fadeOutLeftBig
+                                              )
+                                              
+                                          )),
                                    column(11,
                                           wellPanel(class = "wellclass",
                                                     style = "height:55vh;",
@@ -277,6 +295,8 @@ server <- function(input, output) {
     
     observeEvent(input$sourcegroup, {
         
+        #removeCssClass(id = "dropdown", class = "caret")
+        
 
         proper_tb(switch(input$sourcegroup, "DraftKings" = player_list_dk(), "FanDuel" = player_list_fd(), "Yahoo Sports" = player_list_yh()))
         
@@ -285,6 +305,8 @@ server <- function(input, output) {
         
         
     })
+    
+
     
     
     
