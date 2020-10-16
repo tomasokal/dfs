@@ -106,7 +106,8 @@ ui <-
                                              style = "height:55vh",
                                              div(p("Players to include in the optimized lineup:"),
                                                  br(), 
-                                                 DT::DTOutput(outputId = "player_list_include"))
+                                                 DT::DTOutput(outputId = "player_list_include"),
+                                                 htmlOutput(outputId = "totalsal"))
                                              #textOutput(outputId = "myText")
                                              )
                                    ),
@@ -393,6 +394,21 @@ server <- function(input, output) {
     pl_exc <- reactiveVal(NULL)
     
     
+    salary_reac <- reactiveVal(NULL) 
+    
+    
+    
+    output$totalsal <- renderText({
+        
+        
+        salary_reac()
+        
+        
+    })
+    
+    
+    
+    
     observeEvent(input$select_button, {
         selectedRow <- as.numeric(strsplit(input$select_button, "_")[[1]][2])
         player_new <- paste(proper_tb()[selectedRow,1])
@@ -419,6 +435,11 @@ server <- function(input, output) {
             pl_exc(pl_exc_new)
             
         }
+        
+        inc_players <- df_include()
+        
+        
+        salary_reac(HTML(paste0("<br>Total salary: ", as.character(as.numeric(sum(inc_players$Salary))))))
         
 
         
@@ -449,6 +470,8 @@ server <- function(input, output) {
             pl_inc(pl_inc_new)
             
         }
+        
+        
         
         
     })
@@ -600,6 +623,8 @@ server <- function(input, output) {
         
         optimized_lineup(NULL)
         
+        salary_reac(NULL)
+        
     })
     
     
@@ -611,6 +636,7 @@ server <- function(input, output) {
         #return(player_exclude())
         return(input$select_button3)
     })
+    
     
     
     optimized_lineup <- reactiveVal(NULL)
