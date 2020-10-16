@@ -77,10 +77,11 @@ ui <-
                                           shinyWidgets::dropdown(
                                               inputId = "dropdown",
                                               p("Need help? Hover a player's expected points to see how many points they would need to be considered optimal at their salary and position."),
-                                              #style = "minimal",
+                                              style = "material-circle",
                                               size = "lg",
                                               icon = icon("info"),
-                                              status = 'helpbutton', 
+                                              #status = "primary",
+                                              #status = 'helpbutton', 
                                               width = "300px",
                                               
                                               animate = animateOptions(
@@ -561,6 +562,8 @@ server <- function(input, output) {
     escape = FALSE,
     selection = "none",
     options = list(
+        scroller = TRUE,
+        #width = "5vw",
         initComplete = JS(
             "function(settings, json) {",
             "$(this.api().table().container()).css({'font-size': '80%'});",
@@ -578,6 +581,7 @@ server <- function(input, output) {
     escape = FALSE,
     selection = "none",
     options = list(
+        scroller = TRUE,
         initComplete = JS(
             "function(settings, json) {",
             "$(this.api().table().container()).css({'font-size': '80%'});",

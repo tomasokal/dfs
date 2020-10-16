@@ -136,7 +136,7 @@
   width: 20vw;
   display: inline-block;
   vertical-align: middle;
-  font-size:24px;
+  font-size:2vh;
 }
 
 
@@ -271,7 +271,7 @@ span.tooltip:after {
 
 
 
-body { font-size: 22px; line-height: 1.4; padding-bottom:30px; font-family: 'Source Sans Pro', sans-serif;}
+body { font-size: 2vh; line-height: 1.4; padding-bottom:30px; font-family: 'Source Sans Pro', sans-serif;}
 
 /*
 
