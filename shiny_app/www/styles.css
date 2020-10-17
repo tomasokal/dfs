@@ -1,34 +1,41 @@
 /* CSS styles used in the shiny app */
 
 
-@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap');
 
 
 .btn-testbutton {
-  background-color:#EBECF0;
+  background-color:#FFFFFF;
   /*padding:10px;
   margin-left: 20px;*/
   height:60px;
   font-size:18px;
   font-weight:bold;
-  border: 2px solid #808080;
+  border: 2px solid #1479FF;
+  color:#1479FF;
   
 }
 
 .btn-testbutton:active {
-  background-color:#FFFF99;
+  background-color:#1479FF;
+  color:white;
+  border:2px solid #FFFFFF;
   /*padding:10px;
   margin-left: 20px;*/
 }
 
 .btn-testbutton:hover {
-  background-color:#FFFF99;
+    background-color:#1479FF;
+  color:white;
+  border:2px solid #FFFFFF;
   /*padding:10px;
   margin-left: 20px;*/
 }
 
 .btn-testbutton:focus {
-  background-color:#FFFF99;
+    background-color:#1479FF;
+  color:white;
+  border:2px solid #FFFFFF;
   /*padding:10px;
   margin-left: 20px;*/
 }
@@ -79,27 +86,47 @@
 
 .btncolor {
   
-  background-color:#EBECF0;
+  background-color:#1479FF;
+  color:#FFFFFF;
   margin-left: 10px;
   height:60px;
   font-size:18px;
   font-weight:bold;
-  border: 2px solid #808080;
+  /*border: 2px solid #808080;*/
+  border-radius:5px;
+  border:2px solid #1479FF;
+  box-shadow:
+  0 0.6px 1.4px rgba(20, 121, 255, 0.007),
+  0 1.5px 3.3px rgba(20, 121, 255, 0.013),
+  0 2.9px 6.3px rgba(20, 121, 255, 0.018),
+  0 5.1px 11.2px rgba(20, 121, 255, 0.024),
+  0 9.6px 20.9px rgba(20, 121, 255, 0.032),
+  0 23px 50px rgba(20, 121, 255, 0.05)
+                            ;
   
 }
 
 .btncolor:active {
-  background-color:#FFFF99;
+  background-color:#FFFFFF;
+  border:2px solid #1479FF;
+  color:#1479FF;
+  border-radius:5px;
   
 }
 
 .btncolor:hover {
-  background-color:#FFFF99;
+  background-color:#FFFFFF;
+  border:2px solid #1479FF;
+  color:#1479FF;
+  border-radius:5px;
   
 }
 
 .btncolor:focus {
-  background-color:#FFFF99;
+  background-color:#FFFFFF;
+  border:2px solid #1479FF;
+  color:#1479FF;
+  border-radius:5px;
   
 }
 
@@ -166,16 +193,32 @@
   font-weight:bold;
 }
 
-.wellclass {background-color: #FFFFFF;
-                          -webkit-box-shadow: 2px 3px 6px 2px rgba(211,211,211,1);
-                          -moz-box-shadow: 2px 3px 6px 2px rgba(211,211,211,1);
-                          box-shadow: 2px 3px 6px 2px rgba(211,211,211,1);
+.wellclass {background-color: #ffffff;
+                          border-radius: 12px;
+                          -webkit-box-shadow: 2px 3px 6px 2px rgba(20, 121, 255,.1);
+                          -moz-box-shadow: 2px 3px 6px 2px rgba(20, 121, 255,.1);
+                          box-shadow:
+                            0 0.6px 1.4px rgba(20, 121, 255, 0.007),
+                            0 1.5px 3.3px rgba(20, 121, 255, 0.013),
+                            0 2.9px 6.3px rgba(20, 121, 255, 0.018),
+                            0 5.1px 11.2px rgba(20, 121, 255, 0.024),
+                            0 9.6px 20.9px rgba(20, 121, 255, 0.032),
+                            0 23px 50px rgba(20, 121, 255, 0.05)
+                                                      ;
 }
 
-.optiwell {background-color: #FFFFFF;
+.optiwell {background-color: #ffffff;
+                          border-radius: 12px;
                           -webkit-box-shadow: 2px 3px 6px 2px rgba(211,211,211,1);
                           -moz-box-shadow: 2px 3px 6px 2px rgba(211,211,211,1);
-                          box-shadow: 2px 3px 6px 2px rgba(211,211,211,1);
+                                                    box-shadow:
+                            0 0.6px 1.4px rgba(20, 121, 255, 0.007),
+                            0 1.5px 3.3px rgba(20, 121, 255, 0.013),
+                            0 2.9px 6.3px rgba(20, 121, 255, 0.018),
+                            0 5.1px 11.2px rgba(20, 121, 255, 0.024),
+                            0 9.6px 20.9px rgba(20, 121, 255, 0.032),
+                            0 23px 50px rgba(20, 121, 255, 0.05)
+                                                      ;
                           margin-left: -16px;
                           margin-right: -45px;
 }
@@ -188,16 +231,29 @@
 */
 
 
-.navbar-nav .navbar-brand { border: 0; padding: 4px 0px;
-  min-height:55px !important;
-                               /*background-color: #262626;*/
-                               font-size: 26px;
+.navbar  { border: 0; /*padding: 4px 0px;*/
+                              min-height:55px !important;
+                               background-color: #FFFFFF;
+                               font-size: 22px !important;
                                /*color: blue;*/
+                               /*background-color:#1479FF !important;*/
+                               color:#1479FF;
+                               /*font-weight:bold;*/
                                line-height: 55px;
+                               border-bottom:2px solid #1279FF;
+                               /*border-radius:5px;*/
                                text-align:center;
 }
 
+.navbar-brand {
+  font-size: 24px;
+  
+}
 
+.navbar-default .navbar-brand {
+                         color: #1479FF;}
+
+/*li a {color: #1479FF;}*/
                                
  /* font size and border*/
 
@@ -278,7 +334,7 @@ span.tooltip:after {
 
 
 
-body { font-size: 2vh; line-height: 1.4; padding-bottom:30px; font-family: 'Source Sans Pro', sans-serif;}
+body { font-size: 2vh; line-height: 1.4; padding-bottom:30px; font-family: 'Source Sans Pro', sans-serif;background-color:#f3f8ff;}
 
 /*
 
