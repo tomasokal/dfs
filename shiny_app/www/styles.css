@@ -199,11 +199,11 @@
                           -moz-box-shadow: 2px 3px 6px 2px rgba(20, 121, 255,.1);
                           box-shadow:
                             0 0.6px 1.4px rgba(20, 121, 255, 0.007),
-                            0 1.5px 3.3px rgba(20, 121, 255, 0.013),
-                            0 2.9px 6.3px rgba(20, 121, 255, 0.018),
-                            0 5.1px 11.2px rgba(20, 121, 255, 0.024),
-                            0 9.6px 20.9px rgba(20, 121, 255, 0.032),
-                            0 23px 50px rgba(20, 121, 255, 0.05)
+                            0 1.8px 4.3px rgba(20, 121, 255, 0.013),
+                            0 3.9px 7.3px rgba(20, 121, 255, 0.018),
+                            0 5.1px 15.2px rgba(20, 121, 255, 0.024),
+                            0 11.6px 31.9px rgba(20, 121, 255, 0.032),
+                            0 33px 70px rgba(20, 121, 255, 0.05)
                                                       ;
 }
 
@@ -248,6 +248,10 @@
 .navbar-brand {
   font-size: 24px;
   
+}
+
+.odd {
+    background-color: #f3f8ff;;
 }
 
 .navbar-default .navbar-brand {
@@ -334,7 +338,7 @@ span.tooltip:after {
 
 
 
-body { font-size: 2vh; line-height: 1.4; padding-bottom:30px; font-family: 'Source Sans Pro', sans-serif;background-color:#f3f8ff;}
+body { font-size: 2vh; line-height: 1.4; padding-bottom:10px; font-family: 'Source Sans Pro', sans-serif;background-color:#f3f8ff;}
 
 /*
 

@@ -128,7 +128,7 @@ ui <-
                                         p(HTML("Built by <a href=\"https://twitter.com/tomasokal\">Tomas Okal</a> and <a href=\"https://twitter.com/_willdebras\">Will Bonnell</a>, 
                                                inspired by work by <a href=\"https://twitter.com/Troy4MWRD\">Troy Hernandez</a>, 
                                                powered by R Shiny, {data.table}, and Github Actions, with ♥."),
-                                          style = "padding-left:100px")),
+                                          style = "padding-left:100px; font-size:1.5vh;")),
                                  column(1))
                    
                ),
