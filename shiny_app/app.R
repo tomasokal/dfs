@@ -133,8 +133,10 @@ ui <-
                    
                ),
                
-               tabPanel(title = "Methodology"
-                   
+               tabPanel(title = "Methodology",
+                        
+                        htmlOutput("inc")
+                  
                    
                )
                
@@ -961,6 +963,11 @@ server <- function(input, output) {
     # ))
     
     output$optimized <- renderText({optimized_lineup()})
+    
+    getPage<-function() {
+        return(includeHTML("methodology.html"))
+    }
+    output$inc<-renderUI({getPage()})
     
     
 }
