@@ -107,7 +107,7 @@ ui <-
                                              div(p("Players to include in the optimized lineup:"),
                                                  br(), 
                                                  DT::DTOutput(outputId = "player_list_include"),
-                                                 htmlOutput(outputId = "totalsal"))
+                                                 htmlOutput(outputId = "totalsal", class = "totalsal"))
                                              #textOutput(outputId = "myText")
                                              )
                                    ),
@@ -436,10 +436,15 @@ server <- function(input, output) {
             
         }
         
+        salary_full <- switch(input$sourcegroup, 
+                              "DraftKings" = 50000, 
+                              "FanDuel" = 60000, 
+                              "Yahoo Sports" = 200)
+        
         inc_players <- df_include()
         
         
-        salary_reac(HTML(paste0("<br>Total salary: ", as.character(as.numeric(sum(inc_players$Salary))))))
+        salary_reac(HTML(paste0("Remaining salary: ", as.character(as.numeric(salary_full-sum(inc_players$Salary))))))
         
 
         
@@ -495,6 +500,16 @@ server <- function(input, output) {
             pl_inc(pl_inc_new)
             
         }
+        
+        salary_full <- switch(input$sourcegroup, 
+                              "DraftKings" = 50000, 
+                              "FanDuel" = 60000, 
+                              "Yahoo Sports" = 200)
+        
+        inc_players <- df_include()
+        
+        
+        salary_reac(HTML(paste0("Remaining salary: ", as.character(as.numeric(salary_full-sum(inc_players$Salary))))))
 
 
 
