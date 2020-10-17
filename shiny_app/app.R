@@ -325,12 +325,17 @@ server <- function(input, output) {
                       initComplete = JS(
                           "function(settings, json) {",
                           "$(this.api().table().container()).css({'font-size': '80%'});",
+                          "$(this.api().table().header()).css({'border-top': '2px solid #1479FF',
+                                                                'font-weight': 'normal !important',
+                                                                
+                                                            });",
                           "}"),
                       #dom = 't', displays table only
                       columnDefs = list(list(className = 'dt-center', targets = 2:8),
                                         list(width = '10%', targets = 3),
                                         list(width = '18%', targets = 4),
                                         list(visible = FALSE, targets = c(5:6))),
+                  
                       # rowCallback = JS('(function(row, data) {var value=data[1]; $(row).css({"background-color":"#FFFF99"});})'),
                       rowCallback = JS("function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {",
                                        "if (aData[5]==0) {",
@@ -601,6 +606,8 @@ server <- function(input, output) {
     selection = "none",
     options = list(
         scroller = TRUE,
+        language = list(
+            zeroRecords = "Click the ✓ to include a player in the optimizer."), 
         #width = "5vw",
         initComplete = JS(
             "function(settings, json) {",
@@ -620,6 +627,8 @@ server <- function(input, output) {
     selection = "none",
     options = list(
         scroller = TRUE,
+        language = list(
+            zeroRecords = "Click the ✗ to exclude a player from the optimizer."), 
         initComplete = JS(
             "function(settings, json) {",
             "$(this.api().table().container()).css({'font-size': '80%'});",
