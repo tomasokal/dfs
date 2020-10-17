@@ -5,6 +5,7 @@ library(data.table)
 library(DT)
 library(lpSolve)
 library(dplyr)
+library(curl)
 
 
 
