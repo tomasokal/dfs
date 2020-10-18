@@ -322,7 +322,7 @@ server <- function(input, output) {
                   selection = "none",
                   options = list(
                       pageLength = 50,
-                      scrollY = "37.5vh",
+                      scrollY = "34.5vh",
                       scroller = TRUE,
                       lengthMenu = list(c(50, 100, -1), c("50", "100", "All")),
                       initComplete = JS(
