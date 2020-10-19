@@ -335,6 +335,34 @@ span.tooltip:after {
 }
 
 
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+            padding: 0.4em 0.7em !important;
+
+  border-radius:5px !important;
+  /*border-color:#f3f8ff !important;*/
+              font-size:1.4vh;
+  background-color:none;
+        }
+    
+        
+.paginate_button>li>a, .paginate_button>li>span {
+  background-color:#f3f8ff !important;
+}   
+        
+.dataTables_wrapper .dataTables_paginate .paginate_button a:hover {
+
+        background-color:orange !important;
+        }
+
+
+
+
+.current {
+    border:1px solid blue !important;
+  border-radius:5px;
+  background-color:#f3f8ff !important;
+}
+
 
 
 

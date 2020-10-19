@@ -96,7 +96,12 @@ ui <-
                                                     style = "height:55vh;",
                                           div(
                                               br(), 
-                                              DT::DTOutput(outputId = "player_list_table"))
+                                              DT::DTOutput(outputId = "player_list_table"),
+                                              style = ".dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+
+        background-color:orange !important;
+        }
+")
                                           ))#,
                                    #column(1)
                                    
@@ -327,7 +332,7 @@ server <- function(input, output) {
                       lengthMenu = list(c(50, 100, -1), c("50", "100", "All")),
                       initComplete = JS(
                           "function(settings, json) {",
-                          "$(this.api().table().container()).css({'font-size': '80%'});",
+                          "$(this.api().table().container()).css({'font-size': '1.4vh'});",
                           "$(this.api().table().header()).css({'border-top': '2px solid #1479FF',
                                                                 'font-weight': 'normal !important',
                                                                 
@@ -609,12 +614,13 @@ server <- function(input, output) {
     selection = "none",
     options = list(
         scroller = TRUE,
+        scrollX = TRUE,
         language = list(
             zeroRecords = "Click the ✓ to include a player in the optimizer."), 
         #width = "5vw",
         initComplete = JS(
             "function(settings, json) {",
-            "$(this.api().table().container()).css({'font-size': '80%'});",
+            "$(this.api().table().container()).css({'font-size': '1.4vh'});",
             "}"),
         columnDefs = list(list(className = 'dt-center', targets = 2:4),
                           list(width = '18%', targets = 4)),
@@ -630,11 +636,12 @@ server <- function(input, output) {
     selection = "none",
     options = list(
         scroller = TRUE,
+        scrollX = TRUE,
         language = list(
             zeroRecords = "Click the ✗ to exclude a player from the optimizer."), 
         initComplete = JS(
             "function(settings, json) {",
-            "$(this.api().table().container()).css({'font-size': '80%'});",
+            "$(this.api().table().container()).css({'font-size': '1.4vh'});",
             "}"),
         columnDefs = list(list(className = 'dt-center', targets = 2:4),
                           list(width = '18%', targets = 4)),
