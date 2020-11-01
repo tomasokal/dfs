@@ -928,7 +928,7 @@ server <- function(input, output) {
             f.rhs <- rep(0, nrow(con_players))
             
             f.dir[1] <- "<="
-            f.rhs[1] <- 50000
+            f.rhs[1] <- salary_full
             
             f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
             f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
