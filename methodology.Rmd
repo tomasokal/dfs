@@ -5,7 +5,7 @@ output:
     css: shiny_app/www/styles.css
 ---
 
-An optimal lineup generated through linear programming is provided for each of the three main DFS platforms (Draftkings, Fanduel, Yahoo). Projections and salaries are continously updated througout the week to provide up to date information needed. If you wish to include a player not in the gnerated lineup, they can be selected from the selection of players available on each platform. Similarly, palyers can be excluded from optimization. 
+An optimal lineup generated through linear programming is provided for each of the three main DFS platforms (Draftkings, Fanduel, Yahoo). Projections and salaries are continously updated througout the week to provide up to date information needed. If you wish to include a player not in the gnerated lineup, they can be selected from the selection of players available on each platform. Similarly, players can be excluded from optimization. 
 
 ## Projections and salaries
 
