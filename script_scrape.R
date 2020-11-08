@@ -84,7 +84,7 @@ slate_function <- function(x) {
   else if ("2020-11-02" < x & x < "2020-11-10") {
     
     # WEEK 9
-    exclude <- c("GBP", "SFO", "NOS", "TBP", "NEP", "NYJ")
+    exclude <- c("GB", "SF", "NO", "TB", "NE", "NYJ")
     
   }
   
