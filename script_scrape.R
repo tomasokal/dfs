@@ -1672,3 +1672,418 @@ opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
 picks_dk <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_DK, SALARY = SALARY_DK)]
 
 data.table::fwrite(picks_dk, "Output/picks_dk.csv")
+
+# Baseline picks
+
+## Yahoo
+player_pool <- slate_thu_mon[!is.na(SALARY_YH)]
+obj_points <- player_pool[, .(POINTS = POINTS_YH)]
+position_dt <- player_pool[, j = .(ppQB = ifelse(POSITION == "QB", 1, 0),
+                                   ppRB = ifelse(POSITION == "RB", 1, 0),
+                                   ppWR = ifelse(POSITION == "WR", 1, 0),
+                                   ppTE = ifelse(POSITION == "TE", 1, 0),
+                                   ppDST = ifelse(POSITION == "DST", 1, 0),
+                                   ppFlex = ifelse(POSITION %in% c("RB", "WR", "TE"), 1, 0))]
+
+con_players <- t(cbind(SALARY = player_pool[, SALARY_YH], position_dt))
+colnames(con_players) <- player_pool$PLAYER
+
+f.dir <- rep(0, nrow(con_players))
+f.rhs <- rep(0, nrow(con_players))
+
+f.dir[1] <- "<="
+f.rhs[1] <- 200
+
+f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
+f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
+
+opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+picks_yh <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_YH, SALARY = SALARY_YH)]
+
+data.table::fwrite(picks_yh, "Output/picks_yh_thu_mon.csv")
+
+## FanDuel
+player_pool <- slate_thu_mon[!is.na(SALARY_FD)]
+obj_points <- player_pool[, .(POINTS = POINTS_FD)]
+position_dt <- player_pool[, j = .(ppQB = ifelse(POSITION == "QB", 1, 0),
+                                   ppRB = ifelse(POSITION == "RB", 1, 0),
+                                   ppWR = ifelse(POSITION == "WR", 1, 0),
+                                   ppTE = ifelse(POSITION == "TE", 1, 0),
+                                   ppDST = ifelse(POSITION == "DST", 1, 0),
+                                   ppFlex = ifelse(POSITION %in% c("RB", "WR", "TE"), 1, 0))]
+
+con_players <- t(cbind(SALARY = player_pool[, SALARY_FD], position_dt))
+colnames(con_players) <- player_pool$PLAYER
+
+f.dir <- rep(0, nrow(con_players))
+f.rhs <- rep(0, nrow(con_players))
+
+f.dir[1] <- "<="
+f.rhs[1] <- 60000
+
+f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
+f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
+
+opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+picks_fd <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_FD, SALARY = SALARY_FD)]
+
+data.table::fwrite(picks_fd, "Output/picks_fd_thu_mon.csv")
+
+## DraftKings
+player_pool <- slate_thu_mon[!is.na(SALARY_DK)]
+obj_points <- player_pool[, .(POINTS = POINTS_DK)]
+position_dt <- player_pool[, j = .(ppQB = ifelse(POSITION == "QB", 1, 0),
+                                   ppRB = ifelse(POSITION == "RB", 1, 0),
+                                   ppWR = ifelse(POSITION == "WR", 1, 0),
+                                   ppTE = ifelse(POSITION == "TE", 1, 0),
+                                   ppDST = ifelse(POSITION == "DST", 1, 0),
+                                   ppFlex = ifelse(POSITION %in% c("RB", "WR", "TE"), 1, 0))]
+
+con_players <- t(cbind(SALARY = player_pool[, SALARY_DK], position_dt))
+colnames(con_players) <- player_pool$PLAYER
+
+f.dir <- rep(0, nrow(con_players))
+f.rhs <- rep(0, nrow(con_players))
+
+f.dir[1] <- "<="
+f.rhs[1] <- 50000
+
+f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
+f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
+
+opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+picks_dk <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_DK, SALARY = SALARY_DK)]
+
+data.table::fwrite(picks_dk, "Output/picks_dk_thu_mon.csv")
+
+# Baseline picks
+
+## Yahoo
+player_pool <- slate_sun_early[!is.na(SALARY_YH)]
+obj_points <- player_pool[, .(POINTS = POINTS_YH)]
+position_dt <- player_pool[, j = .(ppQB = ifelse(POSITION == "QB", 1, 0),
+                                   ppRB = ifelse(POSITION == "RB", 1, 0),
+                                   ppWR = ifelse(POSITION == "WR", 1, 0),
+                                   ppTE = ifelse(POSITION == "TE", 1, 0),
+                                   ppDST = ifelse(POSITION == "DST", 1, 0),
+                                   ppFlex = ifelse(POSITION %in% c("RB", "WR", "TE"), 1, 0))]
+
+con_players <- t(cbind(SALARY = player_pool[, SALARY_YH], position_dt))
+colnames(con_players) <- player_pool$PLAYER
+
+f.dir <- rep(0, nrow(con_players))
+f.rhs <- rep(0, nrow(con_players))
+
+f.dir[1] <- "<="
+f.rhs[1] <- 200
+
+f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
+f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
+
+opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+picks_yh <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_YH, SALARY = SALARY_YH)]
+
+data.table::fwrite(picks_yh, "Output/picks_yh_sun_early.csv")
+
+## FanDuel
+player_pool <- slate_sun_early[!is.na(SALARY_FD)]
+obj_points <- player_pool[, .(POINTS = POINTS_FD)]
+position_dt <- player_pool[, j = .(ppQB = ifelse(POSITION == "QB", 1, 0),
+                                   ppRB = ifelse(POSITION == "RB", 1, 0),
+                                   ppWR = ifelse(POSITION == "WR", 1, 0),
+                                   ppTE = ifelse(POSITION == "TE", 1, 0),
+                                   ppDST = ifelse(POSITION == "DST", 1, 0),
+                                   ppFlex = ifelse(POSITION %in% c("RB", "WR", "TE"), 1, 0))]
+
+con_players <- t(cbind(SALARY = player_pool[, SALARY_FD], position_dt))
+colnames(con_players) <- player_pool$PLAYER
+
+f.dir <- rep(0, nrow(con_players))
+f.rhs <- rep(0, nrow(con_players))
+
+f.dir[1] <- "<="
+f.rhs[1] <- 60000
+
+f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
+f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
+
+opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+picks_fd <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_FD, SALARY = SALARY_FD)]
+
+data.table::fwrite(picks_fd, "Output/picks_fd_sun_early.csv")
+
+## DraftKings
+player_pool <- slate_sun_early[!is.na(SALARY_DK)]
+obj_points <- player_pool[, .(POINTS = POINTS_DK)]
+position_dt <- player_pool[, j = .(ppQB = ifelse(POSITION == "QB", 1, 0),
+                                   ppRB = ifelse(POSITION == "RB", 1, 0),
+                                   ppWR = ifelse(POSITION == "WR", 1, 0),
+                                   ppTE = ifelse(POSITION == "TE", 1, 0),
+                                   ppDST = ifelse(POSITION == "DST", 1, 0),
+                                   ppFlex = ifelse(POSITION %in% c("RB", "WR", "TE"), 1, 0))]
+
+con_players <- t(cbind(SALARY = player_pool[, SALARY_DK], position_dt))
+colnames(con_players) <- player_pool$PLAYER
+
+f.dir <- rep(0, nrow(con_players))
+f.rhs <- rep(0, nrow(con_players))
+
+f.dir[1] <- "<="
+f.rhs[1] <- 50000
+
+f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
+f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
+
+opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+picks_dk <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_DK, SALARY = SALARY_DK)]
+
+data.table::fwrite(picks_dk, "Output/picks_dk_sun_early.csv")
+
+# Baseline picks
+
+## Yahoo
+player_pool <- slate_sun_mon[!is.na(SALARY_YH)]
+obj_points <- player_pool[, .(POINTS = POINTS_YH)]
+position_dt <- player_pool[, j = .(ppQB = ifelse(POSITION == "QB", 1, 0),
+                                   ppRB = ifelse(POSITION == "RB", 1, 0),
+                                   ppWR = ifelse(POSITION == "WR", 1, 0),
+                                   ppTE = ifelse(POSITION == "TE", 1, 0),
+                                   ppDST = ifelse(POSITION == "DST", 1, 0),
+                                   ppFlex = ifelse(POSITION %in% c("RB", "WR", "TE"), 1, 0))]
+
+con_players <- t(cbind(SALARY = player_pool[, SALARY_YH], position_dt))
+colnames(con_players) <- player_pool$PLAYER
+
+f.dir <- rep(0, nrow(con_players))
+f.rhs <- rep(0, nrow(con_players))
+
+f.dir[1] <- "<="
+f.rhs[1] <- 200
+
+f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
+f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
+
+opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+picks_yh <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_YH, SALARY = SALARY_YH)]
+
+data.table::fwrite(picks_yh, "Output/picks_yh_sun_mon.csv")
+
+## FanDuel
+player_pool <- slate_sun_mon[!is.na(SALARY_FD)]
+obj_points <- player_pool[, .(POINTS = POINTS_FD)]
+position_dt <- player_pool[, j = .(ppQB = ifelse(POSITION == "QB", 1, 0),
+                                   ppRB = ifelse(POSITION == "RB", 1, 0),
+                                   ppWR = ifelse(POSITION == "WR", 1, 0),
+                                   ppTE = ifelse(POSITION == "TE", 1, 0),
+                                   ppDST = ifelse(POSITION == "DST", 1, 0),
+                                   ppFlex = ifelse(POSITION %in% c("RB", "WR", "TE"), 1, 0))]
+
+con_players <- t(cbind(SALARY = player_pool[, SALARY_FD], position_dt))
+colnames(con_players) <- player_pool$PLAYER
+
+f.dir <- rep(0, nrow(con_players))
+f.rhs <- rep(0, nrow(con_players))
+
+f.dir[1] <- "<="
+f.rhs[1] <- 60000
+
+f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
+f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
+
+opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+picks_fd <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_FD, SALARY = SALARY_FD)]
+
+data.table::fwrite(picks_fd, "Output/picks_fd_sun_mon.csv")
+
+## DraftKings
+player_pool <- slate_sun_mon[!is.na(SALARY_DK)]
+obj_points <- player_pool[, .(POINTS = POINTS_DK)]
+position_dt <- player_pool[, j = .(ppQB = ifelse(POSITION == "QB", 1, 0),
+                                   ppRB = ifelse(POSITION == "RB", 1, 0),
+                                   ppWR = ifelse(POSITION == "WR", 1, 0),
+                                   ppTE = ifelse(POSITION == "TE", 1, 0),
+                                   ppDST = ifelse(POSITION == "DST", 1, 0),
+                                   ppFlex = ifelse(POSITION %in% c("RB", "WR", "TE"), 1, 0))]
+
+con_players <- t(cbind(SALARY = player_pool[, SALARY_DK], position_dt))
+colnames(con_players) <- player_pool$PLAYER
+
+f.dir <- rep(0, nrow(con_players))
+f.rhs <- rep(0, nrow(con_players))
+
+f.dir[1] <- "<="
+f.rhs[1] <- 50000
+
+f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
+f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
+
+opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+picks_dk <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_DK, SALARY = SALARY_DK)]
+
+data.table::fwrite(picks_dk, "Output/picks_dk_sun_mon.csv")
+
+# Baseline picks
+
+## Yahoo
+player_pool <- slate_afternoon[!is.na(SALARY_YH)]
+obj_points <- player_pool[, .(POINTS = POINTS_YH)]
+position_dt <- player_pool[, j = .(ppQB = ifelse(POSITION == "QB", 1, 0),
+                                   ppRB = ifelse(POSITION == "RB", 1, 0),
+                                   ppWR = ifelse(POSITION == "WR", 1, 0),
+                                   ppTE = ifelse(POSITION == "TE", 1, 0),
+                                   ppDST = ifelse(POSITION == "DST", 1, 0),
+                                   ppFlex = ifelse(POSITION %in% c("RB", "WR", "TE"), 1, 0))]
+
+con_players <- t(cbind(SALARY = player_pool[, SALARY_YH], position_dt))
+colnames(con_players) <- player_pool$PLAYER
+
+f.dir <- rep(0, nrow(con_players))
+f.rhs <- rep(0, nrow(con_players))
+
+f.dir[1] <- "<="
+f.rhs[1] <- 200
+
+f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
+f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
+
+opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+picks_yh <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_YH, SALARY = SALARY_YH)]
+
+data.table::fwrite(picks_yh, "Output/picks_yh_afternoon.csv")
+
+## FanDuel
+player_pool <- slate_afternoon[!is.na(SALARY_FD)]
+obj_points <- player_pool[, .(POINTS = POINTS_FD)]
+position_dt <- player_pool[, j = .(ppQB = ifelse(POSITION == "QB", 1, 0),
+                                   ppRB = ifelse(POSITION == "RB", 1, 0),
+                                   ppWR = ifelse(POSITION == "WR", 1, 0),
+                                   ppTE = ifelse(POSITION == "TE", 1, 0),
+                                   ppDST = ifelse(POSITION == "DST", 1, 0),
+                                   ppFlex = ifelse(POSITION %in% c("RB", "WR", "TE"), 1, 0))]
+
+con_players <- t(cbind(SALARY = player_pool[, SALARY_FD], position_dt))
+colnames(con_players) <- player_pool$PLAYER
+
+f.dir <- rep(0, nrow(con_players))
+f.rhs <- rep(0, nrow(con_players))
+
+f.dir[1] <- "<="
+f.rhs[1] <- 60000
+
+f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
+f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
+
+opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+picks_fd <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_FD, SALARY = SALARY_FD)]
+
+data.table::fwrite(picks_fd, "Output/picks_fd_afternoon.csv")
+
+## DraftKings
+player_pool <- slate_afternoon[!is.na(SALARY_DK)]
+obj_points <- player_pool[, .(POINTS = POINTS_DK)]
+position_dt <- player_pool[, j = .(ppQB = ifelse(POSITION == "QB", 1, 0),
+                                   ppRB = ifelse(POSITION == "RB", 1, 0),
+                                   ppWR = ifelse(POSITION == "WR", 1, 0),
+                                   ppTE = ifelse(POSITION == "TE", 1, 0),
+                                   ppDST = ifelse(POSITION == "DST", 1, 0),
+                                   ppFlex = ifelse(POSITION %in% c("RB", "WR", "TE"), 1, 0))]
+
+con_players <- t(cbind(SALARY = player_pool[, SALARY_DK], position_dt))
+colnames(con_players) <- player_pool$PLAYER
+
+f.dir <- rep(0, nrow(con_players))
+f.rhs <- rep(0, nrow(con_players))
+
+f.dir[1] <- "<="
+f.rhs[1] <- 50000
+
+f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
+f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
+
+opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+picks_dk <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_DK, SALARY = SALARY_DK)]
+
+data.table::fwrite(picks_dk, "Output/picks_dk_afternoon.csv")
+
+# Baseline picks
+
+## Yahoo
+player_pool <- slate_sun_turbo[!is.na(SALARY_YH)]
+obj_points <- player_pool[, .(POINTS = POINTS_YH)]
+position_dt <- player_pool[, j = .(ppQB = ifelse(POSITION == "QB", 1, 0),
+                                   ppRB = ifelse(POSITION == "RB", 1, 0),
+                                   ppWR = ifelse(POSITION == "WR", 1, 0),
+                                   ppTE = ifelse(POSITION == "TE", 1, 0),
+                                   ppDST = ifelse(POSITION == "DST", 1, 0),
+                                   ppFlex = ifelse(POSITION %in% c("RB", "WR", "TE"), 1, 0))]
+
+con_players <- t(cbind(SALARY = player_pool[, SALARY_YH], position_dt))
+colnames(con_players) <- player_pool$PLAYER
+
+f.dir <- rep(0, nrow(con_players))
+f.rhs <- rep(0, nrow(con_players))
+
+f.dir[1] <- "<="
+f.rhs[1] <- 200
+
+f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
+f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
+
+opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+picks_yh <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_YH, SALARY = SALARY_YH)]
+
+data.table::fwrite(picks_yh, "Output/picks_yh_sun_turbo.csv")
+
+## FanDuel
+player_pool <- slate_sun_turbo[!is.na(SALARY_FD)]
+obj_points <- player_pool[, .(POINTS = POINTS_FD)]
+position_dt <- player_pool[, j = .(ppQB = ifelse(POSITION == "QB", 1, 0),
+                                   ppRB = ifelse(POSITION == "RB", 1, 0),
+                                   ppWR = ifelse(POSITION == "WR", 1, 0),
+                                   ppTE = ifelse(POSITION == "TE", 1, 0),
+                                   ppDST = ifelse(POSITION == "DST", 1, 0),
+                                   ppFlex = ifelse(POSITION %in% c("RB", "WR", "TE"), 1, 0))]
+
+con_players <- t(cbind(SALARY = player_pool[, SALARY_FD], position_dt))
+colnames(con_players) <- player_pool$PLAYER
+
+f.dir <- rep(0, nrow(con_players))
+f.rhs <- rep(0, nrow(con_players))
+
+f.dir[1] <- "<="
+f.rhs[1] <- 60000
+
+f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
+f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
+
+opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+picks_fd <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_FD, SALARY = SALARY_FD)]
+
+data.table::fwrite(picks_fd, "Output/picks_fd_sun_turbo.csv")
+
+## DraftKings
+player_pool <- slate_sun_turbo[!is.na(SALARY_DK)]
+obj_points <- player_pool[, .(POINTS = POINTS_DK)]
+position_dt <- player_pool[, j = .(ppQB = ifelse(POSITION == "QB", 1, 0),
+                                   ppRB = ifelse(POSITION == "RB", 1, 0),
+                                   ppWR = ifelse(POSITION == "WR", 1, 0),
+                                   ppTE = ifelse(POSITION == "TE", 1, 0),
+                                   ppDST = ifelse(POSITION == "DST", 1, 0),
+                                   ppFlex = ifelse(POSITION %in% c("RB", "WR", "TE"), 1, 0))]
+
+con_players <- t(cbind(SALARY = player_pool[, SALARY_DK], position_dt))
+colnames(con_players) <- player_pool$PLAYER
+
+f.dir <- rep(0, nrow(con_players))
+f.rhs <- rep(0, nrow(con_players))
+
+f.dir[1] <- "<="
+f.rhs[1] <- 50000
+
+f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
+f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
+
+opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+picks_dk <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_DK, SALARY = SALARY_DK)]
+
+data.table::fwrite(picks_dk, "Output/picks_dk_sun_turbo.csv")
