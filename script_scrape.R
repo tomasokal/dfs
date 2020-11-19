@@ -131,6 +131,11 @@ merge_full <- merge_full[, SLATE_AFTERNOON := ifelse(TEAM %chin% SLATE_CHECK[[5]
 merge_full <- merge_full[, SLATE_SUN_TURBO := ifelse(TEAM %chin% SLATE_CHECK[[6]], 0, 1)]
 
 slate_main <- merge_full[SLATE_MAIN == 1]
+slate_thu_mon <- merge_full[SLATE_THU_MON == 1]
+slate_sun_early <- merge_full[SLATE_SUN_EARLY == 1]
+slate_sun_mon <- merge_full[SLATE_SUN_MON == 1]
+slate_afternoon <- merge_full[SLATE_AFTERNOON == 1]
+slate_sun_turbo <- merge_full[SLATE_SUN_TURBO == 1]
 
 # Export data 
 data.table::fwrite(merge_full, "Output/salaries_projections_scraped_script.csv")
@@ -139,9 +144,13 @@ data.table::fwrite(merge_full, "Output/salaries_projections_scraped_script.csv")
 time <- as.POSIXct(Sys.time(), "Etc/GMT+5")
 save(time, file = "Output/time.RData")
 
+# -------------------------------------------------------------------------------------------------
+
 # Optimum difference
 
-## DraftKings
+## Main Slate
+
+### DraftKings
 player_pool <- slate_main[!is.na(SALARY_DK)]
 obj_points <- player_pool[, .(POINTS = POINTS_DK)]
 position_dt <- player_pool[, j = .(ppQB = ifelse(POSITION == "QB", 1, 0),
@@ -218,7 +227,7 @@ eval_dk <- data.table::data.table(PLAYER = player_pool$PLAYER
                                   , NEEDED_POINTS = unlist(new_points)
 )[, DIFF_DK := NEEDED_POINTS - PROJECTED_POINTS][, .(PLAYER, TEAM, POSITION, DIFF_DK)][, COLOR_DK := rgb(colorfunc((DIFF_DK - min(DIFF_DK)) / (max(DIFF_DK) - min(DIFF_DK))), maxColorValue = 255)]
 
-## Fanduel
+### Fanduel
 player_pool <- slate_main[!is.na(SALARY_FD)]
 obj_points <- player_pool[, .(POINTS = POINTS_FD)]
 position_dt <- player_pool[, j = .(ppQB = ifelse(POSITION == "QB", 1, 0),
@@ -293,7 +302,7 @@ eval_fd <- data.table::data.table(PLAYER = player_pool$PLAYER
                                   , NEEDED_POINTS = unlist(new_points)
 )[, DIFF_FD := NEEDED_POINTS - PROJECTED_POINTS][, .(PLAYER, TEAM, POSITION, DIFF_FD)][, COLOR_FD := rgb(colorfunc((DIFF_FD - min(DIFF_FD)) / (max(DIFF_FD) - min(DIFF_FD))), maxColorValue = 255)]
 
-## Yahoo
+### Yahoo
 player_pool <- slate_main[!is.na(SALARY_YH)]
 obj_points <- player_pool[, .(POINTS = POINTS_YH)]
 position_dt <- player_pool[, j = .(ppQB = ifelse(POSITION == "QB", 1, 0),
@@ -378,6 +387,1208 @@ merge3 <- merge3[order(-POINTS_DK)]
 
 # Export data 
 data.table::fwrite(merge3, "Output/salaries_projections_main_slate.csv")
+
+## Thursday - Monday Slate
+
+### DraftKings
+player_pool <- slate_thu_mon[!is.na(SALARY_DK)]
+obj_points <- player_pool[, .(POINTS = POINTS_DK)]
+position_dt <- player_pool[, j = .(ppQB = ifelse(POSITION == "QB", 1, 0),
+                                   ppRB = ifelse(POSITION == "RB", 1, 0),
+                                   ppWR = ifelse(POSITION == "WR", 1, 0),
+                                   ppTE = ifelse(POSITION == "TE", 1, 0),
+                                   ppDST = ifelse(POSITION == "DST", 1, 0),
+                                   ppFlex = ifelse(POSITION %in% c("RB", "WR", "TE"), 1, 0))]
+
+con_players <- t(cbind(SALARY = player_pool[, SALARY_DK], position_dt))
+colnames(con_players) <- player_pool$PLAYER
+
+f.dir <- rep(0, nrow(con_players))
+f.rhs <- rep(0, nrow(con_players))
+
+f.dir[1] <- "<="
+f.rhs[1] <- 50000
+
+f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
+f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
+
+opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+picks_base <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_DK, SALARY = SALARY_DK)]
+
+new_points <- rep(0, nrow(player_pool))
+
+for (i in 1:nrow(player_pool)) {
+  
+  if (!as.character(player_pool[i, 1]) %in% picks_base$PLAYER) {
+    
+    obj_points <- player_pool[, .(POINTS = POINTS_DK)]
+    exp_points <- obj_points[i]
+    
+    picks_new <- picks_base
+    
+    print("Not in optimal lineup")
+    
+    repeat {
+      
+      exp_points <- exp_points + 0.25
+      new_points[i] <-  exp_points
+      
+      obj_points[i] <- exp_points
+      
+      opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+      picks_new <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_DK, SALARY = SALARY_DK)]
+      
+      if (as.character(player_pool[i, 1]) %in% picks_new$PLAYER) {
+        
+        break
+        
+      }
+      
+    }
+    
+  }
+  
+  else {
+    
+    print("In optimal lineup")
+    
+    new_points[i] <- obj_points[i]
+    
+  }
+  
+}
+
+colorfunc <- colorRamp(c("#FFA500", "white", "#D5D5F7", "#AAAAEE", "#8080E6", "#5555DE"))
+
+eval_dk <- data.table::data.table(PLAYER = player_pool$PLAYER
+                                  , TEAM = player_pool$TEAM
+                                  , POSITION = player_pool$POSITION
+                                  , PROJECTED_POINTS = player_pool$POINTS_DK
+                                  , NEEDED_POINTS = unlist(new_points)
+)[, DIFF_DK := NEEDED_POINTS - PROJECTED_POINTS][, .(PLAYER, TEAM, POSITION, DIFF_DK)][, COLOR_DK := rgb(colorfunc((DIFF_DK - min(DIFF_DK)) / (max(DIFF_DK) - min(DIFF_DK))), maxColorValue = 255)]
+
+### Fanduel
+player_pool <- slate_thu_mon[!is.na(SALARY_FD)]
+obj_points <- player_pool[, .(POINTS = POINTS_FD)]
+position_dt <- player_pool[, j = .(ppQB = ifelse(POSITION == "QB", 1, 0),
+                                   ppRB = ifelse(POSITION == "RB", 1, 0),
+                                   ppWR = ifelse(POSITION == "WR", 1, 0),
+                                   ppTE = ifelse(POSITION == "TE", 1, 0),
+                                   ppDST = ifelse(POSITION == "DST", 1, 0),
+                                   ppFlex = ifelse(POSITION %in% c("RB", "WR", "TE"), 1, 0))]
+
+con_players <- t(cbind(SALARY = player_pool[, SALARY_FD], position_dt))
+colnames(con_players) <- player_pool$PLAYER
+
+f.dir <- rep(0, nrow(con_players))
+f.rhs <- rep(0, nrow(con_players))
+
+f.dir[1] <- "<="
+f.rhs[1] <- 50000
+
+f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
+f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
+
+opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+picks_base <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_FD, SALARY = SALARY_FD)]
+
+new_points <- rep(0, nrow(player_pool))
+
+for (i in 1:nrow(player_pool)) {
+  
+  if (!as.character(player_pool[i, 1]) %in% picks_base$PLAYER) {
+    
+    obj_points <- player_pool[, .(POINTS = POINTS_FD)]
+    exp_points <- obj_points[i]
+    
+    picks_new <- picks_base
+    
+    print("Not in optimal lineup")
+    
+    repeat {
+      
+      exp_points <- exp_points + 0.25
+      new_points[i] <-  exp_points
+      
+      obj_points[i] <- exp_points
+      
+      opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+      picks_new <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_FD, SALARY = SALARY_FD)]
+      
+      if (as.character(player_pool[i, 1]) %in% picks_new$PLAYER) {
+        
+        break
+        
+      }
+      
+    }
+    
+  }
+  
+  else {
+    
+    print("In optimal lineup")
+    
+    new_points[i] <- obj_points[i]
+    
+  }
+  
+}
+
+eval_fd <- data.table::data.table(PLAYER = player_pool$PLAYER
+                                  , TEAM = player_pool$TEAM
+                                  , POSITION = player_pool$POSITION
+                                  , PROJECTED_POINTS = player_pool$POINTS_FD
+                                  , NEEDED_POINTS = unlist(new_points)
+)[, DIFF_FD := NEEDED_POINTS - PROJECTED_POINTS][, .(PLAYER, TEAM, POSITION, DIFF_FD)][, COLOR_FD := rgb(colorfunc((DIFF_FD - min(DIFF_FD)) / (max(DIFF_FD) - min(DIFF_FD))), maxColorValue = 255)]
+
+### Yahoo
+player_pool <- slate_thu_mon[!is.na(SALARY_YH)]
+obj_points <- player_pool[, .(POINTS = POINTS_YH)]
+position_dt <- player_pool[, j = .(ppQB = ifelse(POSITION == "QB", 1, 0),
+                                   ppRB = ifelse(POSITION == "RB", 1, 0),
+                                   ppWR = ifelse(POSITION == "WR", 1, 0),
+                                   ppTE = ifelse(POSITION == "TE", 1, 0),
+                                   ppDST = ifelse(POSITION == "DST", 1, 0),
+                                   ppFlex = ifelse(POSITION %in% c("RB", "WR", "TE"), 1, 0))]
+
+con_players <- t(cbind(SALARY = player_pool[, SALARY_YH], position_dt))
+colnames(con_players) <- player_pool$PLAYER
+
+f.dir <- rep(0, nrow(con_players))
+f.rhs <- rep(0, nrow(con_players))
+
+f.dir[1] <- "<="
+f.rhs[1] <- 50000
+
+f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
+f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
+
+opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+picks_base <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_YH, SALARY = SALARY_YH)]
+
+new_points <- rep(0, nrow(player_pool))
+
+for (i in 1:nrow(player_pool)) {
+  
+  if (!as.character(player_pool[i, 1]) %in% picks_base$PLAYER) {
+    
+    obj_points <- player_pool[, .(POINTS = POINTS_YH)]
+    exp_points <- obj_points[i]
+    
+    picks_new <- picks_base
+    
+    print("Not in optimal lineup")
+    
+    repeat {
+      
+      exp_points <- exp_points + 0.25
+      new_points[i] <-  exp_points
+      
+      obj_points[i] <- exp_points
+      
+      opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+      picks_new <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_YH, SALARY = SALARY_YH)]
+      
+      if (as.character(player_pool[i, 1]) %in% picks_new$PLAYER) {
+        
+        break
+        
+      }
+      
+    }
+    
+  }
+  
+  else {
+    
+    print("In optimal lineup")
+    
+    new_points[i] <- obj_points[i]
+    
+  }
+  
+}
+
+
+eval_yh <- data.table::data.table(PLAYER = player_pool$PLAYER
+                                  , TEAM = player_pool$TEAM
+                                  , POSITION = player_pool$POSITION
+                                  , PROJECTED_POINTS = player_pool$POINTS_YH
+                                  , NEEDED_POINTS = unlist(new_points)
+)[, DIFF_YH := NEEDED_POINTS - PROJECTED_POINTS][, .(PLAYER, TEAM, POSITION, DIFF_YH)][, COLOR_YH := rgb(colorfunc((DIFF_YH - min(DIFF_YH)) / (max(DIFF_YH) - min(DIFF_YH))), maxColorValue = 255)]
+
+# Merging together
+merge1 <- merge(slate_thu_mon, eval_dk, by = c("PLAYER", "TEAM", "POSITION"), all.x = TRUE)
+merge2 <- merge(merge1, eval_fd, by = c("PLAYER", "TEAM", "POSITION"), all.x = TRUE)
+merge3 <- merge(merge2, eval_yh, by = c("PLAYER", "TEAM", "POSITION"), all.x = TRUE)
+
+merge3 <- merge3[order(-POINTS_DK)]
+
+# Export data 
+data.table::fwrite(merge3, "Output/salaries_projections_slate_thu_mon.csv")
+
+## Sunday Early Slate
+
+### DraftKings
+player_pool <- slate_sun_early[!is.na(SALARY_DK)]
+obj_points <- player_pool[, .(POINTS = POINTS_DK)]
+position_dt <- player_pool[, j = .(ppQB = ifelse(POSITION == "QB", 1, 0),
+                                   ppRB = ifelse(POSITION == "RB", 1, 0),
+                                   ppWR = ifelse(POSITION == "WR", 1, 0),
+                                   ppTE = ifelse(POSITION == "TE", 1, 0),
+                                   ppDST = ifelse(POSITION == "DST", 1, 0),
+                                   ppFlex = ifelse(POSITION %in% c("RB", "WR", "TE"), 1, 0))]
+
+con_players <- t(cbind(SALARY = player_pool[, SALARY_DK], position_dt))
+colnames(con_players) <- player_pool$PLAYER
+
+f.dir <- rep(0, nrow(con_players))
+f.rhs <- rep(0, nrow(con_players))
+
+f.dir[1] <- "<="
+f.rhs[1] <- 50000
+
+f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
+f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
+
+opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+picks_base <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_DK, SALARY = SALARY_DK)]
+
+new_points <- rep(0, nrow(player_pool))
+
+for (i in 1:nrow(player_pool)) {
+  
+  if (!as.character(player_pool[i, 1]) %in% picks_base$PLAYER) {
+    
+    obj_points <- player_pool[, .(POINTS = POINTS_DK)]
+    exp_points <- obj_points[i]
+    
+    picks_new <- picks_base
+    
+    print("Not in optimal lineup")
+    
+    repeat {
+      
+      exp_points <- exp_points + 0.25
+      new_points[i] <-  exp_points
+      
+      obj_points[i] <- exp_points
+      
+      opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+      picks_new <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_DK, SALARY = SALARY_DK)]
+      
+      if (as.character(player_pool[i, 1]) %in% picks_new$PLAYER) {
+        
+        break
+        
+      }
+      
+    }
+    
+  }
+  
+  else {
+    
+    print("In optimal lineup")
+    
+    new_points[i] <- obj_points[i]
+    
+  }
+  
+}
+
+colorfunc <- colorRamp(c("#FFA500", "white", "#D5D5F7", "#AAAAEE", "#8080E6", "#5555DE"))
+
+eval_dk <- data.table::data.table(PLAYER = player_pool$PLAYER
+                                  , TEAM = player_pool$TEAM
+                                  , POSITION = player_pool$POSITION
+                                  , PROJECTED_POINTS = player_pool$POINTS_DK
+                                  , NEEDED_POINTS = unlist(new_points)
+)[, DIFF_DK := NEEDED_POINTS - PROJECTED_POINTS][, .(PLAYER, TEAM, POSITION, DIFF_DK)][, COLOR_DK := rgb(colorfunc((DIFF_DK - min(DIFF_DK)) / (max(DIFF_DK) - min(DIFF_DK))), maxColorValue = 255)]
+
+### Fanduel
+player_pool <- slate_sun_early[!is.na(SALARY_FD)]
+obj_points <- player_pool[, .(POINTS = POINTS_FD)]
+position_dt <- player_pool[, j = .(ppQB = ifelse(POSITION == "QB", 1, 0),
+                                   ppRB = ifelse(POSITION == "RB", 1, 0),
+                                   ppWR = ifelse(POSITION == "WR", 1, 0),
+                                   ppTE = ifelse(POSITION == "TE", 1, 0),
+                                   ppDST = ifelse(POSITION == "DST", 1, 0),
+                                   ppFlex = ifelse(POSITION %in% c("RB", "WR", "TE"), 1, 0))]
+
+con_players <- t(cbind(SALARY = player_pool[, SALARY_FD], position_dt))
+colnames(con_players) <- player_pool$PLAYER
+
+f.dir <- rep(0, nrow(con_players))
+f.rhs <- rep(0, nrow(con_players))
+
+f.dir[1] <- "<="
+f.rhs[1] <- 50000
+
+f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
+f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
+
+opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+picks_base <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_FD, SALARY = SALARY_FD)]
+
+new_points <- rep(0, nrow(player_pool))
+
+for (i in 1:nrow(player_pool)) {
+  
+  if (!as.character(player_pool[i, 1]) %in% picks_base$PLAYER) {
+    
+    obj_points <- player_pool[, .(POINTS = POINTS_FD)]
+    exp_points <- obj_points[i]
+    
+    picks_new <- picks_base
+    
+    print("Not in optimal lineup")
+    
+    repeat {
+      
+      exp_points <- exp_points + 0.25
+      new_points[i] <-  exp_points
+      
+      obj_points[i] <- exp_points
+      
+      opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+      picks_new <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_FD, SALARY = SALARY_FD)]
+      
+      if (as.character(player_pool[i, 1]) %in% picks_new$PLAYER) {
+        
+        break
+        
+      }
+      
+    }
+    
+  }
+  
+  else {
+    
+    print("In optimal lineup")
+    
+    new_points[i] <- obj_points[i]
+    
+  }
+  
+}
+
+eval_fd <- data.table::data.table(PLAYER = player_pool$PLAYER
+                                  , TEAM = player_pool$TEAM
+                                  , POSITION = player_pool$POSITION
+                                  , PROJECTED_POINTS = player_pool$POINTS_FD
+                                  , NEEDED_POINTS = unlist(new_points)
+)[, DIFF_FD := NEEDED_POINTS - PROJECTED_POINTS][, .(PLAYER, TEAM, POSITION, DIFF_FD)][, COLOR_FD := rgb(colorfunc((DIFF_FD - min(DIFF_FD)) / (max(DIFF_FD) - min(DIFF_FD))), maxColorValue = 255)]
+
+### Yahoo
+player_pool <- slate_sun_early[!is.na(SALARY_YH)]
+obj_points <- player_pool[, .(POINTS = POINTS_YH)]
+position_dt <- player_pool[, j = .(ppQB = ifelse(POSITION == "QB", 1, 0),
+                                   ppRB = ifelse(POSITION == "RB", 1, 0),
+                                   ppWR = ifelse(POSITION == "WR", 1, 0),
+                                   ppTE = ifelse(POSITION == "TE", 1, 0),
+                                   ppDST = ifelse(POSITION == "DST", 1, 0),
+                                   ppFlex = ifelse(POSITION %in% c("RB", "WR", "TE"), 1, 0))]
+
+con_players <- t(cbind(SALARY = player_pool[, SALARY_YH], position_dt))
+colnames(con_players) <- player_pool$PLAYER
+
+f.dir <- rep(0, nrow(con_players))
+f.rhs <- rep(0, nrow(con_players))
+
+f.dir[1] <- "<="
+f.rhs[1] <- 50000
+
+f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
+f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
+
+opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+picks_base <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_YH, SALARY = SALARY_YH)]
+
+new_points <- rep(0, nrow(player_pool))
+
+for (i in 1:nrow(player_pool)) {
+  
+  if (!as.character(player_pool[i, 1]) %in% picks_base$PLAYER) {
+    
+    obj_points <- player_pool[, .(POINTS = POINTS_YH)]
+    exp_points <- obj_points[i]
+    
+    picks_new <- picks_base
+    
+    print("Not in optimal lineup")
+    
+    repeat {
+      
+      exp_points <- exp_points + 0.25
+      new_points[i] <-  exp_points
+      
+      obj_points[i] <- exp_points
+      
+      opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+      picks_new <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_YH, SALARY = SALARY_YH)]
+      
+      if (as.character(player_pool[i, 1]) %in% picks_new$PLAYER) {
+        
+        break
+        
+      }
+      
+    }
+    
+  }
+  
+  else {
+    
+    print("In optimal lineup")
+    
+    new_points[i] <- obj_points[i]
+    
+  }
+  
+}
+
+
+eval_yh <- data.table::data.table(PLAYER = player_pool$PLAYER
+                                  , TEAM = player_pool$TEAM
+                                  , POSITION = player_pool$POSITION
+                                  , PROJECTED_POINTS = player_pool$POINTS_YH
+                                  , NEEDED_POINTS = unlist(new_points)
+)[, DIFF_YH := NEEDED_POINTS - PROJECTED_POINTS][, .(PLAYER, TEAM, POSITION, DIFF_YH)][, COLOR_YH := rgb(colorfunc((DIFF_YH - min(DIFF_YH)) / (max(DIFF_YH) - min(DIFF_YH))), maxColorValue = 255)]
+
+# Merging together
+merge1 <- merge(slate_sun_early, eval_dk, by = c("PLAYER", "TEAM", "POSITION"), all.x = TRUE)
+merge2 <- merge(merge1, eval_fd, by = c("PLAYER", "TEAM", "POSITION"), all.x = TRUE)
+merge3 <- merge(merge2, eval_yh, by = c("PLAYER", "TEAM", "POSITION"), all.x = TRUE)
+
+merge3 <- merge3[order(-POINTS_DK)]
+
+# Export data 
+data.table::fwrite(merge3, "Output/salaries_projections_slate_sun_early.csv")
+
+## Sunday - Monday Slate
+
+### DraftKings
+player_pool <- slate_sun_mon[!is.na(SALARY_DK)]
+obj_points <- player_pool[, .(POINTS = POINTS_DK)]
+position_dt <- player_pool[, j = .(ppQB = ifelse(POSITION == "QB", 1, 0),
+                                   ppRB = ifelse(POSITION == "RB", 1, 0),
+                                   ppWR = ifelse(POSITION == "WR", 1, 0),
+                                   ppTE = ifelse(POSITION == "TE", 1, 0),
+                                   ppDST = ifelse(POSITION == "DST", 1, 0),
+                                   ppFlex = ifelse(POSITION %in% c("RB", "WR", "TE"), 1, 0))]
+
+con_players <- t(cbind(SALARY = player_pool[, SALARY_DK], position_dt))
+colnames(con_players) <- player_pool$PLAYER
+
+f.dir <- rep(0, nrow(con_players))
+f.rhs <- rep(0, nrow(con_players))
+
+f.dir[1] <- "<="
+f.rhs[1] <- 50000
+
+f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
+f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
+
+opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+picks_base <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_DK, SALARY = SALARY_DK)]
+
+new_points <- rep(0, nrow(player_pool))
+
+for (i in 1:nrow(player_pool)) {
+  
+  if (!as.character(player_pool[i, 1]) %in% picks_base$PLAYER) {
+    
+    obj_points <- player_pool[, .(POINTS = POINTS_DK)]
+    exp_points <- obj_points[i]
+    
+    picks_new <- picks_base
+    
+    print("Not in optimal lineup")
+    
+    repeat {
+      
+      exp_points <- exp_points + 0.25
+      new_points[i] <-  exp_points
+      
+      obj_points[i] <- exp_points
+      
+      opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+      picks_new <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_DK, SALARY = SALARY_DK)]
+      
+      if (as.character(player_pool[i, 1]) %in% picks_new$PLAYER) {
+        
+        break
+        
+      }
+      
+    }
+    
+  }
+  
+  else {
+    
+    print("In optimal lineup")
+    
+    new_points[i] <- obj_points[i]
+    
+  }
+  
+}
+
+colorfunc <- colorRamp(c("#FFA500", "white", "#D5D5F7", "#AAAAEE", "#8080E6", "#5555DE"))
+
+eval_dk <- data.table::data.table(PLAYER = player_pool$PLAYER
+                                  , TEAM = player_pool$TEAM
+                                  , POSITION = player_pool$POSITION
+                                  , PROJECTED_POINTS = player_pool$POINTS_DK
+                                  , NEEDED_POINTS = unlist(new_points)
+)[, DIFF_DK := NEEDED_POINTS - PROJECTED_POINTS][, .(PLAYER, TEAM, POSITION, DIFF_DK)][, COLOR_DK := rgb(colorfunc((DIFF_DK - min(DIFF_DK)) / (max(DIFF_DK) - min(DIFF_DK))), maxColorValue = 255)]
+
+### Fanduel
+player_pool <- slate_sun_mon[!is.na(SALARY_FD)]
+obj_points <- player_pool[, .(POINTS = POINTS_FD)]
+position_dt <- player_pool[, j = .(ppQB = ifelse(POSITION == "QB", 1, 0),
+                                   ppRB = ifelse(POSITION == "RB", 1, 0),
+                                   ppWR = ifelse(POSITION == "WR", 1, 0),
+                                   ppTE = ifelse(POSITION == "TE", 1, 0),
+                                   ppDST = ifelse(POSITION == "DST", 1, 0),
+                                   ppFlex = ifelse(POSITION %in% c("RB", "WR", "TE"), 1, 0))]
+
+con_players <- t(cbind(SALARY = player_pool[, SALARY_FD], position_dt))
+colnames(con_players) <- player_pool$PLAYER
+
+f.dir <- rep(0, nrow(con_players))
+f.rhs <- rep(0, nrow(con_players))
+
+f.dir[1] <- "<="
+f.rhs[1] <- 50000
+
+f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
+f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
+
+opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+picks_base <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_FD, SALARY = SALARY_FD)]
+
+new_points <- rep(0, nrow(player_pool))
+
+for (i in 1:nrow(player_pool)) {
+  
+  if (!as.character(player_pool[i, 1]) %in% picks_base$PLAYER) {
+    
+    obj_points <- player_pool[, .(POINTS = POINTS_FD)]
+    exp_points <- obj_points[i]
+    
+    picks_new <- picks_base
+    
+    print("Not in optimal lineup")
+    
+    repeat {
+      
+      exp_points <- exp_points + 0.25
+      new_points[i] <-  exp_points
+      
+      obj_points[i] <- exp_points
+      
+      opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+      picks_new <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_FD, SALARY = SALARY_FD)]
+      
+      if (as.character(player_pool[i, 1]) %in% picks_new$PLAYER) {
+        
+        break
+        
+      }
+      
+    }
+    
+  }
+  
+  else {
+    
+    print("In optimal lineup")
+    
+    new_points[i] <- obj_points[i]
+    
+  }
+  
+}
+
+eval_fd <- data.table::data.table(PLAYER = player_pool$PLAYER
+                                  , TEAM = player_pool$TEAM
+                                  , POSITION = player_pool$POSITION
+                                  , PROJECTED_POINTS = player_pool$POINTS_FD
+                                  , NEEDED_POINTS = unlist(new_points)
+)[, DIFF_FD := NEEDED_POINTS - PROJECTED_POINTS][, .(PLAYER, TEAM, POSITION, DIFF_FD)][, COLOR_FD := rgb(colorfunc((DIFF_FD - min(DIFF_FD)) / (max(DIFF_FD) - min(DIFF_FD))), maxColorValue = 255)]
+
+### Yahoo
+player_pool <- slate_sun_mon[!is.na(SALARY_YH)]
+obj_points <- player_pool[, .(POINTS = POINTS_YH)]
+position_dt <- player_pool[, j = .(ppQB = ifelse(POSITION == "QB", 1, 0),
+                                   ppRB = ifelse(POSITION == "RB", 1, 0),
+                                   ppWR = ifelse(POSITION == "WR", 1, 0),
+                                   ppTE = ifelse(POSITION == "TE", 1, 0),
+                                   ppDST = ifelse(POSITION == "DST", 1, 0),
+                                   ppFlex = ifelse(POSITION %in% c("RB", "WR", "TE"), 1, 0))]
+
+con_players <- t(cbind(SALARY = player_pool[, SALARY_YH], position_dt))
+colnames(con_players) <- player_pool$PLAYER
+
+f.dir <- rep(0, nrow(con_players))
+f.rhs <- rep(0, nrow(con_players))
+
+f.dir[1] <- "<="
+f.rhs[1] <- 50000
+
+f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
+f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
+
+opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+picks_base <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_YH, SALARY = SALARY_YH)]
+
+new_points <- rep(0, nrow(player_pool))
+
+for (i in 1:nrow(player_pool)) {
+  
+  if (!as.character(player_pool[i, 1]) %in% picks_base$PLAYER) {
+    
+    obj_points <- player_pool[, .(POINTS = POINTS_YH)]
+    exp_points <- obj_points[i]
+    
+    picks_new <- picks_base
+    
+    print("Not in optimal lineup")
+    
+    repeat {
+      
+      exp_points <- exp_points + 0.25
+      new_points[i] <-  exp_points
+      
+      obj_points[i] <- exp_points
+      
+      opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+      picks_new <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_YH, SALARY = SALARY_YH)]
+      
+      if (as.character(player_pool[i, 1]) %in% picks_new$PLAYER) {
+        
+        break
+        
+      }
+      
+    }
+    
+  }
+  
+  else {
+    
+    print("In optimal lineup")
+    
+    new_points[i] <- obj_points[i]
+    
+  }
+  
+}
+
+
+eval_yh <- data.table::data.table(PLAYER = player_pool$PLAYER
+                                  , TEAM = player_pool$TEAM
+                                  , POSITION = player_pool$POSITION
+                                  , PROJECTED_POINTS = player_pool$POINTS_YH
+                                  , NEEDED_POINTS = unlist(new_points)
+)[, DIFF_YH := NEEDED_POINTS - PROJECTED_POINTS][, .(PLAYER, TEAM, POSITION, DIFF_YH)][, COLOR_YH := rgb(colorfunc((DIFF_YH - min(DIFF_YH)) / (max(DIFF_YH) - min(DIFF_YH))), maxColorValue = 255)]
+
+# Merging together
+merge1 <- merge(slate_sun_mon, eval_dk, by = c("PLAYER", "TEAM", "POSITION"), all.x = TRUE)
+merge2 <- merge(merge1, eval_fd, by = c("PLAYER", "TEAM", "POSITION"), all.x = TRUE)
+merge3 <- merge(merge2, eval_yh, by = c("PLAYER", "TEAM", "POSITION"), all.x = TRUE)
+
+merge3 <- merge3[order(-POINTS_DK)]
+
+# Export data 
+data.table::fwrite(merge3, "Output/salaries_projections_slate_sun_mon.csv")
+
+## Sunday Afteroon Slate
+
+### DraftKings
+player_pool <- slate_afternoon[!is.na(SALARY_DK)]
+obj_points <- player_pool[, .(POINTS = POINTS_DK)]
+position_dt <- player_pool[, j = .(ppQB = ifelse(POSITION == "QB", 1, 0),
+                                   ppRB = ifelse(POSITION == "RB", 1, 0),
+                                   ppWR = ifelse(POSITION == "WR", 1, 0),
+                                   ppTE = ifelse(POSITION == "TE", 1, 0),
+                                   ppDST = ifelse(POSITION == "DST", 1, 0),
+                                   ppFlex = ifelse(POSITION %in% c("RB", "WR", "TE"), 1, 0))]
+
+con_players <- t(cbind(SALARY = player_pool[, SALARY_DK], position_dt))
+colnames(con_players) <- player_pool$PLAYER
+
+f.dir <- rep(0, nrow(con_players))
+f.rhs <- rep(0, nrow(con_players))
+
+f.dir[1] <- "<="
+f.rhs[1] <- 50000
+
+f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
+f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
+
+opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+picks_base <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_DK, SALARY = SALARY_DK)]
+
+new_points <- rep(0, nrow(player_pool))
+
+for (i in 1:nrow(player_pool)) {
+  
+  if (!as.character(player_pool[i, 1]) %in% picks_base$PLAYER) {
+    
+    obj_points <- player_pool[, .(POINTS = POINTS_DK)]
+    exp_points <- obj_points[i]
+    
+    picks_new <- picks_base
+    
+    print("Not in optimal lineup")
+    
+    repeat {
+      
+      exp_points <- exp_points + 0.25
+      new_points[i] <-  exp_points
+      
+      obj_points[i] <- exp_points
+      
+      opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+      picks_new <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_DK, SALARY = SALARY_DK)]
+      
+      if (as.character(player_pool[i, 1]) %in% picks_new$PLAYER) {
+        
+        break
+        
+      }
+      
+    }
+    
+  }
+  
+  else {
+    
+    print("In optimal lineup")
+    
+    new_points[i] <- obj_points[i]
+    
+  }
+  
+}
+
+colorfunc <- colorRamp(c("#FFA500", "white", "#D5D5F7", "#AAAAEE", "#8080E6", "#5555DE"))
+
+eval_dk <- data.table::data.table(PLAYER = player_pool$PLAYER
+                                  , TEAM = player_pool$TEAM
+                                  , POSITION = player_pool$POSITION
+                                  , PROJECTED_POINTS = player_pool$POINTS_DK
+                                  , NEEDED_POINTS = unlist(new_points)
+)[, DIFF_DK := NEEDED_POINTS - PROJECTED_POINTS][, .(PLAYER, TEAM, POSITION, DIFF_DK)][, COLOR_DK := rgb(colorfunc((DIFF_DK - min(DIFF_DK)) / (max(DIFF_DK) - min(DIFF_DK))), maxColorValue = 255)]
+
+### Fanduel
+player_pool <- slate_afternoon[!is.na(SALARY_FD)]
+obj_points <- player_pool[, .(POINTS = POINTS_FD)]
+position_dt <- player_pool[, j = .(ppQB = ifelse(POSITION == "QB", 1, 0),
+                                   ppRB = ifelse(POSITION == "RB", 1, 0),
+                                   ppWR = ifelse(POSITION == "WR", 1, 0),
+                                   ppTE = ifelse(POSITION == "TE", 1, 0),
+                                   ppDST = ifelse(POSITION == "DST", 1, 0),
+                                   ppFlex = ifelse(POSITION %in% c("RB", "WR", "TE"), 1, 0))]
+
+con_players <- t(cbind(SALARY = player_pool[, SALARY_FD], position_dt))
+colnames(con_players) <- player_pool$PLAYER
+
+f.dir <- rep(0, nrow(con_players))
+f.rhs <- rep(0, nrow(con_players))
+
+f.dir[1] <- "<="
+f.rhs[1] <- 50000
+
+f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
+f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
+
+opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+picks_base <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_FD, SALARY = SALARY_FD)]
+
+new_points <- rep(0, nrow(player_pool))
+
+for (i in 1:nrow(player_pool)) {
+  
+  if (!as.character(player_pool[i, 1]) %in% picks_base$PLAYER) {
+    
+    obj_points <- player_pool[, .(POINTS = POINTS_FD)]
+    exp_points <- obj_points[i]
+    
+    picks_new <- picks_base
+    
+    print("Not in optimal lineup")
+    
+    repeat {
+      
+      exp_points <- exp_points + 0.25
+      new_points[i] <-  exp_points
+      
+      obj_points[i] <- exp_points
+      
+      opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+      picks_new <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_FD, SALARY = SALARY_FD)]
+      
+      if (as.character(player_pool[i, 1]) %in% picks_new$PLAYER) {
+        
+        break
+        
+      }
+      
+    }
+    
+  }
+  
+  else {
+    
+    print("In optimal lineup")
+    
+    new_points[i] <- obj_points[i]
+    
+  }
+  
+}
+
+eval_fd <- data.table::data.table(PLAYER = player_pool$PLAYER
+                                  , TEAM = player_pool$TEAM
+                                  , POSITION = player_pool$POSITION
+                                  , PROJECTED_POINTS = player_pool$POINTS_FD
+                                  , NEEDED_POINTS = unlist(new_points)
+)[, DIFF_FD := NEEDED_POINTS - PROJECTED_POINTS][, .(PLAYER, TEAM, POSITION, DIFF_FD)][, COLOR_FD := rgb(colorfunc((DIFF_FD - min(DIFF_FD)) / (max(DIFF_FD) - min(DIFF_FD))), maxColorValue = 255)]
+
+### Yahoo
+player_pool <- slate_afternoon[!is.na(SALARY_YH)]
+obj_points <- player_pool[, .(POINTS = POINTS_YH)]
+position_dt <- player_pool[, j = .(ppQB = ifelse(POSITION == "QB", 1, 0),
+                                   ppRB = ifelse(POSITION == "RB", 1, 0),
+                                   ppWR = ifelse(POSITION == "WR", 1, 0),
+                                   ppTE = ifelse(POSITION == "TE", 1, 0),
+                                   ppDST = ifelse(POSITION == "DST", 1, 0),
+                                   ppFlex = ifelse(POSITION %in% c("RB", "WR", "TE"), 1, 0))]
+
+con_players <- t(cbind(SALARY = player_pool[, SALARY_YH], position_dt))
+colnames(con_players) <- player_pool$PLAYER
+
+f.dir <- rep(0, nrow(con_players))
+f.rhs <- rep(0, nrow(con_players))
+
+f.dir[1] <- "<="
+f.rhs[1] <- 50000
+
+f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
+f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
+
+opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+picks_base <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_YH, SALARY = SALARY_YH)]
+
+new_points <- rep(0, nrow(player_pool))
+
+for (i in 1:nrow(player_pool)) {
+  
+  if (!as.character(player_pool[i, 1]) %in% picks_base$PLAYER) {
+    
+    obj_points <- player_pool[, .(POINTS = POINTS_YH)]
+    exp_points <- obj_points[i]
+    
+    picks_new <- picks_base
+    
+    print("Not in optimal lineup")
+    
+    repeat {
+      
+      exp_points <- exp_points + 0.25
+      new_points[i] <-  exp_points
+      
+      obj_points[i] <- exp_points
+      
+      opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+      picks_new <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_YH, SALARY = SALARY_YH)]
+      
+      if (as.character(player_pool[i, 1]) %in% picks_new$PLAYER) {
+        
+        break
+        
+      }
+      
+    }
+    
+  }
+  
+  else {
+    
+    print("In optimal lineup")
+    
+    new_points[i] <- obj_points[i]
+    
+  }
+  
+}
+
+
+eval_yh <- data.table::data.table(PLAYER = player_pool$PLAYER
+                                  , TEAM = player_pool$TEAM
+                                  , POSITION = player_pool$POSITION
+                                  , PROJECTED_POINTS = player_pool$POINTS_YH
+                                  , NEEDED_POINTS = unlist(new_points)
+)[, DIFF_YH := NEEDED_POINTS - PROJECTED_POINTS][, .(PLAYER, TEAM, POSITION, DIFF_YH)][, COLOR_YH := rgb(colorfunc((DIFF_YH - min(DIFF_YH)) / (max(DIFF_YH) - min(DIFF_YH))), maxColorValue = 255)]
+
+# Merging together
+merge1 <- merge(slate_afternoon, eval_dk, by = c("PLAYER", "TEAM", "POSITION"), all.x = TRUE)
+merge2 <- merge(merge1, eval_fd, by = c("PLAYER", "TEAM", "POSITION"), all.x = TRUE)
+merge3 <- merge(merge2, eval_yh, by = c("PLAYER", "TEAM", "POSITION"), all.x = TRUE)
+
+merge3 <- merge3[order(-POINTS_DK)]
+
+# Export data 
+data.table::fwrite(merge3, "Output/salaries_projections_slate_afternoon.csv")
+
+## Sunday Afternoon Turbo Slate
+
+### DraftKings
+player_pool <- slate_sun_turbo[!is.na(SALARY_DK)]
+obj_points <- player_pool[, .(POINTS = POINTS_DK)]
+position_dt <- player_pool[, j = .(ppQB = ifelse(POSITION == "QB", 1, 0),
+                                   ppRB = ifelse(POSITION == "RB", 1, 0),
+                                   ppWR = ifelse(POSITION == "WR", 1, 0),
+                                   ppTE = ifelse(POSITION == "TE", 1, 0),
+                                   ppDST = ifelse(POSITION == "DST", 1, 0),
+                                   ppFlex = ifelse(POSITION %in% c("RB", "WR", "TE"), 1, 0))]
+
+con_players <- t(cbind(SALARY = player_pool[, SALARY_DK], position_dt))
+colnames(con_players) <- player_pool$PLAYER
+
+f.dir <- rep(0, nrow(con_players))
+f.rhs <- rep(0, nrow(con_players))
+
+f.dir[1] <- "<="
+f.rhs[1] <- 50000
+
+f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
+f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
+
+opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+picks_base <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_DK, SALARY = SALARY_DK)]
+
+new_points <- rep(0, nrow(player_pool))
+
+for (i in 1:nrow(player_pool)) {
+  
+  if (!as.character(player_pool[i, 1]) %in% picks_base$PLAYER) {
+    
+    obj_points <- player_pool[, .(POINTS = POINTS_DK)]
+    exp_points <- obj_points[i]
+    
+    picks_new <- picks_base
+    
+    print("Not in optimal lineup")
+    
+    repeat {
+      
+      exp_points <- exp_points + 0.25
+      new_points[i] <-  exp_points
+      
+      obj_points[i] <- exp_points
+      
+      opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+      picks_new <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_DK, SALARY = SALARY_DK)]
+      
+      if (as.character(player_pool[i, 1]) %in% picks_new$PLAYER) {
+        
+        break
+        
+      }
+      
+    }
+    
+  }
+  
+  else {
+    
+    print("In optimal lineup")
+    
+    new_points[i] <- obj_points[i]
+    
+  }
+  
+}
+
+colorfunc <- colorRamp(c("#FFA500", "white", "#D5D5F7", "#AAAAEE", "#8080E6", "#5555DE"))
+
+eval_dk <- data.table::data.table(PLAYER = player_pool$PLAYER
+                                  , TEAM = player_pool$TEAM
+                                  , POSITION = player_pool$POSITION
+                                  , PROJECTED_POINTS = player_pool$POINTS_DK
+                                  , NEEDED_POINTS = unlist(new_points)
+)[, DIFF_DK := NEEDED_POINTS - PROJECTED_POINTS][, .(PLAYER, TEAM, POSITION, DIFF_DK)][, COLOR_DK := rgb(colorfunc((DIFF_DK - min(DIFF_DK)) / (max(DIFF_DK) - min(DIFF_DK))), maxColorValue = 255)]
+
+### Fanduel
+player_pool <- slate_sun_turbo[!is.na(SALARY_FD)]
+obj_points <- player_pool[, .(POINTS = POINTS_FD)]
+position_dt <- player_pool[, j = .(ppQB = ifelse(POSITION == "QB", 1, 0),
+                                   ppRB = ifelse(POSITION == "RB", 1, 0),
+                                   ppWR = ifelse(POSITION == "WR", 1, 0),
+                                   ppTE = ifelse(POSITION == "TE", 1, 0),
+                                   ppDST = ifelse(POSITION == "DST", 1, 0),
+                                   ppFlex = ifelse(POSITION %in% c("RB", "WR", "TE"), 1, 0))]
+
+con_players <- t(cbind(SALARY = player_pool[, SALARY_FD], position_dt))
+colnames(con_players) <- player_pool$PLAYER
+
+f.dir <- rep(0, nrow(con_players))
+f.rhs <- rep(0, nrow(con_players))
+
+f.dir[1] <- "<="
+f.rhs[1] <- 50000
+
+f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
+f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
+
+opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+picks_base <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_FD, SALARY = SALARY_FD)]
+
+new_points <- rep(0, nrow(player_pool))
+
+for (i in 1:nrow(player_pool)) {
+  
+  if (!as.character(player_pool[i, 1]) %in% picks_base$PLAYER) {
+    
+    obj_points <- player_pool[, .(POINTS = POINTS_FD)]
+    exp_points <- obj_points[i]
+    
+    picks_new <- picks_base
+    
+    print("Not in optimal lineup")
+    
+    repeat {
+      
+      exp_points <- exp_points + 0.25
+      new_points[i] <-  exp_points
+      
+      obj_points[i] <- exp_points
+      
+      opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+      picks_new <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_FD, SALARY = SALARY_FD)]
+      
+      if (as.character(player_pool[i, 1]) %in% picks_new$PLAYER) {
+        
+        break
+        
+      }
+      
+    }
+    
+  }
+  
+  else {
+    
+    print("In optimal lineup")
+    
+    new_points[i] <- obj_points[i]
+    
+  }
+  
+}
+
+eval_fd <- data.table::data.table(PLAYER = player_pool$PLAYER
+                                  , TEAM = player_pool$TEAM
+                                  , POSITION = player_pool$POSITION
+                                  , PROJECTED_POINTS = player_pool$POINTS_FD
+                                  , NEEDED_POINTS = unlist(new_points)
+)[, DIFF_FD := NEEDED_POINTS - PROJECTED_POINTS][, .(PLAYER, TEAM, POSITION, DIFF_FD)][, COLOR_FD := rgb(colorfunc((DIFF_FD - min(DIFF_FD)) / (max(DIFF_FD) - min(DIFF_FD))), maxColorValue = 255)]
+
+### Yahoo
+player_pool <- slate_sun_turbo[!is.na(SALARY_YH)]
+obj_points <- player_pool[, .(POINTS = POINTS_YH)]
+position_dt <- player_pool[, j = .(ppQB = ifelse(POSITION == "QB", 1, 0),
+                                   ppRB = ifelse(POSITION == "RB", 1, 0),
+                                   ppWR = ifelse(POSITION == "WR", 1, 0),
+                                   ppTE = ifelse(POSITION == "TE", 1, 0),
+                                   ppDST = ifelse(POSITION == "DST", 1, 0),
+                                   ppFlex = ifelse(POSITION %in% c("RB", "WR", "TE"), 1, 0))]
+
+con_players <- t(cbind(SALARY = player_pool[, SALARY_YH], position_dt))
+colnames(con_players) <- player_pool$PLAYER
+
+f.dir <- rep(0, nrow(con_players))
+f.rhs <- rep(0, nrow(con_players))
+
+f.dir[1] <- "<="
+f.rhs[1] <- 50000
+
+f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
+f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
+
+opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+picks_base <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_YH, SALARY = SALARY_YH)]
+
+new_points <- rep(0, nrow(player_pool))
+
+for (i in 1:nrow(player_pool)) {
+  
+  if (!as.character(player_pool[i, 1]) %in% picks_base$PLAYER) {
+    
+    obj_points <- player_pool[, .(POINTS = POINTS_YH)]
+    exp_points <- obj_points[i]
+    
+    picks_new <- picks_base
+    
+    print("Not in optimal lineup")
+    
+    repeat {
+      
+      exp_points <- exp_points + 0.25
+      new_points[i] <-  exp_points
+      
+      obj_points[i] <- exp_points
+      
+      opt <- lp("max", obj_points, con_players, f.dir, f.rhs, all.bin = TRUE)
+      picks_new <- player_pool[which(opt$solution == 1), ][, .(PLAYER, POSITION, TEAM, POINTS = POINTS_YH, SALARY = SALARY_YH)]
+      
+      if (as.character(player_pool[i, 1]) %in% picks_new$PLAYER) {
+        
+        break
+        
+      }
+      
+    }
+    
+  }
+  
+  else {
+    
+    print("In optimal lineup")
+    
+    new_points[i] <- obj_points[i]
+    
+  }
+  
+}
+
+
+eval_yh <- data.table::data.table(PLAYER = player_pool$PLAYER
+                                  , TEAM = player_pool$TEAM
+                                  , POSITION = player_pool$POSITION
+                                  , PROJECTED_POINTS = player_pool$POINTS_YH
+                                  , NEEDED_POINTS = unlist(new_points)
+)[, DIFF_YH := NEEDED_POINTS - PROJECTED_POINTS][, .(PLAYER, TEAM, POSITION, DIFF_YH)][, COLOR_YH := rgb(colorfunc((DIFF_YH - min(DIFF_YH)) / (max(DIFF_YH) - min(DIFF_YH))), maxColorValue = 255)]
+
+# Merging together
+merge1 <- merge(slate_sun_turbo, eval_dk, by = c("PLAYER", "TEAM", "POSITION"), all.x = TRUE)
+merge2 <- merge(merge1, eval_fd, by = c("PLAYER", "TEAM", "POSITION"), all.x = TRUE)
+merge3 <- merge(merge2, eval_yh, by = c("PLAYER", "TEAM", "POSITION"), all.x = TRUE)
+
+merge3 <- merge3[order(-POINTS_DK)]
+
+# Export data 
+data.table::fwrite(merge3, "Output/salaries_projections_slate_sun_turbo.csv")
+
+# --------------------------------------------------------------------------------------------------------------------
 
 # Baseline picks
 
