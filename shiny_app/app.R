@@ -8,7 +8,13 @@ library(dplyr)
 library(curl)
 
 
-
+salaries_main <- data.table::fread("https://raw.githubusercontent.com/tomasokal/dfs/production/Output/salaries_projections_main_slate.csv")
+#salaries_afternoon <- data.table::fread("https://raw.githubusercontent.com/tomasokal/dfs/production/Output/salaries_projections_slate_afternoon.csv")
+salaries_sun_early <- data.table::fread("https://raw.githubusercontent.com/tomasokal/dfs/production/Output/salaries_projections_slate_sun_early.csv")
+salaries_sun_mon <- data.table::fread("https://raw.githubusercontent.com/tomasokal/dfs/production/Output/salaries_projections_slate_sun_mon.csv")
+#salaries_sun_turbo <- data.table::fread("https://raw.githubusercontent.com/tomasokal/dfs/production/Output/salaries_projections_slate_sun_turbo.csv")
+salaries_thu_mon <- data.table::fread("https://raw.githubusercontent.com/tomasokal/dfs/production/Output/salaries_projections_slate_thu_mon.csv")
+ 
 
 full_salaries <- data.table::fread("https://raw.githubusercontent.com/tomasokal/dfs/production/Output/salaries_projections_main_slate.csv")
 
@@ -47,6 +53,15 @@ ui <-
                                               status = 'testbutton',
                                               checkIcon = list(yes = icon("ok", lib = "glyphicon"))
                                           ),
+                                          radioGroupButtons(
+                                            inputId = "slate", label = "Select a slate",
+                                            size = "lg",
+                                            individual = TRUE,
+                                            width = "100%",
+                                            status = 'testbutton',
+                                            checkIcon = list(yes = icon("ok", lib = "glyphicon")),
+                                            choices = c("Main", "Early Only", "Sunday to Monday", "Thursday to Monday")
+                                          ),
                                           p(HTML(paste0("<i>Salaries last updated: ", time, "</i>"))),
                                           actionButton(inputId = "runbutton",
                                                        icon = icon("chart-bar"),
@@ -56,7 +71,7 @@ ui <-
                                                        label = "Reset selections",
                                                        icon = icon("undo"),
                                                        class = "btncolor"),
-                                          p(HTML("<br>Optimizes for Sunday slate. More options coming soon.<br>")),
+                                          #p(HTML("<br>Optimizes for Sunday slate. More options coming soon.<br>")),
                                           verbatimTextOutput('hoverIndex')
                                           ),
                                    column(1)),
