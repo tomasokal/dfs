@@ -26,6 +26,18 @@ projections_dfs <- projections_dfs[, .(PLAYER = v25
                                        , SALARY_DK = as.numeric(gsub("[\\$,]","", v20))
                                        , SALARY_YH = as.numeric(gsub("[\\$,]","", v23)))]
 
+taysom_qb <- projections_dfs[PLAYER == "Taysom Hill"]
+taysom_qb[1, 1] <- "Taysom Hill DK/YH"
+taysom_qb[1, 2] <- "QB"
+taysom_qb[1, 7] <- NA
+taysom_te <- projections_dfs[PLAYER == "Taysom Hill"]
+taysom_te[1, 1] <- "Taysom Hill FD"
+taysom_te[1, 8] <- NA
+taysom_te[1, 9] <- NA
+
+projections_dfs <- projections_dfs[!PLAYER == "Taysom Hill"]
+
+projections_dfs <- data.table::rbindlist(list(projections_dfs, taysom_qb, taysom_te))
 
 ## Defense
 url <- "https://www.numberfire.com/nfl/fantasy/fantasy-football-projections/d"
@@ -244,7 +256,7 @@ f.dir <- rep(0, nrow(con_players))
 f.rhs <- rep(0, nrow(con_players))
 
 f.dir[1] <- "<="
-f.rhs[1] <- 50000
+f.rhs[1] <- 60000
 
 f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
 f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
@@ -319,7 +331,7 @@ f.dir <- rep(0, nrow(con_players))
 f.rhs <- rep(0, nrow(con_players))
 
 f.dir[1] <- "<="
-f.rhs[1] <- 50000
+f.rhs[1] <- 200
 
 f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
 f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
@@ -484,7 +496,7 @@ f.dir <- rep(0, nrow(con_players))
 f.rhs <- rep(0, nrow(con_players))
 
 f.dir[1] <- "<="
-f.rhs[1] <- 50000
+f.rhs[1] <- 60000
 
 f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
 f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
@@ -559,7 +571,7 @@ f.dir <- rep(0, nrow(con_players))
 f.rhs <- rep(0, nrow(con_players))
 
 f.dir[1] <- "<="
-f.rhs[1] <- 50000
+f.rhs[1] <- 200
 
 f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
 f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
@@ -724,7 +736,7 @@ f.dir <- rep(0, nrow(con_players))
 f.rhs <- rep(0, nrow(con_players))
 
 f.dir[1] <- "<="
-f.rhs[1] <- 50000
+f.rhs[1] <- 60000
 
 f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
 f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
@@ -799,7 +811,7 @@ f.dir <- rep(0, nrow(con_players))
 f.rhs <- rep(0, nrow(con_players))
 
 f.dir[1] <- "<="
-f.rhs[1] <- 50000
+f.rhs[1] <- 200
 
 f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
 f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
@@ -964,7 +976,7 @@ f.dir <- rep(0, nrow(con_players))
 f.rhs <- rep(0, nrow(con_players))
 
 f.dir[1] <- "<="
-f.rhs[1] <- 50000
+f.rhs[1] <- 60000
 
 f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
 f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
@@ -1039,7 +1051,7 @@ f.dir <- rep(0, nrow(con_players))
 f.rhs <- rep(0, nrow(con_players))
 
 f.dir[1] <- "<="
-f.rhs[1] <- 50000
+f.rhs[1] <- 200
 
 f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
 f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
@@ -1204,7 +1216,7 @@ f.dir <- rep(0, nrow(con_players))
 f.rhs <- rep(0, nrow(con_players))
 
 f.dir[1] <- "<="
-f.rhs[1] <- 50000
+f.rhs[1] <- 60000
 
 f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
 f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
@@ -1279,7 +1291,7 @@ f.dir <- rep(0, nrow(con_players))
 f.rhs <- rep(0, nrow(con_players))
 
 f.dir[1] <- "<="
-f.rhs[1] <- 50000
+f.rhs[1] <- 200
 
 f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
 f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
@@ -1444,7 +1456,7 @@ f.dir <- rep(0, nrow(con_players))
 f.rhs <- rep(0, nrow(con_players))
 
 f.dir[1] <- "<="
-f.rhs[1] <- 50000
+f.rhs[1] <- 60000
 
 f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
 f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
@@ -1519,7 +1531,7 @@ f.dir <- rep(0, nrow(con_players))
 f.rhs <- rep(0, nrow(con_players))
 
 f.dir[1] <- "<="
-f.rhs[1] <- 50000
+f.rhs[1] <- 200
 
 f.dir[2:nrow(con_players)] <- c("=", ">=", ">=", ">=", "=", "=")
 f.rhs[2:nrow(con_players)] <- c(1, 2, 3, 1, 1, 7)
