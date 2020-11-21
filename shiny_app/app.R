@@ -16,7 +16,7 @@ salaries_sun_mon <- data.table::fread("https://raw.githubusercontent.com/tomasok
 salaries_thu_mon <- data.table::fread("https://raw.githubusercontent.com/tomasokal/dfs/production/Output/salaries_projections_slate_thu_mon.csv")
  
 
-full_salaries <- data.table::fread("https://raw.githubusercontent.com/tomasokal/dfs/production/Output/salaries_projections_main_slate.csv")
+full_salaries_use <- data.table::fread("https://raw.githubusercontent.com/tomasokal/dfs/production/Output/salaries_projections_main_slate.csv")
 
 
 
@@ -60,7 +60,7 @@ ui <-
                                             width = "100%",
                                             status = 'testbutton',
                                             checkIcon = list(yes = icon("ok", lib = "glyphicon")),
-                                            choices = c("Main", "Early Only", "Sunday to Monday", "Thursday to Monday")
+                                            choices = c("Main", "Early only", "Sunday to Monday", "Thursday to Monday")
                                           ),
                                           p(HTML(paste0("<i>Salaries last updated: ", time, "</i>"))),
                                           actionButton(inputId = "runbutton",
@@ -170,6 +170,47 @@ ui <-
 # Define server logic required to draw a histogram
 server <- function(input, output) {
     
+    
+
+    
+     full_salaries <- reactiveVal(NULL)
+
+    # full_salaries <- eventReactive(input$slate, {
+    # 
+    # 
+    #     return(switch(input$slate,
+    # 
+    #                          "Main" = salaries_main,
+    #                          "Early only" = salaries_sun_early,
+    #                          "Sunday to Monday" = salaries_sun_mon,
+    #                          "Thursday to Monday" = salaries_thu_mon,
+    # 
+    #     ))
+    # 
+    # 
+    # 
+    # })
+    
+    observeEvent(input$slate, {
+        
+        
+        player_list <- switch(input$slate,
+                              "Main" = salaries_main,
+                              "Early only" = salaries_sun_early,
+                              "Sunday to Monday" = salaries_sun_mon,
+                              "Thursday to Monday" = salaries_thu_mon
+        )
+        
+        full_salaries(player_list)
+        
+        proper_tb(switch(input$sourcegroup, "DraftKings" = player_list_dk(), "FanDuel" = player_list_fd(), "Yahoo Sports" = player_list_yh()))
+        
+        
+        
+    })
+    
+
+
 
     
     shinyInput <- function(FUN, len, id, ...) {
@@ -190,27 +231,27 @@ server <- function(input, output) {
     #     points_switch <- switch(input$sourcegroup, "DraftKings" = "POINTS_DK", "FanDuel" = "POINTS_FD", "Yahoo Sports" = "POINTS_YH")
     # 
     # 
-    #     players_full <- dplyr::select(full_salaries, PLAYER, POSITION, source_switch, points_switch)
+    #     players_full <- dplyr::select(full_salaries(), PLAYER, POSITION, source_switch, points_switch)
     # 
     # 
     # 
     #     tibble::tibble(
     # 
     # 
-    #         Player = full_salaries$PLAYER,
-    #         `Pos.` = full_salaries$POSITION,
+    #         Player = full_salaries()$PLAYER,
+    #         `Pos.` = full_salaries()$POSITION,
     #         Salary = players_full[[ncol(players_full)-1]],
     #         Points = players_full[[ncol(players_full)]],
-    #         # Points = full_salaries$POINTS_DK,
-    #         # Salary = full_salaries$SALARY_DK,
-    #         Include = shinyInput(actionButton, nrow(full_salaries),
+    #         # Points = full_salaries()$POINTS_DK,
+    #         # Salary = full_salaries()$SALARY_DK,
+    #         Include = shinyInput(actionButton, nrow(full_salaries()),
     #                              'button_',
     #                              label = "",
     #                              icon = icon("check"),
     #                              class = "include",
     #                              onclick = paste0('Shiny.onInputChange( \"select_button\" , this.id)')
     #         ),
-    #         Exclude = shinyInput(actionButton, nrow(full_salaries),
+    #         Exclude = shinyInput(actionButton, nrow(full_salaries()),
     #                                       'button_',
     #                                       label = "",
     #                              icon = icon("times"),
@@ -223,7 +264,7 @@ server <- function(input, output) {
     
     player_list_dk <- reactive({
         
-        sal_dk <- full_salaries[!is.na(full_salaries$SALARY_DK)]
+        sal_dk <- full_salaries()[!is.na(full_salaries()$SALARY_DK)]
         
         
         
@@ -255,7 +296,7 @@ server <- function(input, output) {
     
     player_list_fd <- reactive({
         
-        sal_fd <- full_salaries[!is.na(full_salaries$SALARY_FD)]
+        sal_fd <- full_salaries()[!is.na(full_salaries()$SALARY_FD)]
         
         tibble::tibble(
             
@@ -286,7 +327,7 @@ server <- function(input, output) {
     
     player_list_yh <- reactive({
         
-        sal_yh <- full_salaries[!is.na(full_salaries$SALARY_YH)]
+        sal_yh <- full_salaries()[!is.na(full_salaries()$SALARY_YH)]
         
         tibble::tibble(
             
@@ -317,6 +358,7 @@ server <- function(input, output) {
     
     proper_tb <- reactiveVal(NULL)
     
+
     
     observeEvent(input$sourcegroup, {
         
@@ -401,7 +443,7 @@ server <- function(input, output) {
     
     # output$player_list_table <- DT::renderDT({
     #     #player_list()
-    #     datatable(full_salaries, 
+    #     datatable(full_salaries(), 
     #               options = list(columnDefs = list(list(visible=FALSE, targets = 6:10)), 
     #                              rowCallback = JS("function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {",
     #                                               "var full_text = 'This player needs to earn ' + aData[5] + ' to be considered in an optimal lineup' ",
@@ -569,7 +611,7 @@ server <- function(input, output) {
         
         
         
-        players <- subset(full_salaries, PLAYER %in% pl_inc())
+        players <- subset(full_salaries(), PLAYER %in% pl_inc())
         
         source_switch <- switch(input$sourcegroup, "DraftKings" = "SALARY_DK", "FanDuel" = "SALARY_FD", "Yahoo Sports" = "SALARY_YH") 
         
@@ -597,7 +639,7 @@ server <- function(input, output) {
         
         
         
-        players <- subset(full_salaries, PLAYER %in% pl_exc())
+        players <- subset(full_salaries(), PLAYER %in% pl_exc())
         
         source_switch <- switch(input$sourcegroup, "DraftKings" = "SALARY_DK", "FanDuel" = "SALARY_FD", "Yahoo Sports" = "SALARY_YH") 
         
@@ -709,7 +751,7 @@ server <- function(input, output) {
         salary_switch <- switch(input$sourcegroup, "DraftKings" = "SALARY_DK", "FanDuel" = "SALARY_FD", "Yahoo Sports" = "SALARY_YH")
         points_switch <- switch(input$sourcegroup, "DraftKings" = "POINTS_DK", "FanDuel" = "POINTS_FD", "Yahoo Sports" = "POINTS_YH")
         
-        df_full <- full_salaries %>%
+        df_full <- full_salaries() %>%
             dplyr::select(PLAYER, POSITION, TEAM, salary_switch, points_switch) %>%
             `colnames<-`(c("Player", "Position", "Team", "Salary", "Points")) %>%
             dplyr::filter(!is.na(Salary))
@@ -717,7 +759,7 @@ server <- function(input, output) {
         
         #------------------------------------------------------------------##
         
-        inc_test <- subset(full_salaries, PLAYER %in% pl_inc())[!is.na(SALARY_DK)] #param for source
+        inc_test <- subset(full_salaries(), PLAYER %in% pl_inc())[!is.na(SALARY_DK)] #param for source
         
         salary_full <- switch(input$sourcegroup, 
                               "DraftKings" = 50000, 
