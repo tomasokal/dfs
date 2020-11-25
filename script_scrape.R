@@ -26,19 +26,6 @@ projections_dfs <- projections_dfs[, .(PLAYER = v25
                                        , SALARY_DK = as.numeric(gsub("[\\$,]","", v20))
                                        , SALARY_YH = as.numeric(gsub("[\\$,]","", v23)))]
 
-taysom_qb <- projections_dfs[PLAYER == "Taysom Hill"]
-taysom_qb[1, 1] <- "Taysom Hill DK/YH"
-taysom_qb[1, 2] <- "QB"
-taysom_qb[1, 7] <- NA
-taysom_te <- projections_dfs[PLAYER == "Taysom Hill"]
-taysom_te[1, 1] <- "Taysom Hill FD"
-taysom_te[1, 8] <- NA
-taysom_te[1, 9] <- NA
-
-projections_dfs <- projections_dfs[!PLAYER == "Taysom Hill"]
-
-projections_dfs <- data.table::rbindlist(list(projections_dfs, taysom_qb, taysom_te))
-
 ## Defense
 url <- "https://www.numberfire.com/nfl/fantasy/fantasy-football-projections/d"
 page <- rvest::html_table(xml2::read_html(url)
@@ -82,6 +69,15 @@ slate_function <- function(x) {
     
     # WEEK 12
     exclude <- c("HOU", "DET", "WAS", "DAL", "BAL", "PIT", "CHI", "GBP", "SEA", "PHI")
+    
+    # WEEK 12
+    exclude <- list(main_slate <- c("HOU", "DET", "WAS", "DAL", "BAL", "PIT", "CHI", "GB", "SEA", "PHI")
+                    , thu_mon <- c("NONE")
+                    , sun_early <- c("HOU", "DET", "WAS", "DAL", "BAL", "PIT", "NO", "DEN", "SF", "LA", "CHI", "GB", "SEA", "PHI")
+                    , sun_mon <- c("HOU", "DET", "WAS", "DAL", "BAL", "PIT")
+                    , sun_afternoon <- c("HOU", "DET", "WAS", "DAL", "BAL", "PIT")
+                    , sun_turbo <- c("HOU", "DET", "WAS", "DAL", "BAL", "PIT")
+    )
     
   }
   
