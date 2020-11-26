@@ -68,15 +68,12 @@ slate_function <- function(x) {
   else if ("2020-11-23" < x & x < "2020-12-01") {
     
     # WEEK 12
-    exclude <- c("HOU", "DET", "WAS", "DAL", "BAL", "PIT", "CHI", "GBP", "SEA", "PHI")
-    
-    # WEEK 12
-    exclude <- list(main_slate <- c("HOU", "DET", "WAS", "DAL", "BAL", "PIT", "CHI", "GB", "SEA", "PHI")
+    exclude <- list(main_slate <- c("HOU", "DET", "WAS", "DAL", "BAL", "CHI", "GB", "SEA", "PHI")
                     , thu_mon <- c("NONE")
-                    , sun_early <- c("HOU", "DET", "WAS", "DAL", "BAL", "PIT", "NO", "DEN", "SF", "LA", "CHI", "GB", "SEA", "PHI")
-                    , sun_mon <- c("HOU", "DET", "WAS", "DAL", "BAL", "PIT")
-                    , sun_afternoon <- c("HOU", "DET", "WAS", "DAL", "BAL", "PIT")
-                    , sun_turbo <- c("HOU", "DET", "WAS", "DAL", "BAL", "PIT")
+                    , sun_early <- c("HOU", "DET", "WAS", "DAL","NO", "DEN", "SF", "LA", "CHI", "GB", "SEA", "PHI")
+                    , sun_mon <- c("HOU", "DET", "WAS", "DAL",)
+                    , sun_afternoon <- c("HOU", "DET", "WAS", "DAL")
+                    , sun_turbo <- c("HOU", "DET", "WAS", "DAL")
     )
     
   }
