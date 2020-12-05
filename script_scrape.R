@@ -81,12 +81,12 @@ slate_function <- function(x) {
   else if ("2020-11-30" < x & x < "2020-12-08") {
     
     # WEEK 13
-    exclude <- list(main_slate <- c("BAL", "DAL", "SF", "BUF", "PIT", "WAS", "KC", "DEN")
+    exclude <- list(main_slate <- c("BAL", "DAL", "SF", "BUF", "PIT", "WSH", "KC", "DEN")
                     , thu_mon <- c("BAL", "DAL")
-                    , sun_early <- c("BAL", "DAL", "SF", "BUF", "PIT", "WAS", "KC", "DEN", "LA", "ARI", "NY", "SEA", "NE", "LAC", "PHI", "GB")
+                    , sun_early <- c("BAL", "DAL", "SF", "BUF", "PIT", "WSH", "KC", "DEN", "LA", "ARI", "NY", "SEA", "NE", "LAC", "PHI", "GB")
                     , sun_mon <- c("BAL", "DAL")
-                    , sun_afternoon <- c("HOU", "DET", "WAS", "DAL")
-                    , sun_turbo <- c("HOU", "DET", "WAS", "DAL")
+                    , sun_afternoon <- c("HOU", "DET", "WSH", "DAL")
+                    , sun_turbo <- c("HOU", "DET", "WSH", "DAL")
     )
     
   }
