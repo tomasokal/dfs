@@ -82,9 +82,9 @@ slate_function <- function(x) {
     
     # WEEK 13
     exclude <- list(main_slate <- c("BAL", "DAL", "SF", "BUF", "PIT", "WAS", "KC", "DEN")
-                    , thu_mon <- c("SF", "BUF", "PIT", "WAS", "KC", "DEN")
+                    , thu_mon <- c("BAL", "DAL")
                     , sun_early <- c("BAL", "DAL", "SF", "BUF", "PIT", "WAS", "KC", "DEN", "LA", "ARI", "NY", "SEA", "NE", "LAC", "PHI", "GB")
-                    , sun_mon <- c("SF", "BUF", "PIT", "WAS", "KC", "DEN")
+                    , sun_mon <- c("BAL", "DAL")
                     , sun_afternoon <- c("HOU", "DET", "WAS", "DAL")
                     , sun_turbo <- c("HOU", "DET", "WAS", "DAL")
     )
