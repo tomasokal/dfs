@@ -101,9 +101,15 @@ slate_function <- function(x) {
   else if ("2020-12-14" < x & x < "2020-12-22") {
     
     # WEEK 15
-    exclude <- c("NEP", "LAR", "PIT", "BUF", "BAL", "CLE")
+    exclude <- list(main_slate <- c("LV", "LAC", "BUF", "DEN", "CAR", "GB", "CLE", "NY", "PIT", "CIN")
+                    , thu_mon <- c("NONE")
+                    , sun_early <- c("LV", "LAC", "BUF", "DEN", "CAR", "GB", "CLE", "NY", "PIT", "CIN", "NYJ", "LA", "KC", "NO")
+                    , sun_mon <- c("LV", "LAC", "BUF", "DEN", "CAR", "GB")
+                    , sun_afternoon <- c("HOU", "DET", "WSH", "DAL")
+                    , sun_turbo <- c("HOU", "DET", "WSH", "DAL")
+      )
     
-  }
+    }
   
   else if ("2020-12-21" < x & x < "2020-12-29") {
     
