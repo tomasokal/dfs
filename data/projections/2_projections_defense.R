@@ -27,3 +27,5 @@ scrape_projections <- scrape_projections[, .(PLAYER = v22
                                              , SALARY_FD = as.numeric(gsub("[\\$,]","", v14))
                                              , SALARY_DK = as.numeric(gsub("[\\$,]","", v17)))]
 
+
+

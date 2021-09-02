@@ -34,4 +34,5 @@ scrape_projections <- scrape_projections[, .(PLAYER = v25
                                              , PASS_YDS = as.numeric(v7)
                                              , PASS_TDS = as.numeric(v8)
                                              , PASS_INT = as.numeric(v9))]
+
                                              
