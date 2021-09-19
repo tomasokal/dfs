@@ -1,7 +1,7 @@
 # Load player and defense projections
 # Loading this to join in new script for debugging purposes
-projections_players <- data.table::fread('_export/projections_players.csv')
-projections_dst <- data.table::fread('_export/projections_dst.csv')
+projections_players <- data.table::fread('data/_export/projections_players.csv')
+projections_dst <- data.table::fread('data/_export/projections_dst.csv')
 
 # Merge projections
 projections <- data.table::rbindlist(list(projections_players, projections_dst), fill = TRUE)
