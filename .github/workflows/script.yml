@@ -6,7 +6,8 @@ name: script
 #    - cron:  '0 */6 * * *'
 on:
   push:
-    branches: production
+    branches: data_2021_start
+    # branches: production
 
 jobs:
 
@@ -22,17 +23,15 @@ jobs:
         run: |
           R -e 'install.packages("data.table")'
           R -e 'install.packages("xml2")'
-          R -e 'install.packages("httr")'
           R -e 'install.packages("rvest")'
-          R -e 'install.packages("lpSolve")'
           
-      - name: Scrape
-        run: Rscript script_scrape.R
+      - name: run_data
+        run: Rscript data/run_data.R
       
       - name: Commit files
         run: |
           git config --local user.name github-actions
           git config --local user.email "actions@github.com"
-          git add Output/*
-          git commit -am "GH ACTION Autorun $(date)"
-          git push origin production 
+          git add data/*
+          git commit -am "GH ACTION Autorun --date=iso"
+          git push origin data_2021_start 
