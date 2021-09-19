@@ -33,5 +33,5 @@ jobs:
           git config --local user.name github-actions
           git config --local user.email "actions@github.com"
           git add data/*
-          git commit -am "GH ACTION Autorun --date=iso"
+          git commit -am "Github Actions: Data Scrape"
           git push origin data_2021_start 
