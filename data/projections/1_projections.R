@@ -36,6 +36,6 @@ scrape_projections <- scrape_projections[, .(PLAYER = v25
                                              , PASS_INT = as.numeric(v9))]
 
 # Write to csv file
-data.table::fwrite(scrape_projections, '_export/projections_players.csv')
+data.table::fwrite(scrape_projections, 'data/_export/projections_players.csv')
 
                                              

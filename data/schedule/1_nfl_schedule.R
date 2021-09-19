@@ -44,5 +44,5 @@ function_scrape_schedule <- function( x ) {
 scrape_schedule <- data.table::rbindlist(lapply(seq(1:18), function_scrape_schedule))[DATE>=(Sys.Date()), ]
 
 # Write to csv file
-data.table::fwrite(scrape_schedule, '_export/schedule.csv')
+data.table::fwrite(scrape_schedule, 'data/_export/schedule.csv')
 

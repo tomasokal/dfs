@@ -28,7 +28,7 @@ scrape_projections <- scrape_projections[, .(PLAYER = v22
                                              , SALARY_DK = as.numeric(gsub("[\\$,]","", v17)))]
 
 # Write to csv file
-data.table::fwrite(scrape_projections, '_export/projections_dst.csv')
+data.table::fwrite(scrape_projections, 'data/_export/projections_dst.csv')
 
 
 
