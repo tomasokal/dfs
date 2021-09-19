@@ -21,7 +21,7 @@ function_scrape_schedule <- function( x ) {
   
   # Select features
   scrape_schedule <- scrape_schedule[, ODDS_HOME := rowSums(.SD, na.rm = TRUE), .SDcols = c(12, 14)]
-  scrape_schedule <- scrape_schedule[, .(WEEK = x
+  scrape_schedule <- scrape_schedule[, .(WEEK = paste0('WEEK ', x)
                                          , DAY = v4
                                          , DATE = as.Date(v5, format = "%m/%d")
                                          , TIME = v6
@@ -33,19 +33,16 @@ function_scrape_schedule <- function( x ) {
                                      ]
   
   # Remove teams with byes
-  scrape_schedule[scrape_schedule==''|scrape_schedule==' '] <- NA
+  scrape_schedule[scrape_schedule==''] <- NA
   scrape_schedule <- scrape_schedule[!is.na(DAY), ]
   
   return(scrape_schedule)
   
 }
 
-mydate <- Sys.Date()
+# Load over all weeks and filter out rows that are in the past. 
+scrape_schedule <- data.table::rbindlist(lapply(seq(1:18), function_scrape_schedule))[DATE>=(Sys.Date()), ]
 
-## TODO 
-## Make it to where this script will only pull weeks that have not yet happened.
-## Games might get rearranged, but if the week has already happened, do not need to refer to it.
-
-scrape_schedule <- data.table::rbindlist(lapply(seq(1:18), function_scrape_schedule))
-
+# Write to csv file
+data.table::fwrite(scrape_schedule, '_export/schedule.csv')
 
