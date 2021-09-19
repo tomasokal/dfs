@@ -18,7 +18,7 @@ scrape_projections <- scrape_projections[-1, ]
 # Select features
 scrape_projections <- scrape_projections[-1, ]
 scrape_projections <- scrape_projections[, gsub1 := gsub("\t", "", v1), by = v1][, gsub2 := gsub("\n", "_", gsub1), by = gsub1]
-scrape_projections <- scrape_projections[, c("v22", "v23", "v24") := tstrsplit(gsub2, "_", fixed = TRUE)]
+scrape_projections <- scrape_projections[, c("v22", "v23", "v24") := data.table::tstrsplit(gsub2, "_", fixed = TRUE)]
 scrape_projections <- scrape_projections[, .(PLAYER = v22
                                              , POSITION = "DST"
                                              , TEAM = trimws(substr(gsub(".*\\((.*)\\).*", "\\1", v24), 4, nchar(gsub(".*\\((.*)\\).*", "\\1", v24))))
@@ -26,6 +26,9 @@ scrape_projections <- scrape_projections[, .(PLAYER = v22
                                              , POINTS_DK = as.numeric(gsub("[\\$,]","", v16))
                                              , SALARY_FD = as.numeric(gsub("[\\$,]","", v14))
                                              , SALARY_DK = as.numeric(gsub("[\\$,]","", v17)))]
+
+# Write to csv file
+data.table::fwrite(scrape_projections, '_export/projections_dst.csv')
 
 
 
