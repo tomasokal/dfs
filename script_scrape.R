@@ -52,83 +52,17 @@ projections_dst <- projections_dst[, .(PLAYER = v22
 
 slate_function <- function(x) {
   
-  if ("2020-11-16" < x & x < "2020-11-24") {
+  if ("2021-10-23" < x & x < "2021-10-26") {
     
     # WEEK 11
-    exclude <- list(main_slate <- c("ARI", "SEA", "KC", "LV", "LA", "TB")
-                    , thu_mon <- c("NONE")
-                    , sun_early <- c("ARI", "SEA", "MIA", "DEN", "NYJ", "LAC", "DAL", "MIN", "GB", "IND", "KC", "LV", "LA", "TB")
-                    , sun_mon <- c("ARI", "SEA")
-                    , sun_afternoon <- c("ARI", "SEA", "ATL", "NO", "CIN", "WSH", "DET", "CAR", "NE", "HOU", "PHI", "CLE", "PIT", "JAC", "TEN", "BAL", "KC", "LV", "LA", "TB")
-                    , sun_turbo <- c("ARI", "SEA", "ATL", "NO", "CIN", "WSH", "DET", "CAR", "NE", "HOU", "PHI", "CLE", "PIT", "JAC", "TEN", "BAL", "MIA", "DEN", "NYJ", "LAC", "KC", "LV", "LA", "TB")
+    exclude <- list(
+      main_slate <- c("KC", "TEN", "WSH", "GB", "CIN", "BAL", "CAR", "NYG", "ATL", "MIA", "NYJ", "NE", "PHI", "LV", "DET", "LA", "CHI", "TB", "HOU", "ARI"),
+      thu_mon <- c("NONE"),
+      sun_early <- c("KC", "TEN", "WAS", "GB", "CIN", "BAL", "CAR", "NYG", "ATL", "MIA", "NYJ", "NE"),
+      sun_mon <- c("KC", "TEN", "WAS", "GB", "CIN", "BAL", "CAR", "NYG", "ATL", "MIA", "NYJ", "NE", "PHI", "LV", "DET", "LA", "CHI", "TB", "HOU", "ARI", "IND", "SF", "NO", "SEA"),
+      sun_afternoon <- c("PHI", "LV", "DET", "LA", "CHI", "TB", "HOU"),
+      sun_turbo <- c("KC", "TEN", "WAS", "GB", "CIN", "BAL", "CAR", "NYG", "ATL", "MIA", "NYJ", "NE", "PHI", "LV", "DET", "LA", "CHI", "TB", "HOU", "ARI", "IND", "SF", "NO", "SEA")
     )
-    
-  }
-  
-  else if ("2020-11-23" < x & x < "2020-12-01") {
-    
-    # WEEK 12
-    exclude <- list(main_slate <- c("HOU", "DET", "WAS", "DAL", "CHI", "GB", "SEA", "PHI")
-                    , thu_mon <- c("NONE")
-                    , sun_early <- c("HOU", "DET", "WAS", "DAL","NO", "DEN", "SF", "LA", "CHI", "GB", "SEA", "PHI")
-                    , sun_mon <- c("HOU", "DET", "WAS", "DAL")
-                    , sun_afternoon <- c("HOU", "DET", "WAS", "DAL")
-                    , sun_turbo <- c("HOU", "DET", "WAS", "DAL")
-    )
-    
-  }
-  
-  else if ("2020-11-30" < x & x < "2020-12-08") {
-    
-    # WEEK 13
-    exclude <- list(main_slate <- c("BAL", "DAL", "SF", "BUF", "PIT", "WSH", "KC", "DEN")
-                    , thu_mon <- c("BAL", "DAL")
-                    , sun_early <- c("BAL", "DAL", "SF", "BUF", "PIT", "WSH", "KC", "DEN", "LA", "ARI", "NY", "SEA", "NE", "LAC", "PHI", "GB")
-                    , sun_mon <- c("BAL", "DAL")
-                    , sun_afternoon <- c("HOU", "DET", "WSH", "DAL")
-                    , sun_turbo <- c("HOU", "DET", "WSH", "DAL")
-    )
-    
-  }
-  
-  else if ("2020-12-07" < x & x < "2020-12-15") {
-    
-    # WEEK 14
-    exclude <- c("NEP", "LAR", "PIT", "BUF", "BAL", "CLE")
-    
-  }
-  
-  else if ("2020-12-14" < x & x < "2020-12-22") {
-    
-    # WEEK 15
-    exclude <- list(main_slate <- c("LV", "LAC", "BUF", "DEN", "CAR", "GB", "CLE", "NY", "PIT", "CIN")
-                    , thu_mon <- c("NONE")
-                    , sun_early <- c("LV", "LAC", "BUF", "DEN", "CAR", "GB", "CLE", "NY", "PIT", "CIN", "NYJ", "LA", "KC", "NO")
-                    , sun_mon <- c("LV", "LAC", "BUF", "DEN", "CAR", "GB")
-                    , sun_afternoon <- c("HOU", "DET", "WSH", "DAL")
-                    , sun_turbo <- c("HOU", "DET", "WSH", "DAL")
-      )
-    
-    }
-  
-  else if ("2020-12-21" < x & x < "2020-12-29") {
-    
-    # WEEK 16
-    exclude <- c("NEP", "LAR", "PIT", "BUF", "BAL", "CLE")
-    
-  }
-  
-  else if ("2020-12-28" < x & x < "2021-01-05") {
-    
-    # WEEK 17
-    exclude <- c("NONE")
-    
-  }
-  
-  else {
-    
-    # WEEK 15
-    exclude <- c("NONE")
     
   }
   
@@ -140,12 +74,12 @@ SLATE_CHECK <- slate_function(Sys.Date())
 
 # Merging together
 
-merge_full <- data.table::rbindlist(list(projections_dfs, projections_dst))[, SLATE_MAIN := ifelse(TEAM %chin% SLATE_CHECK[[1]], 0, 1)]
-merge_full <- merge_full[, SLATE_THU_MON := ifelse(TEAM %chin% SLATE_CHECK[[2]], 0, 1)]
-merge_full <- merge_full[, SLATE_SUN_EARLY := ifelse(TEAM %chin% SLATE_CHECK[[3]], 0, 1)]
-merge_full <- merge_full[, SLATE_SUN_MON := ifelse(TEAM %chin% SLATE_CHECK[[4]], 0, 1)]
-merge_full <- merge_full[, SLATE_AFTERNOON := ifelse(TEAM %chin% SLATE_CHECK[[5]], 0, 1)]
-merge_full <- merge_full[, SLATE_SUN_TURBO := ifelse(TEAM %chin% SLATE_CHECK[[6]], 0, 1)]
+merge_full <- data.table::rbindlist(list(projections_dfs, projections_dst))[, SLATE_MAIN := ifelse(TEAM %chin% SLATE_CHECK[[1]], 1, 0)]
+merge_full <- merge_full[, SLATE_THU_MON := ifelse(TEAM %chin% SLATE_CHECK[[2]], 1, 0)]
+merge_full <- merge_full[, SLATE_SUN_EARLY := ifelse(TEAM %chin% SLATE_CHECK[[3]], 1, 0)]
+merge_full <- merge_full[, SLATE_SUN_MON := ifelse(TEAM %chin% SLATE_CHECK[[4]], 1, 0)]
+merge_full <- merge_full[, SLATE_AFTERNOON := ifelse(TEAM %chin% SLATE_CHECK[[5]], 1, 0)]
+merge_full <- merge_full[, SLATE_SUN_TURBO := ifelse(TEAM %chin% SLATE_CHECK[[6]], 1, 0)]
 
 slate_main <- merge_full[SLATE_MAIN == 1]
 slate_thu_mon <- merge_full[SLATE_THU_MON == 1]
