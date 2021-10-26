@@ -1,26 +1,30 @@
 PLAYER,POSITION,TEAM,POINTS_FD,POINTS_DK,SALARY_FD,SALARY_DK
-Tampa Bay D/ST,DST,TB,9.13,9.13,4400,4000
-New Orleans D/ST,DST,NO,8.84,8.84,4700,3400
-Los Angeles Rams D/ST,DST,LA,8.76,8.76,4900,5000
-New England D/ST,DST,NE,8.54,8.54,4800,3400
-Green Bay D/ST,DST,GB,8,8,4100,3300
-Carolina D/ST,DST,CAR,8,8,4500,3500
-Cleveland D/ST,DST,CLE,7.51,7.51,3500,3000
-Baltimore D/ST,DST,BAL,7.29,7.29,4300,2900
-Denver D/ST,DST,DEN,6.83,6.83,4500,3100
-New York Giants D/ST,DST,NYG,6.78,6.78,3600,2500
-Las Vegas D/ST,DST,LV,6.7,6.7,4200,3000
-Seattle D/ST,DST,SEA,6.46,6.46,3600,2900
-San Francisco D/ST,DST,SF,6.25,6.25,4000,3200
-Philadelphia D/ST,DST,PHI,6.2,6.2,3500,2300
-Atlanta D/ST,DST,ATL,5.7,5.7,3900,2700
-Kansas City D/ST,DST,KC,5.71,5.71,3400,2600
-Cincinnati D/ST,DST,CIN,5.31,5.31,3500,2800
-New York Jets D/ST,DST,NYJ,5.13,5.13,3300,2400
-Miami D/ST,DST,MIA,5.03,5.03,4000,3200
-Indianapolis D/ST,DST,IND,5,5,4500,3000
-Chicago D/ST,DST,CHI,3.93,3.93,3700,2800
-Tennessee D/ST,DST,TEN,3.84,3.84,3200,2100
-Washington D/ST,DST,WSH,3.75,3.75,3800,2200
-Houston D/ST,DST,HOU,3.64,3.64,3000,2000
-Detroit D/ST,DST,DET,2.55,2.55,3100,2100
+Los Angeles Rams D/ST,DST,LA,8.58,8.58,,
+Buffalo D/ST,DST,BUF,8.06,8.06,,
+Cleveland D/ST,DST,CLE,7.5,7.5,,
+Kansas City D/ST,DST,KC,7.61,7.61,,
+Denver D/ST,DST,DEN,7.34,7.34,,
+Atlanta D/ST,DST,ATL,7.17,7.17,,
+Seattle D/ST,DST,SEA,7.08,7.08,,
+Philadelphia D/ST,DST,PHI,6.94,6.94,,
+Tampa Bay D/ST,DST,TB,6.97,6.97,,
+Chicago D/ST,DST,CHI,6.6,6.6,,
+Los Angeles Chargers D/ST,DST,LAC,6.47,6.47,,
+Jacksonville D/ST,DST,JAC,6.43,6.43,,
+Washington D/ST,DST,WSH,6.21,6.21,,
+Pittsburgh D/ST,DST,PIT,6.19,6.19,,
+Tennessee D/ST,DST,TEN,6.1,6.1,,
+Indianapolis D/ST,DST,IND,6.04,6.04,,
+Detroit D/ST,DST,DET,6.04,6.04,,
+Arizona D/ST,DST,ARI,5.54,5.54,,
+Carolina D/ST,DST,CAR,5.33,5.33,,
+Dallas D/ST,DST,DAL,5.29,5.29,,
+Green Bay D/ST,DST,GB,5.14,5.14,,
+Cincinnati D/ST,DST,CIN,5.12,5.12,,
+New England D/ST,DST,NE,5.1,5.1,,
+Minnesota D/ST,DST,MIN,4.62,4.62,,
+New York Jets D/ST,DST,NYJ,4.38,4.38,,
+New Orleans D/ST,DST,NO,4.28,4.28,,
+Miami D/ST,DST,MIA,4.1,4.1,,
+New York Giants D/ST,DST,NYG,3.73,3.73,,
+Houston D/ST,DST,HOU,2.93,2.93,,
