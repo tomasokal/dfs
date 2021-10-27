@@ -1,4 +1,4 @@
-function_scrape_schedule <- function( x ) {
+function_scrape_schedule <- function(x) {
   
   # Source of data
   url <- paste0("https://nflgamedata.com/schedule.php?season=2021&week=", x)
@@ -31,6 +31,8 @@ function_scrape_schedule <- function( x ) {
                                          , ODDS_HOME
                                          )
                                      ]
+  scrape_schedule[scrape_schedule == 'JAX'] <- 'JAC'
+  scrape_schedule[scrape_schedule == 'WAS'] <- 'WSH'
   
   # Remove teams with byes
   scrape_schedule[scrape_schedule==''] <- NA
