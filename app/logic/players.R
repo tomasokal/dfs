@@ -12,7 +12,7 @@ get_data <- function() {
 
     data.table::fread(
         "https://raw.githubusercontent.com/tomasokal/dfs/production/Output/salaries_projections_main_slate.csv"
-    )  |> 
+    )  |>
     .d(, .(PLAYER, TEAM, POSITION, POINTS_DK, SALARY_DK))
 
 }
