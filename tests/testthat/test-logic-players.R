@@ -2,7 +2,7 @@ box::use(
   testthat[...],
 )
 box::use(
-  app/logic/players[...],
+  app/logic/players,
 )
 
 test_that("Function get_data() returns expected features", {
