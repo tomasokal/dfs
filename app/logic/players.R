@@ -11,8 +11,8 @@ get_data <- function() {
     .d <- `[`
 
     data.table::fread(
-        "https://raw.githubusercontent.com/tomasokal/dfs/production/Output/salaries_projections_main_slate.csv"
-    )  |> 
+        "https://raw.githubusercontent.com/tomasokal/dfs/production/Output/salaries_projections_main_slate.csv" # nolint
+    )  |>
     .d(, .(PLAYER, TEAM, POSITION, POINTS_DK, SALARY_DK))
 
 }
