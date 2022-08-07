@@ -3,5 +3,7 @@
 
 #' @export
 box::use(
-    app/logic/players
+  app/logic/playerTable,
+  app/logic/players,
+  app/logic/slateInformation,
 )
