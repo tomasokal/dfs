@@ -1,24 +1,24 @@
 box::use(
-  shiny[bootstrapPage, moduleServer, NS, reactive, titlePanel, div],
+  shiny[bootstrapPage, moduleServer, NS, reactive, titlePanel, div, img],
 )
 box::use(
-  app/logic/players,
-  app/view[chart, table],
+  app/logic/slateInformation[get_data],
+  app/view[table],
 )
 
 grid <- function(...) div(class = "grid", ...)
 card <- function(...) div(class = "card", ...)
 main <- function(...) div(class = "main", ...)
+logo <- function(...) div(class = "logo", ...)
 
 #' @export
 ui <- function(id) {
   ns <- NS(id)
   bootstrapPage(
     main(
-      titlePanel("Application Title"),
+      titlePanel("DFS Linear Programming Application Redesign"),
       grid(
-        card(table$ui(ns("table"))),
-        card(chart$ui(ns("chart")))
+        card(table$ui(ns("table")))
       )
     )
   )
@@ -27,8 +27,7 @@ ui <- function(id) {
 #' @export
 server <- function(id) {
   moduleServer(id, function(input, output, session) {
-    data <- reactive(players$get_data())
+    data <- reactive(get_data())
     table$server("table", data)
-    chart$server("chart", data)
   })
 }

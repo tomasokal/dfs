@@ -3,6 +3,5 @@
 
 #' @export
 box::use(
-    app/view/chart,
-    app/view/table
+  app/view/table
 )

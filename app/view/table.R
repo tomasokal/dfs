@@ -1,23 +1,23 @@
 box::use(
-    reactable[reactableOutput, renderReactable],
-    shiny[moduleServer, NS],
+  reactable[reactableOutput, renderReactable],
+  shiny[moduleServer, NS],
 )
 
 box::use(
-    app/logic/players,
+  app/logic/playerTable[table],
 )
 
 #' @export
 ui <- function(id) {
-    ns <- NS(id)
-    reactableOutput(ns("table"))
+  ns <- NS(id)
+  reactableOutput(ns("table"))
 }
 
 #' @export
-server  <- function(id, data) {
-    moduleServer(id, function(input, output, session) {
-        output$table <- renderReactable(
-            players$table(data())
-        )
-    })
+server <- function(id, data) {
+  moduleServer(id, function(input, output, session) {
+    output$table <- renderReactable(
+      table(data())
+    )
+  })
 }
