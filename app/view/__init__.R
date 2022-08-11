@@ -3,5 +3,6 @@
 
 #' @export
 box::use(
-  app/view/table
+  app/view/table,
+  app/view/selections,
 )
