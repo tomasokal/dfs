@@ -1,7 +1,7 @@
 box::use(
   data.table[fcase],
-  dplyr[select],
-  htmltools[span],
+  dplyr[select, mutate],
+  htmltools[span, tags],
   htmlwidgets[JS],
   reactable[reactable, colDef, colFormat],
   shiny[img, tagList, div],
@@ -95,12 +95,23 @@ table <- function(data) {
   data$team_image <- turn_team_to_logo(data$teamAbbreviation)
 
   data <- data |>
-    select(shortName, position, team_name, team_image, name, salary, jdt_players_points)
+    select(
+      shortName,
+      position,
+      team_name,
+      team_image,
+      name, salary,
+      projections_edit,
+      projections_true
+    )
 
   reactable(
     data,
     searchable = TRUE,
     resizable = TRUE,
+    defaultSorted = list(
+      projections_edit = "desc"
+    ),
     paginationType = "simple",
     highlight = TRUE,
     compact = TRUE,
@@ -108,6 +119,7 @@ table <- function(data) {
     columns = list(
       shortName = colDef(
         name = "Player",
+        minWidth = 200,
         cell = function(value, index) {
           team_image <- data$team_image[index]
           image <- img(
@@ -141,11 +153,14 @@ table <- function(data) {
           digits = 0
         )
       ),
-      jdt_players_points = colDef(
+      projections_edit = colDef(
         name = "Exp. Pts.",
         format = colFormat(
           digits = 0
         )
+      ),
+      projections_true = colDef(
+        show = FALSE
       )
     )
   )

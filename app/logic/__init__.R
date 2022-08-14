@@ -4,6 +4,5 @@
 #' @export
 box::use(
   app/logic/playerTable,
-  app/logic/players,
   app/logic/slateInformation,
 )
