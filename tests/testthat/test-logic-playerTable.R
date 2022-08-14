@@ -16,7 +16,9 @@ test_that("Function get_data() returns expected features", {
     "salary",
     "jdt_players_points",
     "name",
-    "startTime"
+    "startTime",
+    "projections_true",
+    "projections_edit"
   )
 
   app_df <- colnames(get_data())
